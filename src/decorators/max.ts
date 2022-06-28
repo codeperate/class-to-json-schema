@@ -1,0 +1,1 @@
+export function Max(maximum: number, exclusive?: boolean) {}

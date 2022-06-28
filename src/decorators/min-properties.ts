@@ -1,0 +1,1 @@
+export function MinProperties(minProperties: number) {}
