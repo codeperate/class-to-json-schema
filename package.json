@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start:test":"tsc -p tsconfig.test.json && node test.js"
+    "start:test": "tsc -p tsconfig.test.json"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,6 @@
 export const JSON_SCHEMA_KEY = Symbol('json-schema');
 import { JSONSchema } from '../class/json-schema';
+import { SpecTypes } from '../types/spec';
 import { setSchema } from './set-schema';
 export function getSchema(target: object, propertyKey?: string | symbol) {
     const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, target) as JSONSchema;
@@ -26,11 +27,7 @@ export function getSchemaByMetaType(target: object, propertyKey?: string | symbo
     return schema;
 }
 
-export declare enum SpecTypes {
-    JSON = 'jsonschema',
-    SWAGGER = 'swagger2',
-    OPENAPI = 'openapi3',
-}
+
 
 function replaceAll(src: string, find: string, replace: string) {
     return src.replace(new RegExp(find, 'g'), replace);
