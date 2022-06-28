@@ -38,7 +38,5 @@ export interface JsonSchemaOptions {
 }
 
 export function getJsonSchema(entity:any, options?: JsonSchemaOptions){
-  
-   const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
-   return schema
+   return Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
 }
