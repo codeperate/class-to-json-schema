@@ -2,8 +2,9 @@ import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 import { JSONSchema7Class } from './json-schema-class';
 type ValueOf<T, K extends keyof T> = T[K];
 export class JSONSchema<T extends Function = any> extends JSONSchema7Class {
-    constructor(schema: JSONSchema7) {
+    constructor(schema?: JSONSchema7) {
         super();
+    if(schema)
         Object.assign(this, schema);
     }
     clone(): JSONSchema<T> {
@@ -74,5 +75,8 @@ export class JSONSchema<T extends Function = any> extends JSONSchema7Class {
     props(): (keyof T)[] {
         if (this.properties) return Object.keys(this.properties) as (keyof T)[];
         return [];
+    }
+    static defaultSchema(target,propertyKey){
+
     }
 }

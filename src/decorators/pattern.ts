@@ -1,1 +1,3 @@
-export function Pattern(pattern: string | RegExp) {}
+export function Pattern(pattern: string | RegExp) {
+    
+}
