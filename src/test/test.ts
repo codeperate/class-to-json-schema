@@ -3,6 +3,7 @@ import { Min } from "../decorators/min";
 import { Property } from "../decorators/property";
 import { SpecTypes } from "../types/spec";
 import { getJsonSchema } from "../utils/get-schema";
+import 'reflect-metadata';
 
 export class Person {
     @Property()
