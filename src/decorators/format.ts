@@ -1,4 +1,11 @@
-export function Format(format: JsonFormatTypes) {}
+import { getSchema } from "../utils/get-schema"
+
+export function Format(format: JsonFormatTypes) {
+    return function(target,propertyKey){
+        const schema = getSchema(target,propertyKey)
+        schema.format = format
+    }
+}
 
 export enum JsonFormatTypes {
     DATE_TIME = "date-time",

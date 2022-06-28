@@ -1,4 +1,4 @@
-const JSON_SCHEMA_KEY = Symbol('json-schema');
+export const JSON_SCHEMA_KEY = Symbol('json-schema');
 import { JSONSchema7 } from 'json-schema';
 import { JSONSchema } from '../class/json-schema';
 import { setSchema } from './set-schema';
@@ -24,4 +24,8 @@ export function getSchemaByMetaType(target: object, propertyKey?: string | symbo
     });
     Reflect.defineMetadata(JSON_SCHEMA_KEY, schema, target);
     return schema;
+}
+
+export function getJsonSchema(){
+  
 }
