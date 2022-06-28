@@ -1,5 +1,4 @@
 export const JSON_SCHEMA_KEY = Symbol('json-schema');
-import { JSONSchema7 } from 'json-schema';
 import { JSONSchema } from '../class/json-schema';
 import { setSchema } from './set-schema';
 export function getSchema(target: object, propertyKey?: string | symbol) {
@@ -13,7 +12,7 @@ export function getSchema(target: object, propertyKey?: string | symbol) {
 }
 
 export function getSchemaByMetaType(target: object, propertyKey?: string | symbol): JSONSchema {
-    const propertyType = Reflect.getMetadata('design:type', target, propertyKey);
+    let propertyType = Reflect.getMetadata('design:type', target, propertyKey);
     const schema = new JSONSchema({
         type: 'object',
         properties: {
@@ -26,6 +25,20 @@ export function getSchemaByMetaType(target: object, propertyKey?: string | symbo
     return schema;
 }
 
-export function getJsonSchema(){
+export declare enum SpecTypes {
+  JSON = "jsonschema",
+  SWAGGER = "swagger2",
+  OPENAPI = "openapi3"
+}
+
+export interface JsonSchemaOptions {
+  specType?: SpecTypes;
+  customKeys?: boolean;
+  [key: string]: any;
+}
+
+export function getJsonSchema(entity:any, options?: JsonSchemaOptions){
   
+   const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
+   return schema
 }
