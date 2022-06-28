@@ -13,6 +13,7 @@ export function getSchema(target: object, propertyKey?: string | symbol) {
 
 export function getSchemaByMetaType(target: object, propertyKey?: string | symbol): JSONSchema {
     let propertyType = Reflect.getMetadata('design:type', target, propertyKey);
+
     const schema = new JSONSchema({
         type: 'object',
         properties: {
@@ -26,17 +27,21 @@ export function getSchemaByMetaType(target: object, propertyKey?: string | symbo
 }
 
 export declare enum SpecTypes {
-  JSON = "jsonschema",
-  SWAGGER = "swagger2",
-  OPENAPI = "openapi3"
+    JSON = 'jsonschema',
+    SWAGGER = 'swagger2',
+    OPENAPI = 'openapi3',
 }
 
-export interface JsonSchemaOptions {
-  specType?: SpecTypes;
-  customKeys?: boolean;
-  [key: string]: any;
+function replaceAll(src: string, find: string, replace: string) {
+    return src.replace(new RegExp(find, 'g'), replace);
 }
 
-export function getJsonSchema(entity:any, options?: JsonSchemaOptions){
-   return Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
+export function getJsonSchema(entity: any, specTypes: SpecTypes = SpecTypes.JSON) {
+    let schema: JSONSchema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
+    if (specTypes === SpecTypes.SWAGGER || specTypes === SpecTypes.OPENAPI) {
+        schema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
+        const stringSchema = replaceAll(JSON.stringify(schema.toJSON()), '#/definitions', '#/components/schemas');
+        schema = JSON.parse(stringSchema);
+    }
+    return schema;
 }

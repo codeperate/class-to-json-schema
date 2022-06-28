@@ -1,3 +1,5 @@
-export function ForwardGroups(bool?: boolean): PropertyDecorator{
-    
-}
+// export function ForwardGroups(bool?: boolean): PropertyDecorator{
+
+// }
+
+export {}

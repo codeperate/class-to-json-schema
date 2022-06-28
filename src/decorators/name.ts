@@ -1,4 +1,7 @@
-import { getSchema } from '../utils/get-schema';
+// import { getSchema } from '../utils/get-schema';
 
-export function Name(name: any): ParameterDecorator{
+// export function Name(name: any): ParameterDecorator{
+
+// }
   
+export {}

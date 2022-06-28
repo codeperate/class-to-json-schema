@@ -1,7 +1,7 @@
 import { Integer } from "../decorators/integer";
 import { Min } from "../decorators/min";
 import { Property } from "../decorators/property";
-import { getJsonSchema } from "../utils/get-schema";
+import { getJsonSchema, SpecTypes } from "../utils/get-schema";
 
 export class Person {
     @Property()
@@ -15,4 +15,4 @@ export class Person {
     weight:number
 }
 
-console.log(getJsonSchema(Person));
+console.log(getJsonSchema(Person,SpecTypes.JSON));
