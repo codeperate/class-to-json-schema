@@ -1,3 +1,3 @@
-export declare function Example(...examples: any[]) {
-    
+export function Example(...examples: any[]){
+
 }

@@ -1,3 +1,3 @@
-export function Name(name: any): {
+export function Name(name: any){
     
 }
