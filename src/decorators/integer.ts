@@ -1,10 +1,17 @@
-// import { SchemaDecorators } from '../enum/decorator';
-import { getSchema } from '../utils/get-schema';
+import { JSONSchema7Definition } from 'json-schema';
+import { SchemaDecorators } from '../enum';
+import { decoratorMapper } from '../utils/decorator.utils';
 
 export function Integer(): PropertyDecorator {
     return function (target, propertyKey) {
-        const schema = getSchema(target, propertyKey);
-        if (schema.type === 'array') schema.items = { type: 'integer' };
-        else schema.type = 'integer';
+        decoratorMapper({
+            target,
+            propertyKey: propertyKey.toString(),
+            fn: (schema) => {
+                schema.type === 'array' ? (schema.items = { type: 'integer' }) : (schema.type = 'integer');
+                return schema;
+            },
+            schemaDecorator: SchemaDecorators.Integer,
+        });
     };
 }
