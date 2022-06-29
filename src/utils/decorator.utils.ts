@@ -7,8 +7,8 @@ interface DecoratedMapper {
     target:object;
     propertyKey:string;
     parameters:any;
-    fn: (arg: any, schema: JSONSchema) => void;
     schemaDecorator: SchemaDecorators;
+    fn: (arg: any, schema: JSONSchema) => void;
 }
 
 export function decoratorMapper(decoratedMapper:DecoratedMapper) {

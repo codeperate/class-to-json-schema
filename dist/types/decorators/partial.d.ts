@@ -1,1 +1,1 @@
-export declare function Partial(): void;
+export declare function Partial(): ParameterDecorator;
