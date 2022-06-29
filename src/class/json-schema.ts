@@ -77,6 +77,6 @@ export class JSONSchema<T extends Function = any> extends JSONSchema7Class {
         return [];
     }
     static defaultSchema(target,propertyKey){
-
+        
     }
 }

@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "rootDir": "src",
+        "experimentalDecorators":true
+    },
+    "include": ["src/**/*.ts"],
+    "extends": "./tsconfig.json"
+}

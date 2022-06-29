@@ -1,6 +1,6 @@
 export const JSON_SCHEMA_KEY = Symbol('json-schema');
-import { JSONSchema7 } from 'json-schema';
 import { JSONSchema } from '../class/json-schema';
+import { SpecTypes } from '../types/spec';
 import { setSchema } from './set-schema';
 export function getSchema(target: object, propertyKey?: string | symbol) {
     const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, target) as JSONSchema;
@@ -13,7 +13,8 @@ export function getSchema(target: object, propertyKey?: string | symbol) {
 }
 
 export function getSchemaByMetaType(target: object, propertyKey?: string | symbol): JSONSchema {
-    const propertyType = Reflect.getMetadata('design:type', target, propertyKey);
+    let propertyType = Reflect.getMetadata('design:type', target, propertyKey);
+
     const schema = new JSONSchema({
         type: 'object',
         properties: {
@@ -26,6 +27,18 @@ export function getSchemaByMetaType(target: object, propertyKey?: string | symbo
     return schema;
 }
 
-export function getJsonSchema(){
-  
+
+
+function replaceAll(src: string, find: string, replace: string) {
+    return src.replace(new RegExp(find, 'g'), replace);
+}
+
+export function getJsonSchema(entity: any, specTypes: SpecTypes = SpecTypes.JSON) {
+    let schema: JSONSchema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
+    if (specTypes === SpecTypes.SWAGGER || specTypes === SpecTypes.OPENAPI) {
+        schema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
+        const stringSchema = replaceAll(JSON.stringify(schema.toJSON()), '#/definitions', '#/components/schemas');
+        schema = JSON.parse(stringSchema);
+    }
+    return schema;
 }
