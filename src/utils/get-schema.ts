@@ -1,6 +1,7 @@
 export const JSON_SCHEMA_KEY = Symbol('json-schema');
 import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
+import { DecoratedMap } from '../types/decorated-map';
 import { SpecTypes } from '../types/spec';
 import { defaultConverters } from './defaultConverters';
 import { setSchema } from './set-schema';
@@ -32,11 +33,12 @@ export function getSchemaByMetaType(target: object, propertyKey?: string | symbo
 //     return src.replace(new RegExp(find, 'g'), replace);
 // }
 
-export interface ConvertersOptions {
-    target: object;
-    meta: any;
-    defaultConverter: Function;
-    schema: JSONSchema;
+export interface ConvertersOptions<T=any> {
+    target:object;
+    meta:any;
+    defaultConverter:Function;
+    schema:JSONSchema
+    arguments:T
 }
 
 interface JsonSchemaOptions {
@@ -48,13 +50,9 @@ interface JsonSchemaOptions {
 }
 
 
-// interface DecoratedMap{
-    
-// }
-
 
 export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
-    const decoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as {[key in string]: { type: SchemaDecorators; args: any; fn: Function }[]};
+    const decoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as DecoratedMap[];
     let schema: JSONSchema; //= Reflect.getMetadata(JSON_SCHEMA_KEY, entity)
     const attrs = Object.keys(entity);
     const meta = {}
