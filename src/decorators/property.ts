@@ -3,8 +3,6 @@ import { decoratorMapper } from '../utils/decorator.utils';
 
 export function Property(type?: any) {
     return function (target, propertyKey) {
-        console.log(target);
-        
         decoratorMapper({
             target,
             parameters: type,
@@ -15,5 +13,7 @@ export function Property(type?: any) {
                 return schema;
             },
         });
+        //console.log('Fucked');
+        //console.log(Reflect.getMetadata('design:type', target, propertyKey).name);
     };
 }

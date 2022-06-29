@@ -4,27 +4,24 @@ import { SchemaDecorators } from '../enum/decorator';
 import { DecoratedMap } from '../types/decorated-map';
 import { SpecTypes } from '../types/spec-type';
 
-
-
 export function getSchema(target: object, propertyKey?: string | symbol) {
     const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, target) as JSONSchema;
     if (!schema) {
-      //  const _schema = getSchemaByMetaType(target, propertyKey);
-      //  setSchema(target, _schema);
-      //  return _schema;
+        //  const _schema = getSchemaByMetaType(target, propertyKey);
+        //  setSchema(target, _schema);
+        //  return _schema;
     }
     return schema;
 }
 
-export function setSchemaByMetaType(schema: JSONSchema, target: object, propertyKey?: string) {
-    console.log(target);
-    console.log(propertyKey);
-    let propertyType = Reflect.getMetadata('design:type', target , propertyKey);
+export function setSchemaByMetaType(schema: JSONSchema, target: { new (...args: any[]) }, propertyKey?: string) {
+    let propertyType = Reflect.getMetadata('design:type', new target(), propertyKey).name;
     if (!schema) schema.type = 'object';
     if (!schema.properties) schema.properties = {};
     schema.properties[propertyKey] = {
         type: propertyType,
     };
+    console.log(schema.toJSON());
 }
 
 // function replaceAll(src: string, find: string, replace: string) {
@@ -52,10 +49,8 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
     let schema: JSONSchema = new JSONSchema();
     let meta: any = {};
 
-    console.log(decoratedMaps);
-
     for (const propertyKey of Object.keys(decoratedMaps)) {
-        setSchemaByMetaType(schema,entity, propertyKey);
+        setSchemaByMetaType(schema, entity, propertyKey);
         for (const decorated of decoratedMaps[propertyKey]) {
             if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
                 jsonSchemaOptions.additionalConverters[decorated.type]({

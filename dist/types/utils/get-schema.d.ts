@@ -3,7 +3,9 @@ import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
 import { SpecTypes } from '../types/spec-type';
 export declare function getSchema(target: object, propertyKey?: string | symbol): JSONSchema<any>;
-export declare function setSchemaByMetaType(schema: JSONSchema, target: object, propertyKey?: string): void;
+export declare function setSchemaByMetaType(schema: JSONSchema, target: {
+    new (...args: any[]): any;
+}, propertyKey?: string): void;
 export interface ConvertersOptions<T = any> {
     target: object;
     meta: any;
