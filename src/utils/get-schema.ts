@@ -3,7 +3,6 @@ import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
 import { DecoratedMap } from '../types/decorated-map';
 import { SpecTypes } from '../types/spec';
-import { defaultConverters } from './defaultConverters';
 import { setSchema } from './set-schema';
 export function getSchema(target: object, propertyKey?: string | symbol) {
     const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, target) as JSONSchema;
@@ -36,31 +35,37 @@ export function getSchemaByMetaType(target: object, propertyKey?: string | symbo
 export interface ConvertersOptions<T=any> {
     target:object;
     meta:any;
-    defaultConverter:Function;
     schema:JSONSchema
-    arguments:T
+    arguments:T;
+    defaultConverter:Function;
 }
 
 interface JsonSchemaOptions {
     specTypes: SpecTypes;
     schemaRefPath: string;
     additionalConverters: {
-        [schemaDecorator in SchemaDecorators]: (convertersOptions: ConvertersOptions) => JSONSchema;
+        [schemaDecorator in SchemaDecorators]: (convertersOptions: Partial<ConvertersOptions>) => JSONSchema;
     };
 }
 
-
-
 export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
-    const decoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as DecoratedMap[];
+    let decoratedMaps:DecoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, entity)
     let schema: JSONSchema; //= Reflect.getMetadata(JSON_SCHEMA_KEY, entity)
     const attrs = Object.keys(entity);
-    const meta = {}
+    let meta:any = {}
+    
     for (const attr of attrs) {
-        for (const decorator of decoratedMap[attr]) {
-            if (jsonSchemaOptions.additionalConverters) 
-                jsonSchemaOptions.additionalConverters[decorator.type].defaultConverter(entity,meta,);
-            else decorator.fn(decorator.args);
+        for (const decoratedMap of decoratedMaps[attr]) {
+            if (jsonSchemaOptions.additionalConverters?.[decoratedMap.type]) 
+            {
+                jsonSchemaOptions.additionalConverters[decoratedMap.type]({
+                    target: entity,
+                    schema: schema,
+                    meta: meta,
+                    arguments: decoratedMap.args
+                })
+            }
+            else decoratedMap.fn(decoratedMap.args,schema); 
         }
     }
     // if (specTypes === SpecTypes.SWAGGER || specTypes === SpecTypes.OPENAPI) {

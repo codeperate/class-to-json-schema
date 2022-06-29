@@ -1,1 +1,1 @@
-export declare function RecordOf(model: any, ...keys: string[]): void;
+export declare function RecordOf(model: any, ...keys: string[]): (target: any, propertyKey: any) => void;

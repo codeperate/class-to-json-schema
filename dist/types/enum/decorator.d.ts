@@ -1,5 +1,5 @@
 export declare enum SchemaDecorators {
-    AllOf = "ALLOf",
+    AllOf = "AllOf",
     Allow = "Allow",
     AnuOf = "AnyOf",
     Any = "Any",
