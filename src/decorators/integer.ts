@@ -1,3 +1,4 @@
+import { SchemaDecorators } from '../enum/decorator';
 import { getSchema } from '../utils/get-schema';
 
 export function Integer(): PropertyDecorator {
@@ -6,4 +7,16 @@ export function Integer(): PropertyDecorator {
         if (schema.type === 'array') schema.items = { type: 'integer' };
         else schema.type = 'integer';
     };
+}
+
+
+class{
+    @Integer(1)
+    a
+}
+
+const meta={
+    a:[
+        {decorator:SchemaDecorators.Integer,option:{}}
+    ]
 }
