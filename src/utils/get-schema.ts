@@ -32,11 +32,12 @@ export function getSchemaByMetaType(target: object, propertyKey?: string | symbo
 //     return src.replace(new RegExp(find, 'g'), replace);
 // }
 
-export interface ConvertersOptions {
-    target: object;
-    meta: any;
-    defaultConverter: Function;
-    schema: JSONSchema;
+export interface ConvertersOptions<T=any> {
+    target:object;
+    meta:any;
+    defaultConverter:Function;
+    schema:JSONSchema
+    arguments:T
 }
 
 interface JsonSchemaOptions {

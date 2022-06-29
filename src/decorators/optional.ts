@@ -1,9 +1,8 @@
 import { getSchema } from "../utils/get-schema";
 
 export function Optional(): PropertyDecorator | ParameterDecorator {
-    return function (target, propertyKey) {
+    return function (target, propertyKey, parameterIndex) {
         let schema = getSchema(target, propertyKey);
-        const res = schema.required.indexOf(propertyKey); 
-        if (schema.required.includes(propertyKey))schema.required.slice(res, 0);
+        if (schema.required.includes(propertyKey.toString()))schema.required.slice(parameterIndex, 0);
     }
 }
