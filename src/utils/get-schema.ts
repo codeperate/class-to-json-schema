@@ -33,7 +33,15 @@ function replaceAll(src: string, find: string, replace: string) {
     return src.replace(new RegExp(find, 'g'), replace);
 }
 
-export function getJsonSchema(entity: any, specTypes: SpecTypes = SpecTypes.JSON) {
+interface options{
+    SpecTypes:SpecTypes,
+    schemaRefPath:string,
+    additionalConverters:{
+        
+    }
+}
+
+export function getJsonSchema(entity: any, options:options ) {
     let schema: JSONSchema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
     if (specTypes === SpecTypes.SWAGGER || specTypes === SpecTypes.OPENAPI) {
         schema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
