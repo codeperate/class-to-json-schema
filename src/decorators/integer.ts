@@ -8,15 +8,3 @@ export function Integer(): PropertyDecorator {
         else schema.type = 'integer';
     };
 }
-
-
-// class{
-//     @Integer(1)
-//     a
-// }
-
-// const meta={
-//     a:[
-//         {decorator:SchemaDecorators.Integer,option:{}}
-//     ]
-// }

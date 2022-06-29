@@ -6,3 +6,15 @@ export const defaultConverters={
         
     }
 }
+
+
+// class{
+//     @Integer(1)
+//     a
+// }
+
+// const meta={
+//     a:[
+//         {decorator:SchemaDecorators.Integer,arguments:{}}
+//     ]
+// }

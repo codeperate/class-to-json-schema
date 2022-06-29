@@ -2,6 +2,7 @@ export const JSON_SCHEMA_KEY = Symbol('json-schema');
 import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
 import { SpecTypes } from '../types/spec';
+import { defaultConverters } from './defaultConverters';
 import { setSchema } from './set-schema';
 export function getSchema(target: object, propertyKey?: string | symbol) {
     const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, target) as JSONSchema;
@@ -15,7 +16,6 @@ export function getSchema(target: object, propertyKey?: string | symbol) {
 
 export function getSchemaByMetaType(target: object, propertyKey?: string | symbol): JSONSchema {
     let propertyType = Reflect.getMetadata('design:type', target, propertyKey);
-
     const schema = new JSONSchema({
         type: 'object',
         properties: {
@@ -28,31 +28,42 @@ export function getSchemaByMetaType(target: object, propertyKey?: string | symbo
     return schema;
 }
 
-
-
 // function replaceAll(src: string, find: string, replace: string) {
 //     return src.replace(new RegExp(find, 'g'), replace);
 // }
 
 export interface ConvertersOptions {
-    target:object;
-    meta:any;
-    defaultConverter:Function;
-    schema:JSONSchema
+    target: object;
+    meta: any;
+    defaultConverter: Function;
+    schema: JSONSchema;
 }
 
-interface JsonSchemaOptions{
-    specTypes:SpecTypes,
-    schemaRefPath:string,
-    additionalConverters:{
-        [schemaDecorator in SchemaDecorators]:(convertersOptions:ConvertersOptions)=>JSONSchema;
-    }
+interface JsonSchemaOptions {
+    specTypes: SpecTypes;
+    schemaRefPath: string;
+    additionalConverters: {
+        [schemaDecorator in SchemaDecorators]: (convertersOptions: ConvertersOptions) => JSONSchema;
+    };
 }
 
-export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchemaOptions> ) {
-    let schema: JSONSchema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) 
-    if(!schema){
-        
+
+// interface DecoratedMap{
+    
+// }
+
+
+export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
+    const decoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as {[key in string]: { type: SchemaDecorators; args: any; fn: Function }[]};
+    let schema: JSONSchema; //= Reflect.getMetadata(JSON_SCHEMA_KEY, entity)
+    const attrs = Object.keys(entity);
+    const meta = {}
+    for (const attr of attrs) {
+        for (const decorator of decoratedMap[attr]) {
+            if (jsonSchemaOptions.additionalConverters) 
+                jsonSchemaOptions.additionalConverters[decorator.type].defaultConverter(entity,meta,);
+            else decorator.fn(decorator.args);
+        }
     }
     // if (specTypes === SpecTypes.SWAGGER || specTypes === SpecTypes.OPENAPI) {
     //     schema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
