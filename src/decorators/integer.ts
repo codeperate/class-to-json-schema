@@ -10,13 +10,13 @@ export function Integer(): PropertyDecorator {
 }
 
 
-class{
-    @Integer(1)
-    a
-}
+// class{
+//     @Integer(1)
+//     a
+// }
 
-const meta={
-    a:[
-        {decorator:SchemaDecorators.Integer,option:{}}
-    ]
-}
+// const meta={
+//     a:[
+//         {decorator:SchemaDecorators.Integer,option:{}}
+//     ]
+// }
