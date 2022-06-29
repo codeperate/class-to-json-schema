@@ -18,4 +18,18 @@ export class Person {
     weight:number
 }
 
-console.log(getJsonSchema(Person,SpecTypes.JSON));
+getJsonSchema(Person,{
+    specTypes:SpecTypes.JSON,
+    schemaRefPath:'#/components/schemas/Person',
+    // additionalConverters:{
+    //     schemaDecorator:(
+    //         target,
+    //         meta,
+    //         defaultConverter,
+    //         schema,options
+    //     )=>{
+    //         //jsonSchema
+    //     }
+    // }
+})
+

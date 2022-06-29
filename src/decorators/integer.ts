@@ -1,4 +1,4 @@
-import { SchemaDecorators } from '../enum/decorator';
+// import { SchemaDecorators } from '../enum/decorator';
 import { getSchema } from '../utils/get-schema';
 
 export function Integer(): PropertyDecorator {

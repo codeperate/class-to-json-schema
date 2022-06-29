@@ -1,1 +1,1 @@
-export declare function Optional(): void;
+export declare function Optional(): PropertyDecorator | ParameterDecorator;
