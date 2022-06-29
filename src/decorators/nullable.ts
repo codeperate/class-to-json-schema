@@ -8,13 +8,12 @@ export function Nullable(type: JSONSchema7TypeName | any, ...types: (JSONSchema7
             target,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Nullable,
-            fn: (args, schema) => {
+            fn: (type, schema) => {
                 if (type) {
                     schema.type = [type, null];
                 } else {
                     schema.type = types.concat(null);
                 }
-                args = type;
                 return schema;
             },
         });

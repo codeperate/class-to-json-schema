@@ -1,8 +1,18 @@
-import { getSchema } from "../utils/get-schema";
+import { SchemaDecorators } from '../enum';
+import { decoratorMapper } from '../utils/decorator.utils';
 
 export function MinLength(minLength: number): PropertyDecorator {
     return function (target, propertyKey){
-        let schema = getSchema(target,propertyKey);
-        schema.minLength = minLength;
+        decoratorMapper(
+            {target,
+            propertyKey: propertyKey.toString(),
+            parameters: minLength,
+            fn: (minLength, schema) => {
+                schema.minLength = minLength;
+                return schema;
+            },
+            schemaDecorator: SchemaDecorators.MinLength,}
+        );
+
     };
 }

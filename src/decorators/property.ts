@@ -8,8 +8,7 @@ export function Property(type?: any) {
             parameters: type,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Property,
-            fn: (args, schema) => {
-                args = type;
+            fn: (type, schema) => {
                 schema.properties = { ...schema.properties, [propertyKey]: { type } };
                 return schema;
             },

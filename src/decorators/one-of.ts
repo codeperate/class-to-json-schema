@@ -8,8 +8,7 @@ export function OneOf(...oneOf: JSONSchema7Definition[]): PropertyDecorator {
           target,
           propertyKey: propertyKey.toString(),
           schemaDecorator: SchemaDecorators.OneOf,
-          fn: (args, schema) => {
-            args = oneOf
+          fn: (oneOf, schema) => {
             schema.oneOf = oneOf;
             return schema;
           },
