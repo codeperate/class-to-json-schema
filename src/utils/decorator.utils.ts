@@ -6,12 +6,12 @@ import { JSON_SCHEMA_KEY } from './get-schema';
 interface DecoratedMapper {
     target:object;
     propertyKey:string;
-    parameters:any;
+    parameters?:any;
     schemaDecorator: SchemaDecorators;
     fn: (arg: any, schema: JSONSchema) => void;
 }
 
-export function decoratorMapper(decoratedMapper:DecoratedMapper) {
+export function decoratorMapper(decoratedMapper:Partial<DecoratedMapper>) {
     const decoratedMap: DecoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, decoratedMapper.target);
     if (!decoratedMap[decoratedMapper.propertyKey]) decoratedMap[decoratedMapper.propertyKey] = [];
     decoratedMap[decoratedMapper.propertyKey].push({

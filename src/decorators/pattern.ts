@@ -1,8 +1,18 @@
-import { getSchema } from "../utils/get-schema"
+import { SchemaDecorators } from "../enum";
+import { decoratorMapper } from "../utils/decorator.utils";
 
 export function Pattern(pattern: string | RegExp):PropertyDecorator {
     return function(target,propertyKey){
-        let schema = getSchema(target,propertyKey);
-        schema.pattern = pattern.toString()
+        decoratorMapper({
+            target,
+            parameters: pattern,
+            propertyKey: propertyKey.toString(),
+            schemaDecorator: SchemaDecorators.Pattern,
+            fn: (args, schema) => {
+                args = pattern;
+                schema.pattern = pattern.toString()
+                return schema;
+            },
+        });        
     }
 }
