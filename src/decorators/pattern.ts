@@ -8,8 +8,7 @@ export function Pattern(pattern: string | RegExp):PropertyDecorator {
             parameters: pattern,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Pattern,
-            fn: (args, schema) => {
-                args = pattern;
+            fn: (pattern, schema) => {
                 schema.pattern = pattern.toString()
                 return schema;
             },

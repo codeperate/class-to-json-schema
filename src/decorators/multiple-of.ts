@@ -7,8 +7,7 @@ export function MultipleOf(multipleOf: number): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.MultipleOf,
-            fn: (args, schema) => {
-                args = multipleOf;
+            fn: (multipleOf, schema) => {
                 schema.type === 'array' ? (schema.items = { multipleOf: multipleOf }) : (schema.multipleOf = multipleOf);
                 return schema;
             },

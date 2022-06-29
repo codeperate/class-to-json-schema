@@ -7,7 +7,7 @@ export function Optional(): PropertyDecorator | ParameterDecorator {
             target,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Optional,
-            fn: (args, schema) => {
+            fn: (schema) => {
                 if (schema.required.includes(propertyKey.toString()))schema.required.slice(parameterIndex, 0);
                 return schema;
             },
