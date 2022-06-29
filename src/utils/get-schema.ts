@@ -49,8 +49,6 @@ interface JsonSchemaOptions {
     };
 }
 
-
-
 export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
     const decoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as DecoratedMap[];
     let schema: JSONSchema; //= Reflect.getMetadata(JSON_SCHEMA_KEY, entity)
@@ -59,7 +57,7 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
     for (const attr of attrs) {
         for (const decorator of decoratedMap[attr]) {
             if (jsonSchemaOptions.additionalConverters) 
-                jsonSchemaOptions.additionalConverters[decorator.type].defaultConverter(entity,meta,);
+            jsonSchemaOptions.additionalConverters[decorator.type]
             else decorator.fn(decorator.args);
         }
     }
