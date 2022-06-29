@@ -1,7 +1,7 @@
 export declare const JSON_SCHEMA_KEY: unique symbol;
 import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
-import { SpecTypes } from '../types/spec';
+import { SpecTypes } from '../types/spec-type';
 export declare function getSchema(target: object, propertyKey?: string | symbol): JSONSchema<any>;
 export declare function getSchemaByMetaType(target: object, propertyKey?: string | symbol): JSONSchema;
 export interface ConvertersOptions<T = any> {

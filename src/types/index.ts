@@ -1,3 +1,3 @@
 // created from 'create-ts-index'
 
-export * from './spec';
+export * from './spec-type';

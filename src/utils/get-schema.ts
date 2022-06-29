@@ -2,7 +2,7 @@ export const JSON_SCHEMA_KEY = Symbol('json-schema');
 import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
 import { DecoratedMap } from '../types/decorated-map';
-import { SpecTypes } from '../types/spec';
+import { SpecTypes } from '../types/spec-type';
 import { setSchema } from './set-schema';
 export function getSchema(target: object, propertyKey?: string | symbol) {
     const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, target) as JSONSchema;
@@ -28,9 +28,9 @@ export function getSchemaByMetaType(target: object, propertyKey?: string | symbo
     return schema;
 }
 
-// function replaceAll(src: string, find: string, replace: string) {
-//     return src.replace(new RegExp(find, 'g'), replace);
-// }
+function replaceAll(src: string, find: string, replace: string) {
+    return src.replace(new RegExp(find, 'g'), replace);
+}
 
 export interface ConvertersOptions<T=any> {
     target:object;
@@ -50,10 +50,9 @@ interface JsonSchemaOptions {
 
 export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
     let decoratedMaps:DecoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, entity)
-    let schema: JSONSchema; //= Reflect.getMetadata(JSON_SCHEMA_KEY, entity)
+    let schema: JSONSchema;
     const attrs = Object.keys(entity);
     let meta:any = {}
-    
     for (const attr of attrs) {
         for (const decoratedMap of decoratedMaps[attr]) {
             if (jsonSchemaOptions.additionalConverters?.[decoratedMap.type]) 
@@ -68,10 +67,9 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
             else decoratedMap.fn(decoratedMap.args,schema); 
         }
     }
-    // if (specTypes === SpecTypes.SWAGGER || specTypes === SpecTypes.OPENAPI) {
-    //     schema = Reflect.getMetadata(JSON_SCHEMA_KEY, entity) as JSONSchema;
-    //     const stringSchema = replaceAll(JSON.stringify(schema.toJSON()), '#/definitions', '#/components/schemas');
-    //     schema = JSON.parse(stringSchema);
-    // }
+    if (jsonSchemaOptions.specTypes === SpecTypes.SWAGGER || jsonSchemaOptions.specTypes === SpecTypes.OPENAPI) {
+        const stringSchema = replaceAll(JSON.stringify(schema.toJSON()), '#/definitions', '#/components/schemas');
+        schema = JSON.parse(stringSchema);
+    }
     return schema;
 }
