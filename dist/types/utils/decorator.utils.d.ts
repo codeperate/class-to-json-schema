@@ -4,9 +4,9 @@ import { DecoratedMap } from '../types/decorated-map';
 interface DecoratedMapper {
     target: object;
     propertyKey: string;
-    parameters: any;
+    parameters?: any;
     schemaDecorator: SchemaDecorators;
     fn: (arg: any, schema: JSONSchema) => void;
 }
-export declare function decoratorMapper(decoratedMapper: DecoratedMapper): DecoratedMap;
+export declare function decoratorMapper(decoratedMapper: Partial<DecoratedMapper>): DecoratedMap;
 export {};

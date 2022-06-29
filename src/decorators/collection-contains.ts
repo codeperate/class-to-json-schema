@@ -1,4 +1,6 @@
-// export function CollectionContains(type: any): import("./collectionOf").CollectionOfChainedDecorators{
 
-// }
- export {}
+
+export function CollectionContains(type:any): PropertyDecorator {
+    return function (target,propertyKey){
+    }
+}

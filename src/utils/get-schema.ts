@@ -71,5 +71,6 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
         const stringSchema = replaceAll(JSON.stringify(schema.toJSON()), '#/definitions', '#/components/schemas');
         schema = JSON.parse(stringSchema);
     }
+    
     return schema;
 }
