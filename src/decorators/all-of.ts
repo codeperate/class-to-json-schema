@@ -4,6 +4,7 @@ import { ConvertersOptions, getSchema, JSON_SCHEMA_KEY } from "../utils/get-sche
 
 export function AllOf(...allOf: JSONSchema7Definition[]){
     return function (target,propertyKey){
+        
         const decoratedMap=Reflect.getMetadata(JSON_SCHEMA_KEY,target)
         if(!decoratedMap[propertyKey]) decoratedMap[propertyKey]=[];
         decoratedMap[propertyKey].push({

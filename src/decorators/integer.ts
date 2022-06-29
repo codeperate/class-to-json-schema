@@ -8,3 +8,4 @@ export function Integer(): PropertyDecorator {
         else schema.type = 'integer';
     };
 }
+
