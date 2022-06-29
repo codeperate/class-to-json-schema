@@ -1,8 +1,16 @@
-import { getSchema } from "../utils/get-schema";
+import { SchemaDecorators } from '../enum';
+import { decoratorMapper } from '../utils/decorator.utils';
 
 export function Partial(): ParameterDecorator {
     return function (target, propertyKey, parameterIndex) {
-        let schema = getSchema(target, propertyKey);
-        if (schema.required.includes(propertyKey.toString()))schema.required.slice(parameterIndex, 0);
-    }
+        decoratorMapper({
+            target,
+            propertyKey: propertyKey.toString(),
+            schemaDecorator: SchemaDecorators.Partial,
+            fn: (schema) => {
+                if (schema.required.includes(propertyKey.toString())) schema.required.slice(parameterIndex, 0);
+                return schema;
+            },
+        });
+    };
 }

@@ -1,1 +1,1 @@
-export declare function Allow(...values: any[]): any;
+export declare function Allow(...values: any[]): ParameterDecorator;

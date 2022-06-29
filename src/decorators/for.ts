@@ -1,4 +1,4 @@
-import { SpecTypes } from "../types/spec";
+import { SpecTypes } from "../types/spec-type";
 
 export function For(specType: SpecTypes, schema: any){
 
