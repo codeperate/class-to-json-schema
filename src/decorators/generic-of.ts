@@ -1,1 +1,3 @@
-export function GenericOf(...generics: GenericValue[]) {}
+// export function GenericOf(...generics: GenericValue[]) {}
+
+export {}

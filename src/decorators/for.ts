@@ -1,9 +1,4 @@
-export declare enum SpecTypes {
-    JSON = "jsonschema",
-    SWAGGER = "swagger2",
-    OPENAPI = "openapi3"
-}
-
+import { SpecTypes } from "../types/spec";
 
 export function For(specType: SpecTypes, schema: any){
 
