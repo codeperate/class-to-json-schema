@@ -4,14 +4,14 @@ import { SchemaDecorators } from '../enum/decorator';
 import { SpecTypes } from '../types/spec';
 export declare function getSchema(target: object, propertyKey?: string | symbol): JSONSchema<any>;
 export declare function getSchemaByMetaType(target: object, propertyKey?: string | symbol): JSONSchema;
-interface ConvertersOptions {
+export interface ConvertersOptions {
     target: object;
     meta: any;
     defaultConverter: Function;
     schema: JSONSchema;
 }
 interface JsonSchemaOptions {
-    SpecTypes: SpecTypes;
+    specTypes: SpecTypes;
     schemaRefPath: string;
     additionalConverters: {
         [schemaDecorator in SchemaDecorators]: (convertersOptions: ConvertersOptions) => JSONSchema;

@@ -1,9 +1,10 @@
-import { getSchema } from "../utils/get-schema"
+import { JSONSchema7Definition } from "json-schema";
+import { SchemaDecorators } from "../enum";
+import { decoratorMapper } from "../utils/decorator.utils";
 
 export function Format(format: JsonFormatTypes) {
     return function(target,propertyKey){
-        const schema = getSchema(target,propertyKey)
-        schema.format = format
+        decoratorMapper(target, propertyKey, format, (format, schema)=>{schema.format = format; return schema}, SchemaDecorators.Format)
     }
 }
 
