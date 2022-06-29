@@ -12,6 +12,7 @@ export class JSONSchema<T extends Function = any> extends JSONSchema7Class {
     }
     toJSON(): JSONSchema7 {
         return Object.getOwnPropertyNames(this).reduce((a, b) => {
+            if(this[b])
             a[b] = this[b];
             return a;
         }, {});

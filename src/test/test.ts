@@ -6,21 +6,28 @@ import { getJsonSchema } from "../utils/get-schema";
 import 'reflect-metadata';
 
 export class Person {
-    @Property()
+    @logType
     name:string
 
+    @Property()
     @Integer()
     @Min(0)
     age:number
     
+    @Property()
     @Integer()
     @Min(0)
     weight:number
 }
 
+function logType(target : any, key : string) {
+    console.log(target)
+    var t = Reflect.getMetadata("design:type", target, key);
+    console.log(`${key} type: ${t.name}`);
+}
 
-const person = new Person()
-getJsonSchema(person,{
+
+getJsonSchema(Person,{
     specTypes:SpecTypes.JSON,
     schemaRefPath:'#/components/schemas/Person',
     // additionalConverters:{

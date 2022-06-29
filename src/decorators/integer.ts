@@ -6,8 +6,8 @@ export function Integer(): PropertyDecorator {
         decoratorMapper({
             target,
             propertyKey: propertyKey.toString(),
-            fn: (schema) => {
-                schema.type === 'array' ? (schema.items = { type: 'integer' }) : (schema.type = 'integer');
+            fn: (arg,schema) => {
+                schema?.type === 'array' ? (schema.items = { type: 'integer' }) : (schema.type = 'integer');
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Integer,
