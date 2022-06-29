@@ -1,1 +1,1 @@
-export declare function RequiredGroups(...groups: string[]): void;
+export declare function RequiredGroups(...groups: string[]): PropertyDecorator;

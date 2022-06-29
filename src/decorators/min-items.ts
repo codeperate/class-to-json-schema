@@ -1,8 +1,18 @@
-import { getSchema } from "../utils/get-schema";
+import { JSONSchema7Definition } from 'json-schema';
+import { SchemaDecorators } from '../enum';
+import { decoratorMapper } from '../utils/decorator.utils';
 
 export function MinItems(minItems: number): PropertyDecorator {
     return function (target, propertyKey) {
-        let schema = getSchema(target,propertyKey);
-        schema.minItems = minItems;
-    }
+        decoratorMapper({
+            target,
+            propertyKey: propertyKey.toString(),
+            parameters: minItems,
+            fn: (minItems, schema) => {
+                schema.minItems = minItems;
+                return schema;
+            },
+            schemaDecorator: SchemaDecorators.MinItems,
+        });
+    };
 }
