@@ -22,6 +22,8 @@ export function setSchemaByMetaType(schema: JSONSchema, target: { new (...args: 
     schema.properties[propertyKey] = {
         type: propertyType as JSONSchema7TypeName
     };
+    if(!schema.required) schema.required = []
+    schema.required.push(propertyKey)
 }
 
 // function replaceAll(src: string, find: string, replace: string) {

@@ -6,6 +6,7 @@ export function Nullable(type: JSONSchema7TypeName | any, ...types: (JSONSchema7
     return function (target, propertyKey) {
         decoratorMapper({
             target,
+            parameters:type,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Nullable,
             fn: (type, schema) => {
