@@ -35,9 +35,9 @@ export class Person {
     fingers:boolean[]
 
 
-    @Min(10)
-    @CollectionOf(Number)
-    ages:Collection
+    // @Min(10)
+    // @CollectionOf(Number)
+    // ages:Collection
 
     @Required()
     person2:Person2;
@@ -60,5 +60,5 @@ const schema = getJsonSchema(Person, {
     //     }
     // }
 });
-console.log(schema.toJSON().properties['ages']);
+console.log(schema.toJSON());
 
