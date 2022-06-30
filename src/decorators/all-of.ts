@@ -1,4 +1,4 @@
-import { JSONSchema7Definition } from 'json-schema';
+import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -9,7 +9,7 @@ export function AllOf(...allOf: JSONSchema7Definition[]) {
             propertyKey,
             parameters: allOf,
             fn: (allOf, schema) => {
-                schema.allOf = allOf;
+                (schema.properties[propertyKey] as JSONSchema7).allOf = allOf;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.AllOf,}

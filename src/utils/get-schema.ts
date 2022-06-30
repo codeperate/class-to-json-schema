@@ -3,41 +3,37 @@ import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
 import { DecoratedMap } from '../types/decorated-map';
 import { SpecTypes } from '../types/spec-type';
-import { setSchema } from './set-schema';
+
 export function getSchema(target: object, propertyKey?: string | symbol) {
     const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, target) as JSONSchema;
     if (!schema) {
-        const _schema = getSchemaByMetaType(target, propertyKey);
-        setSchema(target, _schema);
-        return _schema;
+        //  const _schema = getSchemaByMetaType(target, propertyKey);
+        //  setSchema(target, _schema);
+        //  return _schema;
     }
     return schema;
 }
 
-export function getSchemaByMetaType(target: object, propertyKey?: string | symbol): JSONSchema {
-    let propertyType = Reflect.getMetadata('design:type', target, propertyKey);
-    const schema = new JSONSchema({
-        type: 'object',
-        properties: {
-            [propertyKey]: {
-                type: propertyType,
-            },
-        },
-    });
-    Reflect.defineMetadata(JSON_SCHEMA_KEY, schema, target);
-    return schema;
+export function setSchemaByMetaType(schema: JSONSchema, target: { new (...args: any[]) }, propertyKey?: string) {
+    let propertyType = Reflect.getMetadata('design:type', new target(), propertyKey).name;
+    if (!schema) schema.type = 'object';
+    if (!schema.properties) schema.properties = {};
+    schema.properties[propertyKey] = {
+        type: propertyType,
+    };
+    console.log(propertyType);
 }
 
-function replaceAll(src: string, find: string, replace: string) {
-    return src.replace(new RegExp(find, 'g'), replace);
-}
+// function replaceAll(src: string, find: string, replace: string) {
+//     return src.replace(new RegExp(find, 'g'), replace);
+// }
 
-export interface ConvertersOptions<T=any> {
-    target:object;
-    meta:any;
-    schema:JSONSchema
-    arguments:T;
-    defaultConverter:Function;
+export interface ConvertersOptions<T = any> {
+    target: object;
+    meta: any;
+    schema: JSONSchema;
+    arguments: T;
+    defaultConverter: Function;
 }
 
 interface JsonSchemaOptions {
@@ -49,28 +45,27 @@ interface JsonSchemaOptions {
 }
 
 export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
-    let decoratedMaps:DecoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, entity)
-    let schema: JSONSchema;
-    const attrs = Object.keys(entity);
-    let meta:any = {}
-    for (const attr of attrs) {
-        for (const decoratedMap of decoratedMaps[attr]) {
-            if (jsonSchemaOptions.additionalConverters?.[decoratedMap.type]) 
-            {
-                jsonSchemaOptions.additionalConverters[decoratedMap.type]({
+    let decoratedMaps: DecoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, entity);
+    let schema: JSONSchema = new JSONSchema();
+    let meta: any = {};
+
+    for (const propertyKey of Object.keys(decoratedMaps)) {
+        setSchemaByMetaType(schema, entity, propertyKey);
+        for (const decorated of decoratedMaps[propertyKey]) {
+            if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
+                jsonSchemaOptions.additionalConverters[decorated.type]({
                     target: entity,
                     schema: schema,
                     meta: meta,
-                    arguments: decoratedMap.args
-                })
-            }
-            else decoratedMap.fn(decoratedMap.args,schema); 
+                    arguments: decorated.args,
+                });
+            } else decorated.fn(decorated.args, schema);
         }
     }
-    if (jsonSchemaOptions.specTypes === SpecTypes.SWAGGER || jsonSchemaOptions.specTypes === SpecTypes.OPENAPI) {
-        const stringSchema = replaceAll(JSON.stringify(schema.toJSON()), '#/definitions', '#/components/schemas');
-        schema = JSON.parse(stringSchema);
-    }
-    
+    // if (jsonSchemaOptions.specTypes === SpecTypes.SWAGGER || jsonSchemaOptions.specTypes === SpecTypes.OPENAPI) {
+    //     const stringSchema = replaceAll(JSON.stringify(schema.toJSON()), '#/definitions', '#/components/schemas');
+    //     schema = JSON.parse(stringSchema);
+    // }
+    console.log(schema.toJSON());
     return schema;
 }

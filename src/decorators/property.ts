@@ -9,7 +9,7 @@ export function Property(type?: any) {
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Property,
             fn: (type, schema) => {
-                schema.properties = { ...schema.properties, [propertyKey]: { type } };
+                schema.properties = { ...schema.properties, [propertyKey]: { type: type } };
                 return schema;
             },
         });

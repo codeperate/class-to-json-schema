@@ -4,20 +4,24 @@ import { DecoratedMap } from '../types/decorated-map';
 import { JSON_SCHEMA_KEY } from './get-schema';
 
 interface DecoratedMapper {
-    target:object;
-    propertyKey:string;
-    parameters?:any;
+    target: object;
+    propertyKey: string;
+    parameters?: any;
     schemaDecorator: SchemaDecorators;
     fn: (arg: any, schema: JSONSchema) => void;
 }
 
-export function decoratorMapper(decoratedMapper:Partial<DecoratedMapper>) {
-    const decoratedMap: DecoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, decoratedMapper.target);
-    if (!decoratedMap[decoratedMapper.propertyKey]) decoratedMap[decoratedMapper.propertyKey] = [];
-    decoratedMap[decoratedMapper.propertyKey].push({
-        type: decoratedMapper.schemaDecorator,
-        args: decoratedMapper.parameters,
-        fn: decoratedMapper.fn,
+export function decoratorMapper(decoratedMapper: Partial<DecoratedMapper>) {
+    const { propertyKey, schemaDecorator, fn, parameters,target } = decoratedMapper;
+    let decoratedMap: DecoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, target.constructor);
+    if (!decoratedMap) decoratedMap = {  };
+    if(!decoratedMap[propertyKey]) decoratedMap[propertyKey]=[]
+    
+    decoratedMap[propertyKey].push({
+        type: schemaDecorator,
+        args: parameters,
+        fn,
     });
+    Reflect.defineMetadata(JSON_SCHEMA_KEY,decoratedMap,target.constructor)
     return decoratedMap;
 }
