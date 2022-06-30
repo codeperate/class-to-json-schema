@@ -8,8 +8,8 @@ export function MinProperties(minProperties: number): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             parameters: minProperties,
-            fn: (minProperties, schema) => {
-                (schema.properties[propertyKey.toString()] as JSONSchema7).minProperties = minProperties;
+            fn: (minProperties, schema,propertyKey) => {
+                (schema.properties[propertyKey] as JSONSchema7).minProperties = minProperties;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.MinProperties,

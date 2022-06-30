@@ -8,13 +8,12 @@ export function Min(minimum: number): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             parameters: minimum,
-            fn: (minimum, schema) => {
-                schema.properties[propertyKey.toString()] === 'array'
-                    ? ((schema.properties[propertyKey.toString()] as JSONSchema7).items = { minimum: minimum })
-                    : ((schema.properties[propertyKey.toString()] as JSONSchema7).minimum = minimum);
+            fn: (minimum, schema,propertyKey) => {
+                const cv = schema.properties[propertyKey] as JSONSchema7;
 
-                //console.log(schema.properties[propertyKey.toString()]);
-
+                schema.properties[propertyKey] === 'array'
+                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { minimum: minimum, ...cv.items as object })
+                    : ((schema.properties[propertyKey] as JSONSchema7).minimum = minimum);
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Min,

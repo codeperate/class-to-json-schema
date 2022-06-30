@@ -8,7 +8,7 @@ export function Property(type?: any) {
             parameters: type,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Property,
-            fn: (type, schema) => {
+            fn: (type, schema,propertyKey) => {
                 if (!schema.properties[propertyKey]['type'] || type) {
                     schema.properties = { ...schema.properties, [propertyKey]: { type: type } };
                 }

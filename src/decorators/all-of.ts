@@ -8,7 +8,7 @@ export function AllOf(...allOf: JSONSchema7Definition[]) {
             {target,
             propertyKey,
             parameters: allOf,
-            fn: (allOf, schema) => {
+            fn: (allOf, schema,propertyKey) => {
                 (schema.properties[propertyKey] as JSONSchema7).allOf = allOf;
                 return schema;
             },

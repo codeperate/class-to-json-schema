@@ -20,8 +20,12 @@ export function setSchemaByMetaType(schema: JSONSchema, target: { new (...args: 
     if (!schema) schema.type = 'object';
     if (!schema.properties) schema.properties = {};
     schema.properties[propertyKey] = {
-        type: propertyType as JSONSchema7TypeName
+        type: propertyType as JSONSchema7TypeName,
+        ...(propertyKey === 'array')?{
+            items:{}
+        }:{}
     };
+    
     if(!schema.required) schema.required = []
     schema.required.push(propertyKey)
 }
@@ -61,7 +65,7 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
                     meta: meta,
                     arguments: decorated.args,
                 });
-            } else decorated.fn(decorated.args, schema);
+            } else decorated.fn(decorated.args, schema,propertyKey);
         }
     }
     // if (jsonSchemaOptions.specTypes === SpecTypes.SWAGGER || jsonSchemaOptions.specTypes === SpecTypes.OPENAPI) {
@@ -69,5 +73,7 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
     //     schema = JSON.parse(stringSchema);
     // }
     console.log(schema.toJSON());
+    console.log(schema.properties['fingers']);
+    
     return schema;
 }

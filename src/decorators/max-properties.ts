@@ -8,7 +8,7 @@ export function MaxProperties(maxProperties: number) {
             {target,
             propertyKey,
             parameters: maxProperties,
-            fn: (maxProperties, schema) => {
+            fn: (maxProperties, schema,propertyKey) => {
                 (schema.properties[propertyKey] as JSONSchema7).maxProperties = maxProperties;
                 return schema;
             },

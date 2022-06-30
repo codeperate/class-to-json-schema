@@ -8,10 +8,11 @@ export function exclusiveMaximum(maximum: number): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             parameters: maximum,
-            fn: (maximum, schema) => {
-                (schema.properties[propertyKey.toString()] as JSONSchema7).type === 'array'
-                    ? ((schema.properties[propertyKey.toString()] as JSONSchema7).items = { maximum: maximum })
-                    : ((schema.properties[propertyKey.toString()] as JSONSchema7).maximum = maximum);
+            fn: (maximum, schema,propertyKey) => {
+                const cv = schema.properties[propertyKey] as JSONSchema7;
+                cv.type === 'array'
+                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { maximum: maximum, ...cv.items as object })
+                    : ((schema.properties[propertyKey] as JSONSchema7).maximum = maximum);
                 return schema;
             },
             schemaDecorator: SchemaDecorators.ExclusiveMaximum,

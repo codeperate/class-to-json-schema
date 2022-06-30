@@ -3,7 +3,7 @@ import { Min } from '../decorators/min';
 import { SpecTypes } from '../types/spec-type';
 import { getJsonSchema } from '../utils/get-schema';
 import 'reflect-metadata';
-import { Default, Nullable, Property } from '../decorators';
+import { CollectionOf, Default, Max, MaxLength, MinLength, Optional, Property } from '../decorators';
 
 export class Person {
 
@@ -17,13 +17,17 @@ export class Person {
 
     @Integer()
     @Min(0)
+    @Max(10)
     weight: number;
 
     @Property()
-    @Nullable(null)
-    // @Optional()
+    @Optional()
     isMale:boolean;
 
+    @CollectionOf(String)
+    @MaxLength(11)
+    @MinLength(10)
+    fingers:boolean[]
 
 }
 

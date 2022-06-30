@@ -8,8 +8,12 @@ export function Format(format: JsonFormatTypes) {
             target,
             propertyKey,
             parameters: format,
-            fn: (format, schema) => {
-                (schema.properties[propertyKey] as JSONSchema7).format = format;
+            fn: (format, schema, propertyKey) => {
+                const cv = schema.properties[propertyKey] as JSONSchema7;
+
+                cv.type === 'array'
+                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { format: format, ...(cv.items as object) })
+                    : ((schema.properties[propertyKey] as JSONSchema7).format = format);
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Format,

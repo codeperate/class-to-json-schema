@@ -7,8 +7,8 @@ export function Email(): PropertyDecorator{
         decoratorMapper({
             target,
             propertyKey: propertyKey.toString(),
-            fn: (anyOf, schema) => {
-                (schema.properties[propertyKey.toString()] as JSONSchema7).format = 'email';
+            fn: (arg, schema,propertyKey) => {
+                (schema.properties[propertyKey] as JSONSchema7).format = 'email';
                 return schema;
             },
             schemaDecorator: SchemaDecorators.AnyOf,

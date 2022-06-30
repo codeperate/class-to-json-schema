@@ -8,7 +8,7 @@ export function AnyOf(...anyOf: JSONSchema7Definition[]): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             parameters: anyOf,
-            fn: (anyOf, schema) => {
+            fn: (anyOf, schema,propertyKey) => {
                 (schema.properties[propertyKey.toString()] as JSONSchema7).anyOf = anyOf;
                 return schema;
             },

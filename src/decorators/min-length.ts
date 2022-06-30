@@ -8,8 +8,12 @@ export function MinLength(minLength: number): PropertyDecorator {
             {target,
             propertyKey: propertyKey.toString(),
             parameters: minLength,
-            fn: (minLength, schema) => {
-                (schema.properties[propertyKey.toString()] as JSONSchema7).minLength = minLength;
+            fn: (minLength, schema,propertyKey) => {
+                const cv = schema.properties[propertyKey] as JSONSchema7
+
+                cv.type === 'array'
+                    ?(schema.properties[propertyKey] as JSONSchema7).items = { minLength: minLength, ...cv.items as object}
+                    :(schema.properties[propertyKey] as JSONSchema7).minLength = minLength;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.MinLength,}
