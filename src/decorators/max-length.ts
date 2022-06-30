@@ -9,13 +9,10 @@ export function MaxLength(maxLength: number): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             parameters: maxLength,
             fn: (maxLength, schema, propertyKey) => {
-                const cv = schema.properties[propertyKey] as JSONSchema7;
-                console.log(!cv);
-                
-                if(!cv) (schema.properties[propertyKey]as JSONSchema7).items = {}
-                console.log((schema.properties[propertyKey] as JSONSchema7).items);
-                // if (cv.type === 'array') schema.properties[propertyKey].items['maxLength'] = maxLength;
-                // else (schema.properties[propertyKey] as JSONSchema7).maxLength = maxLength;
+                const cs = schema.properties[propertyKey] as JSONSchema7;
+                if (!cs) (schema.properties[propertyKey] as JSONSchema7).items = {};
+                if (cs.type === 'array') (schema.properties[propertyKey] as JSONSchema7).items = { maxLength: maxLength, ...(cs.items as any) };
+                else (schema.properties[propertyKey] as JSONSchema7).maxLength = maxLength;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.MaxLength,

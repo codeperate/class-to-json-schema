@@ -3,7 +3,14 @@ import { Min } from '../decorators/min';
 import { SpecTypes } from '../types/spec-type';
 import { getJsonSchema } from '../utils/get-schema';
 import 'reflect-metadata';
-import { CollectionOf, Default, Max, MaxLength, Property } from '../decorators';
+import { CollectionOf, Default, Max, MaxLength, Property, Required } from '../decorators';
+
+
+export class Person2{
+    @Property()
+    x:number
+}
+
 
 export class Person {
 
@@ -23,19 +30,24 @@ export class Person {
     @Property()
     isMale:boolean;
 
-    @CollectionOf(String)
     @MaxLength(10)
+    @CollectionOf(Boolean)
     fingers:boolean[]
 
+
+    @Min(10)
+    @CollectionOf(Number)
+    ages:Collection
+
+    @Required()
+    person2:Person2;
+
 }
 
-export class Person2{
-    @Property()
-    x:number
-}
 
-getJsonSchema(Person, {
-    specTypes: SpecTypes.JSON,
+
+const schema = getJsonSchema(Person, {
+    specTypes: SpecTypes.OPENAPI,
     schemaRefPath: '#/components/schemas/Person',
     // additionalConverters:{
     //     schemaDecorator:(
@@ -48,3 +60,5 @@ getJsonSchema(Person, {
     //     }
     // }
 });
+console.log(schema.toJSON().properties['ages']);
+

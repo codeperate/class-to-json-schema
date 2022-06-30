@@ -8,10 +8,10 @@ export function CollectionOf(type: any): PropertyDecorator {
             parameters: type,
             propertyKey: propertyKey.toString(),
             fn: (type, schema, propertyKey) => {
-                const cv = schema.properties[propertyKey] as JSONSchema7;
+                let cv = schema.properties[propertyKey] as JSONSchema7;
                 if (cv.type === 'array') {
-                    const t = (type as Function).name.toLowerCase() as JSONSchema7TypeName;
-                    schema.properties[propertyKey] = { type: 'array', items: { type: t } };
+                    let t = (type as Function).name.toLowerCase() as JSONSchema7TypeName;
+                    schema.properties[propertyKey] = { type: 'array', items: {type: t,...cv.items as object} };
                 }
                 return schema;
             },
