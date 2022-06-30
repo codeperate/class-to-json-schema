@@ -1,3 +1,4 @@
+import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -8,7 +9,7 @@ export function Format(format: JsonFormatTypes) {
             propertyKey,
             parameters: format,
             fn: (format, schema) => {
-                schema.format = format;
+                (schema.properties[propertyKey] as JSONSchema7).format = format;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Format,

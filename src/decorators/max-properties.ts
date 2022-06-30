@@ -1,3 +1,4 @@
+import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -8,7 +9,7 @@ export function MaxProperties(maxProperties: number) {
             propertyKey,
             parameters: maxProperties,
             fn: (maxProperties, schema) => {
-                schema.maxProperties = maxProperties;
+                (schema.properties[propertyKey] as JSONSchema7).maxProperties = maxProperties;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.MaxProperties,}

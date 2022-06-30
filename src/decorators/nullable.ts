@@ -1,4 +1,4 @@
-import { JSONSchema7TypeName } from 'json-schema';
+import { JSONSchema7, JSONSchema7TypeName } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -10,9 +10,9 @@ export function Nullable(type: JSONSchema7TypeName | any, ...types: (JSONSchema7
             schemaDecorator: SchemaDecorators.Nullable,
             fn: (type, schema) => {
                 if (type) {
-                    schema.type = [type, null];
+                    (schema.properties[propertyKey.toString()] as JSONSchema7).type = [type, null];
                 } else {
-                    schema.type = types.concat(null);
+                    (schema.properties[propertyKey.toString()] as JSONSchema7).type = types.concat(null);
                 }
                 return schema;
             },
