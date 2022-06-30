@@ -9,11 +9,11 @@ export function Property(type?: any) {
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Property,
             fn: (type, schema) => {
-                schema.properties = { ...schema.properties, [propertyKey]: { type: type } };
+                if (!schema.properties[propertyKey]['type'] || type) {
+                    schema.properties = { ...schema.properties, [propertyKey]: { type: type } };
+                }
                 return schema;
             },
         });
-        //console.log('Fucked');
-        //console.log(Reflect.getMetadata('design:type', target, propertyKey).name);
     };
 }

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "test": "tsc -p tsconfig.test.json && npx ts-node ./src/test/test.ts"
+    "build": "tsc -p tsconfig.json",
+    "test": "npx ts-node ./src/test/test.ts"
   },
   "repository": {
     "type": "git",
