@@ -8,10 +8,10 @@ export function Minimum(minimum: number): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             parameters: minimum,
-            fn: (minimum, schema) => {
-                (schema.properties[propertyKey.toString()] as JSONSchema7).type === 'array'
-                    ? ((schema.properties[propertyKey.toString()] as JSONSchema7).items = { minimum: minimum })
-                    : ((schema.properties[propertyKey.toString()] as JSONSchema7).minimum = minimum);
+            fn: (minimum, schema,propertyKey) => {
+                (schema.properties[propertyKey] as JSONSchema7).type === 'array'
+                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { minimum: minimum })
+                    : ((schema.properties[propertyKey] as JSONSchema7).minimum = minimum);
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Minimum,

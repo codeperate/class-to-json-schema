@@ -8,7 +8,7 @@ export function ExclusiveMinimum(minimum: number) {
             target,
             propertyKey,
             parameters: minimum,
-            fn: (minimum, schema) => {
+            fn: (minimum, schema,propertyKey) => {
                 (schema.properties[propertyKey] as JSONSchema7).type === 'array'
                     ? ((schema.properties[propertyKey] as JSONSchema7).items = { minimum: minimum })
                     : ((schema.properties[propertyKey] as JSONSchema7).minimum = minimum);

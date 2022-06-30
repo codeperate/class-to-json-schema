@@ -9,8 +9,8 @@ export function Pattern(pattern: string | RegExp):PropertyDecorator {
             parameters: pattern,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Pattern,
-            fn: (pattern, schema) => {
-                (schema.properties[propertyKey.toString()] as JSONSchema7).pattern = pattern.toString()
+            fn: (pattern, schema,propertyKey) => {
+                (schema.properties[propertyKey] as JSONSchema7).pattern = pattern.toString()
                 return schema;
             },
         });        

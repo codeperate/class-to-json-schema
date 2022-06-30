@@ -8,7 +8,7 @@ export function Default(defaultValue: string | number | boolean | {}){
             target,
             parameters: defaultValue,
             propertyKey: propertyKey.toString(),
-            fn: (defaultValue, schema) => {
+            fn: (defaultValue, schema,propertyKey) => {
                 (schema.properties[propertyKey] as JSONSchema7).default = defaultValue;
                 return schema;
             },

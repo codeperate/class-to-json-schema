@@ -8,9 +8,9 @@ export function Optional(): PropertyDecorator | ParameterDecorator {
             target,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Optional,
-            fn: (arg, schema) => {
-                if ((schema.properties[propertyKey.toString()] as JSONSchema7).required.includes(propertyKey.toString()))
-                    (schema.properties[propertyKey.toString()] as JSONSchema7).required.slice(parameterIndex, 0);
+            fn: (arg, schema,propertyKey) => {
+                if ((schema.properties[propertyKey] as JSONSchema7).required.includes(propertyKey))
+                    (schema.properties[propertyKey] as JSONSchema7).required.slice(parameterIndex, 0);
                 return schema;
             },
         });

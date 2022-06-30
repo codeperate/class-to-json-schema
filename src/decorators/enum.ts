@@ -8,8 +8,8 @@ export function Enum(...enumValues: (JSONSchema7Type | any)[] ): PropertyDecorat
             target,
             propertyKey: propertyKey.toString(),
             parameters: enumValues,
-            fn: (enumValues, schema) => {
-                (schema.properties[propertyKey.toString()] as JSONSchema7).enum = enumValues;
+            fn: (enumValues, schema,propertyKey) => {
+                (schema.properties[propertyKey] as JSONSchema7).enum = enumValues;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.AnyOf,

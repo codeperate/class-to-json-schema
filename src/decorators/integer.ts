@@ -7,7 +7,7 @@ export function Integer(): PropertyDecorator {
         decoratorMapper({
             target,
             propertyKey: propertyKey.toString(),
-            fn: (arg, schema) => {
+            fn: (arg, schema,propertyKey) => {
                 (schema.properties[propertyKey] as JSONSchema7).type === 'array'
                     ? ((schema.properties[propertyKey] as JSONSchema7).items = { type: 'integer' })
                     : ((schema.properties[propertyKey] as JSONSchema7).type = 'integer');

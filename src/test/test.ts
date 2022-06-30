@@ -3,20 +3,35 @@ import { Min } from '../decorators/min';
 import { SpecTypes } from '../types/spec-type';
 import { getJsonSchema } from '../utils/get-schema';
 import 'reflect-metadata';
-import { Property } from '../decorators';
+import { CollectionOf, Default, Max, MaxLength, Property } from '../decorators';
 
 export class Person {
 
     @Property()
     name: string;
 
+    @Default(10)
     @Integer()
     @Min(0)
     age: number;
 
     @Integer()
     @Min(0)
+    @Max(10)
     weight: number;
+
+    @Property()
+    isMale:boolean;
+
+    @CollectionOf(String)
+    @MaxLength(10)
+    fingers:boolean[]
+
+}
+
+export class Person2{
+    @Property()
+    x:number
 }
 
 getJsonSchema(Person, {

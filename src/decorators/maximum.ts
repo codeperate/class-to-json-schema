@@ -8,10 +8,10 @@ export function Maximum(maximum: number): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             parameters: maximum,
-            fn: (maximum, schema) => {
-                (schema.properties[propertyKey.toString()] as JSONSchema7).type === 'array'
-                    ? ((schema.properties[propertyKey.toString()] as JSONSchema7).items = { maximum: maximum })
-                    : ((schema.properties[propertyKey.toString()] as JSONSchema7).maximum = maximum);
+            fn: (maximum, schema,propertyKey) => {
+                (schema.properties[propertyKey] as JSONSchema7).type === 'array'
+                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { maximum: maximum })
+                    : ((schema.properties[propertyKey] as JSONSchema7).maximum = maximum);
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Maximum,

@@ -8,8 +8,8 @@ export function MinItems(minItems: number): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             parameters: minItems,
-            fn: (minItems, schema) => {
-                (schema.properties[propertyKey.toString()] as JSONSchema7).minItems = minItems;
+            fn: (minItems, schema,propertyKey) => {
+                (schema.properties[propertyKey] as JSONSchema7).minItems = minItems;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.MinItems,

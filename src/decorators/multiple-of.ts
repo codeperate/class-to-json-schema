@@ -8,10 +8,10 @@ export function MultipleOf(multipleOf: number): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.MultipleOf,
-            fn: (multipleOf, schema) => {
-                (schema.properties[propertyKey.toString()] as JSONSchema7).type === 'array'
-                    ? ((schema.properties[propertyKey.toString()] as JSONSchema7).items = { multipleOf: multipleOf })
-                    : ((schema.properties[propertyKey.toString()] as JSONSchema7).multipleOf = multipleOf);
+            fn: (multipleOf, schema,propertyKey) => {
+                (schema.properties[propertyKey] as JSONSchema7).type === 'array'
+                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { multipleOf: multipleOf })
+                    : ((schema.properties[propertyKey] as JSONSchema7).multipleOf = multipleOf);
                 return schema;
             },
         });

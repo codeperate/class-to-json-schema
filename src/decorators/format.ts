@@ -8,7 +8,7 @@ export function Format(format: JsonFormatTypes) {
             target,
             propertyKey,
             parameters: format,
-            fn: (format, schema) => {
+            fn: (format, schema,propertyKey) => {
                 (schema.properties[propertyKey] as JSONSchema7).format = format;
                 return schema;
             },
