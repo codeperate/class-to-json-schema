@@ -1,4 +1,3 @@
-import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -9,11 +8,12 @@ export function Minimum(minimum: number): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             parameters: minimum,
             fn: (minimum, schema,propertyKey) => {
-                const cv = schema.properties[propertyKey] as JSONSchema7;
+                const schemaProperties = schema.properties[propertyKey];
 
-                (schema.properties[propertyKey] as JSONSchema7).type === 'array'
-                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { minimum: minimum, ...cv.items as object })
-                    : ((schema.properties[propertyKey] as JSONSchema7).minimum = minimum);
+                if(typeof schemaProperties==="boolean") return;
+                schemaProperties.type === 'array'
+                    ? (schemaProperties.items = { minimum: minimum, ...schemaProperties.items as object })
+                    : (schemaProperties.minimum = minimum);
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Minimum,

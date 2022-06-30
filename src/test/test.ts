@@ -3,11 +3,19 @@ import { Min } from '../decorators/min';
 import { SpecTypes } from '../types/spec-type';
 import { getJsonSchema } from '../utils/get-schema';
 import 'reflect-metadata';
-import { CollectionOf, Default, Max, MaxLength, MinLength, Optional, Property } from '../decorators';
+import { CollectionOf, Default, Max, MaxLength, MinProperties, Optional, Property, Required } from '../decorators';
+
+
+export class Person2{
+    @Property()
+    x:number
+}
+
 
 export class Person {
 
     @Property()
+    @MaxLength(50)
     name: string;
 
     @Default(10)
@@ -22,22 +30,27 @@ export class Person {
 
     @Property()
     @Optional()
+    @MinProperties(2)
     isMale:boolean;
 
-    @CollectionOf(String)
-    @MaxLength(11)
-    @MinLength(10)
+    @MaxLength(10)
+    @CollectionOf(Boolean)
     fingers:boolean[]
 
+
+    // @Min(10)
+    // @CollectionOf(Number)
+    // ages:Collection
+
+    @Required()
+    person2:Person2;
+
 }
 
-export class Person2{
-    @Property()
-    x:number
-}
 
-getJsonSchema(Person, {
-    specTypes: SpecTypes.JSON,
+
+const schema = getJsonSchema(Person, {
+    specTypes: SpecTypes.OPENAPI,
     schemaRefPath: '#/components/schemas/Person',
     // additionalConverters:{
     //     schemaDecorator:(
@@ -50,3 +63,5 @@ getJsonSchema(Person, {
     //     }
     // }
 });
+console.log(schema.toJSON());
+

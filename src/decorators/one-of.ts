@@ -1,4 +1,4 @@
-import { JSONSchema7, JSONSchema7Definition } from "json-schema";
+import { JSONSchema7Definition } from "json-schema";
 import { SchemaDecorators } from "../enum";
 import { decoratorMapper } from "../utils/decorator.utils";
 
@@ -9,7 +9,10 @@ export function OneOf(...oneOf: JSONSchema7Definition[]): PropertyDecorator {
           propertyKey: propertyKey.toString(),
           schemaDecorator: SchemaDecorators.OneOf,
           fn: (oneOf, schema,propertyKey) => {
-            (schema.properties[propertyKey] as JSONSchema7).oneOf = oneOf;
+            let schemaProperties = schema.properties[propertyKey];
+
+            if(typeof schemaProperties==="boolean") return;
+            schemaProperties.oneOf = oneOf;
             return schema;
           },
         });

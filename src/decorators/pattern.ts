@@ -1,4 +1,3 @@
-import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -10,11 +9,12 @@ export function Pattern(pattern: string | RegExp): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Pattern,
             fn: (pattern, schema, propertyKey) => {
-                const cv = schema.properties[propertyKey] as JSONSchema7;
+                const schemaProperties = schema.properties[propertyKey];
 
-                cv.type === 'array'
-                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { pattern: pattern.tostring(), ...(cv.items as object) })
-                    : ((schema.properties[propertyKey] as JSONSchema7).pattern = pattern.toString());
+                if(typeof schemaProperties==="boolean") return;
+                schemaProperties.type === 'array'
+                    ? (schemaProperties.items = { pattern: pattern.tostring(), ...(schemaProperties.items as object) })
+                    : (schemaProperties.pattern = pattern.toString());
                 return schema;
             },
         });

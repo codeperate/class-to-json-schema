@@ -1,4 +1,4 @@
-import { JSONSchema7, JSONSchema7TypeName } from 'json-schema';
+import { JSONSchema7TypeName } from 'json-schema';
 import { decoratorMapper } from '../utils/decorator.utils';
 
 export function CollectionOf(type: any): PropertyDecorator {
@@ -8,10 +8,12 @@ export function CollectionOf(type: any): PropertyDecorator {
             parameters: type,
             propertyKey: propertyKey.toString(),
             fn: (type, schema, propertyKey) => {
-                const cv = schema.properties[propertyKey] as JSONSchema7;
-                if (cv.type === 'array') {
-                    const t = (type as Function).name.toLowerCase() as JSONSchema7TypeName;
-                    schema.properties[propertyKey] = { type: 'array', items: { type: t } };
+                let schemaProperties = schema.properties[propertyKey];
+
+                if(typeof schemaProperties==="boolean") return;
+                if (schemaProperties.type === 'array') {
+                    let t = (type as Function).name.toLowerCase() as JSONSchema7TypeName;
+                    schemaProperties = { type: 'array', items: {type: t,...schemaProperties.items as object} };
                 }
                 return schema;
             },

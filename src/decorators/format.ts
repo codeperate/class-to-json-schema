@@ -1,19 +1,19 @@
-import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
-export function Format(format: JsonFormatTypes) {
+export function Format(format: JsonFormatTypes|string) {
     return function (target, propertyKey) {
         decoratorMapper({
             target,
             propertyKey,
             parameters: format,
             fn: (format, schema, propertyKey) => {
-                const cv = schema.properties[propertyKey] as JSONSchema7;
+                const schemaProperties = schema.properties[propertyKey];
 
-                cv.type === 'array'
-                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { format: format, ...(cv.items as object) })
-                    : ((schema.properties[propertyKey] as JSONSchema7).format = format);
+                if(typeof schemaProperties==="boolean") return;
+                schemaProperties.type === 'array'
+                    ? (schemaProperties.items = { format: format, ...(schemaProperties.items as object) })
+                    : (schemaProperties.format = format);
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Format,

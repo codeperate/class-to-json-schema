@@ -1,4 +1,3 @@
-import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -9,7 +8,10 @@ export function Default(defaultValue: string | number | boolean | {}){
             parameters: defaultValue,
             propertyKey: propertyKey.toString(),
             fn: (defaultValue, schema,propertyKey) => {
-                (schema.properties[propertyKey] as JSONSchema7).default = defaultValue;
+                let schemaProperties = schema.properties[propertyKey] ;
+
+                if (typeof schemaProperties === 'boolean') return;
+                schemaProperties.default = defaultValue;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Default,

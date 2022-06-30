@@ -7,7 +7,7 @@ export function Partial(): ParameterDecorator {
             target,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Partial,
-            fn: (arg, schema,propertyKey) => {
+            fn: (arg, schema, propertyKey) => {
                 if (schema.required.includes(propertyKey)) schema.required.slice(parameterIndex, 0);
                 return schema;
             },

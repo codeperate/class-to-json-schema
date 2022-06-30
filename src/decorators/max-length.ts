@@ -1,4 +1,3 @@
-import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -9,13 +8,11 @@ export function MaxLength(maxLength: number): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             parameters: maxLength,
             fn: (maxLength, schema, propertyKey) => {
-                const cv = schema.properties[propertyKey] as JSONSchema7;
-
-                if (!cv) (schema.properties[propertyKey] as JSONSchema7).items = {};
-
-                cv.type === 'array'
-                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { maxLength: maxLength, ...(cv.items as object) })
-                    : ((schema.properties[propertyKey] as JSONSchema7).maxLength = maxLength);
+                const schemaProperties = schema.properties[propertyKey];
+                if(typeof schemaProperties==="boolean") return;
+                if (!schemaProperties) schemaProperties.items = {};
+                if (schemaProperties.type === 'array') schemaProperties.items = { maxLength: maxLength, ...(schemaProperties.items as any) };
+                else schemaProperties.maxLength = maxLength;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.MaxLength,

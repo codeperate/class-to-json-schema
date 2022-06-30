@@ -8,19 +8,9 @@ export function Optional(): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Optional,
             fn: (arg, schema, propertyKey) => {
-                
-
                 if (schema.required.includes(propertyKey)) {
                     let parameterIndex = schema.required.indexOf(propertyKey, 0);
-
-
-                    console.log(parameterIndex);
-                    console.log(schema.required);
-                    console.log(typeof(schema.required));
-                    
-                    
-                    schema.required.slice(parameterIndex, 1);
-                    console.log(schema.required);
+                    schema.required.splice(parameterIndex, 1);
                 }
                 return schema;
             },

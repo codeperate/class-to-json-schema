@@ -77,7 +77,4 @@ export class JSONSchema<T extends Function = any> extends JSONSchema7Class {
         if (this.properties) return Object.keys(this.properties) as (keyof T)[];
         return [];
     }
-    static defaultSchema(target,propertyKey){
-        
-    }
 }

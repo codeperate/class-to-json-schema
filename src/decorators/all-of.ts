@@ -1,19 +1,22 @@
-import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+import { JSONSchema7Definition } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
 export function AllOf(...allOf: JSONSchema7Definition[]) {
     return function (target, propertyKey) {
-        decoratorMapper(
-            {target,
+        decoratorMapper({
+            target,
             propertyKey,
             parameters: allOf,
-            fn: (allOf, schema,propertyKey) => {
-                (schema.properties[propertyKey] as JSONSchema7).allOf = allOf;
+            fn: (allOf, schema, propertyKey) => {
+                let schemaProperties = schema.properties[propertyKey];
+
+                if (typeof schemaProperties === 'boolean') return;
+                schemaProperties.allOf = allOf;
                 return schema;
             },
-            schemaDecorator: SchemaDecorators.AllOf,}
-        );
+            schemaDecorator: SchemaDecorators.AllOf,
+        });
     };
 }
 

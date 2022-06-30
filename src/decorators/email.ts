@@ -1,4 +1,3 @@
-import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -8,7 +7,10 @@ export function Email(): PropertyDecorator{
             target,
             propertyKey: propertyKey.toString(),
             fn: (arg, schema,propertyKey) => {
-                (schema.properties[propertyKey] as JSONSchema7).format = 'email';
+                let schemaProperties = schema.properties[propertyKey] ;
+
+                if(typeof schemaProperties==="boolean") return;
+                schemaProperties.format = 'email';
                 return schema;
             },
             schemaDecorator: SchemaDecorators.AnyOf,

@@ -1,4 +1,3 @@
-import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -8,11 +7,12 @@ export function Integer(): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             fn: (arg, schema,propertyKey) => {
-                const cv =  schema.properties[propertyKey] as JSONSchema7;
+                const schemaProperties =  schema.properties[propertyKey];
 
-                (schema.properties[propertyKey] as JSONSchema7).type === 'array'
-                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { type: 'integer', ...cv.items as object })
-                    : ((schema.properties[propertyKey] as JSONSchema7).type = 'integer');
+                if(typeof schemaProperties==="boolean") return;
+                schemaProperties.type === 'array'
+                    ? (schemaProperties.items = { type: 'integer', ...schemaProperties.items as object })
+                    : (schemaProperties.type = 'integer');
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Integer,

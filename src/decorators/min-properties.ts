@@ -1,4 +1,3 @@
-import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -9,7 +8,9 @@ export function MinProperties(minProperties: number): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             parameters: minProperties,
             fn: (minProperties, schema,propertyKey) => {
-                (schema.properties[propertyKey] as JSONSchema7).minProperties = minProperties;
+                let schemaProperties = schema.properties[propertyKey]
+                if(typeof schemaProperties==="boolean") return;
+                schemaProperties.minProperties = minProperties;
                 return schema;
             },
             schemaDecorator: SchemaDecorators.MinProperties,
