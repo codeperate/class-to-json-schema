@@ -3,7 +3,7 @@ import { Min } from '../decorators/min';
 import { SpecTypes } from '../types/spec-type';
 import { getJsonSchema } from '../utils/get-schema';
 import 'reflect-metadata';
-import { Default, Property } from '../decorators';
+import { Default, Nullable, Property } from '../decorators';
 
 export class Person {
 
@@ -20,8 +20,15 @@ export class Person {
     weight: number;
 
     @Property()
+    @Nullable(null)
+    // @Optional()
     isMale:boolean;
 
+}
+
+export class Person2{
+    @Property()
+    x:number
 }
 
 getJsonSchema(Person, {

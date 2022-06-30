@@ -1,4 +1,4 @@
-import { SchemaDecorators } from "../enum";
+ import { SchemaDecorators } from "../enum";
 import { decoratorMapper } from "../utils/decorator.utils";
 
 export function Optional(): PropertyDecorator | ParameterDecorator {

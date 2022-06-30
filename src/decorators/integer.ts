@@ -8,7 +8,9 @@ export function Integer(): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             fn: (arg, schema) => {
-                schema?.type === 'array' ? (schema.items = { type: 'integer' }) : ((schema.properties[propertyKey] as JSONSchema7).type = 'integer');
+                (schema.properties[propertyKey] as JSONSchema7).type === 'array'
+                    ? ((schema.properties[propertyKey] as JSONSchema7).items = { type: 'integer' })
+                    : ((schema.properties[propertyKey] as JSONSchema7).type = 'integer');
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Integer,
