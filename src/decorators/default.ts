@@ -1,8 +1,18 @@
-import { getSchema } from "../utils/get-schema"
+import { JSONSchema7 } from 'json-schema';
+import { SchemaDecorators } from '../enum';
+import { decoratorMapper } from '../utils/decorator.utils';
 
-export function defauiDefault(defaultValue: string | number | boolean | {}){
+export function Default(defaultValue: string | number | boolean | {}){
     return function (target,propertyKey){
-        const schema = getSchema(target,propertyKey)
-        schema.default = defaultValue;
+        decoratorMapper({
+            target,
+            parameters: defaultValue;
+            propertyKey: propertyKey.toString(),
+            fn: (defaultValue, schema) => {
+                (schema.properties[propertyKey] as JSONSchema7).default = defaultValue;
+                return schema;
+            },
+            schemaDecorator: SchemaDecorators.Default,
+        });
     }
 }

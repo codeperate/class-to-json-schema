@@ -1,4 +1,5 @@
 export const JSON_SCHEMA_KEY = Symbol('json-schema');
+import { JSONSchema7TypeName } from 'json-schema';
 import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
 import { DecoratedMap } from '../types/decorated-map';
@@ -6,22 +7,21 @@ import { SpecTypes } from '../types/spec-type';
 
 export function getSchema(target: object, propertyKey?: string | symbol) {
     const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, target) as JSONSchema;
-    if (!schema) {
-        //  const _schema = getSchemaByMetaType(target, propertyKey);
-        //  setSchema(target, _schema);
-        //  return _schema;
-    }
+    // if (!schema) {
+    //     //  const _schema = getSchemaByMetaType(target, propertyKey);
+    //     //  setSchema(target, _schema);
+    //     //  return _schema;
+    // }
     return schema;
 }
 
 export function setSchemaByMetaType(schema: JSONSchema, target: { new (...args: any[]) }, propertyKey?: string) {
-    let propertyType = Reflect.getMetadata('design:type', new target(), propertyKey).name;
+    let propertyType = (Reflect.getMetadata('design:type', new target(), propertyKey).name as String).toLowerCase();
     if (!schema) schema.type = 'object';
     if (!schema.properties) schema.properties = {};
     schema.properties[propertyKey] = {
-        type: propertyType,
+        type: propertyType as JSONSchema7TypeName
     };
-    console.log(propertyType);
 }
 
 // function replaceAll(src: string, find: string, replace: string) {
