@@ -9,7 +9,8 @@ export function Required(): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Required,
             fn: (args, schema,propertyKey) => {
-                schema.required.push(propertyKey);
+                if(!schema.required.includes(propertyKey))
+                    schema.required.push(propertyKey);
                 return schema;
             },
         });
