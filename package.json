@@ -1,11 +1,17 @@
 {
     "name": "class-to-json-schema",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "Build JSON schema with class and decorators.",
+    "main": "dist/index.js",
+    "types": "types/index.d.ts",
+    "files": [
+        "dist",
+        "types"
+    ],
     "scripts": {
         "build": "tsc -p tsconfig.json",
-        "test": "npx ts-node ./src/test/test.ts"
+        "test": "npx ts-node ./src/test/test.ts",
+        "release": "pnpm run build && np"
     },
     "repository": {
         "type": "git",
@@ -19,6 +25,7 @@
     "homepage": "https://github.com/codeperate/class-to-json-schema#readme",
     "dependencies": {
         "@types/json-schema": "^7.0.11",
+        "np": "^7.6.2",
         "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
