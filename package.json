@@ -3,14 +3,14 @@
     "version": "1.0.0",
     "description": "Build JSON schema with class and decorators.",
     "main": "dist/index.js",
-    "types": "types/index.d.ts",
+    "types": "dist/types/index.d.ts",
     "files": [
-        "dist",
-        "types"
+        "dist"
     ],
     "scripts": {
-        "build": "tsc -p tsconfig.json",
-        "test": "npx ts-node ./src/test/test.ts",
+        "build": "del-cli dist && tsc -p tsconfig.build.json",
+        "test": "jest",
+        "develop:test": "jest --watchAll",
         "release": "pnpm run build && np"
     },
     "repository": {
@@ -29,6 +29,13 @@
         "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
+        "@jest/types": "^28.1.1",
+        "@types/jest": "^28.1.4",
+        "@types/node": "^18.0.0",
+        "del-cli": "^4.0.1",
+        "jest": "^28.1.2",
+        "ts-jest": "^28.0.5",
+        "ts-node": "^10.8.2",
         "typescript": "^4.7.4"
     }
 }
