@@ -9,6 +9,7 @@ import { isClass, replaceAll } from './utils';
 
 export function getSchema(target: object, propertyKey?: string | symbol) {
     const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, target) as JSONSchema;
+    console.log(schema);
     return schema;
 }
 
