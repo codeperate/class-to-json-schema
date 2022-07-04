@@ -30,7 +30,7 @@ export class Organization {
 
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
-    expect(schema).toEqual({
+    expect(schema.toJSON()).toStrictEqual({
         required: ['name', 'namespace', 'slug', 'address', 'members', 'phone'],
         properties: {
             name: { type: 'string' },
