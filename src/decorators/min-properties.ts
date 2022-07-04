@@ -7,7 +7,7 @@ export function MinProperties(minProperties: number): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             parameters: minProperties,
-            fn: (minProperties, schema,propertyKey) => {
+            fn: (minProperties, schema, propertyKey) => {
                 let schemaProperties = schema.properties[propertyKey]
                 if(typeof schemaProperties==="boolean") return;
                 schemaProperties.minProperties = minProperties;

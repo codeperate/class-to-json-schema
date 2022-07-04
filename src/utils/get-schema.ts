@@ -1,5 +1,6 @@
 export const JSON_SCHEMA_KEY = Symbol('json-schema');
-
+export const JSON_CLASS_KEY = Symbol('json-class')
+// import { Collection } from '@mikro-orm/core';
 import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
 import { DecoratedMap } from '../types/decorated-map';
