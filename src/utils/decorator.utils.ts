@@ -1,14 +1,14 @@
 import { JSONSchema } from '../class';
 import { SchemaDecorators } from '../enum';
 import { DecoratedMap } from '../types/decorated-map';
-import { JSON_CLASS_KEY, JSON_SCHEMA_KEY } from './get-schema';
+import { JsonSchemaOptions, JSON_SCHEMA_KEY, JSON_CLASS_KEY } from './get-schema';
 
 interface DecoratedMapper {
     target: object;
     propertyKey: string;
     parameters?: any;
     schemaDecorator: SchemaDecorators;
-    fn: (arg: any, schema: JSONSchema,propertyKey:string) => void;
+    fn: (arg: any, schema: JSONSchema,propertyKey:string,jsonSchemaOptions:Partial<JsonSchemaOptions>) => void;
 }
 
 export function decoratorMapper(decoratedMapper: Partial<DecoratedMapper>) {
@@ -16,7 +16,6 @@ export function decoratorMapper(decoratedMapper: Partial<DecoratedMapper>) {
     let decoratedMap: DecoratedMap = Reflect.getMetadata((propertyKey)? JSON_SCHEMA_KEY : JSON_CLASS_KEY, target.constructor);
     if (!decoratedMap) decoratedMap = {  };
     if(!decoratedMap[propertyKey]) decoratedMap[propertyKey]=[]
-    
     decoratedMap[propertyKey].push({
         type: schemaDecorator,
         args: parameters,
