@@ -26,15 +26,15 @@ test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
     console.log(schema.toJSON());
     expect(schema).toEqual({
-        required: [ 'member', 'members', 'state' ],
+        required: ['member', 'members', 'state'],
         properties: {
-          member: { '$ref': '#/components/schemas/member' },
-          members: {
-            type: 'array',
-            items: { '$ref': '#/components/schemas/member' },
-            title: 'Members of Organization'
-          },
-          state: { type: 'string', enum: { ON: 'ON', OFF: 'OFF' } }
-        }
-      })
+            member: { $ref: '#/components/schemas/member' },
+            members: {
+                type: 'array',
+                items: { $ref: '#/components/schemas/member' },
+                title: 'Members of Organization',
+            },
+            state: { type: 'string', enum: ['ON', 'OFF'] },
+        },
+    });
 });
