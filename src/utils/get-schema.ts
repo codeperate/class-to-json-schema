@@ -29,7 +29,7 @@ export interface ConvertersOptions<T = any> {
     defaultConverter: Function;
 }
 
-interface JsonSchemaOptions {
+export interface JsonSchemaOptions {
     specTypes: SpecTypes;
     schemaRefPath: string;
     additionalConverters: {
@@ -39,16 +39,22 @@ interface JsonSchemaOptions {
 
 export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
     let decoratedMaps: DecoratedMap = Reflect.getMetadata(JSON_SCHEMA_KEY, entity);
+
     let schema: JSONSchema = new JSONSchema();
     let meta: any = {};
     for (const propertyKey of Object.keys(decoratedMaps)) {
         const metaType = getSchemaMetaType(entity, propertyKey);
-        
         const isClassType = isClass(metaType);
         setSchemaByMetaType(schema, metaType, isClassType, propertyKey);
         if (!isClassType)
-        {
-
+        {   
+            const collectionIdx = decoratedMaps[propertyKey].findIndex((e)=>e.type === 'CollectionOf')
+            if(collectionIdx !== -1){
+                const {args} = decoratedMaps[propertyKey][collectionIdx]
+                schema.properties[propertyKey] = {type:'array'}
+                decoratedMaps[propertyKey][collectionIdx].fn(args, schema, propertyKey,jsonSchemaOptions)
+                decoratedMaps[propertyKey].splice(collectionIdx,1)
+            }
             for (const decorated of decoratedMaps[propertyKey]) {
                 if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
                     jsonSchemaOptions.additionalConverters[decorated.type]({
@@ -57,11 +63,12 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
                         meta: meta,
                         arguments: decorated.args,
                     });
-                } else decorated.fn(decorated.args, schema, propertyKey);
+                } else decorated.fn(decorated.args, schema, propertyKey,jsonSchemaOptions);
             }
         }
     }
-
+    console.log(schema.properties['members']);
+    
     if (jsonSchemaOptions.specTypes === SpecTypes.SWAGGER || jsonSchemaOptions.specTypes === SpecTypes.OPENAPI) {
         const stringSchema = replaceAll(JSON.stringify(schema.toJSON()), '#/definitions', '#/components/schemas');
         schema = new JSONSchema(JSON.parse(stringSchema))

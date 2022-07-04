@@ -1,19 +1,22 @@
-import { JSONSchema7TypeName } from 'json-schema';
+import { SchemaDecorators } from '../enum';
+import { Class } from '../types';
 import { decoratorMapper } from '../utils/decorator.utils';
+import { typeTransformer } from '../utils/utils';
 
-export function CollectionOf(type: any): PropertyDecorator {
+export function CollectionOf(type: typeof Number | typeof String | typeof Boolean | typeof Object | Class): PropertyDecorator {
     return function (target, propertyKey) {
         decoratorMapper({
             target,
             parameters: type,
             propertyKey: propertyKey.toString(),
-            fn: (type, schema, propertyKey) => {
+            schemaDecorator:SchemaDecorators.CollectionOf,
+            fn: (type: typeof Number | typeof String | typeof Boolean | Class, schema, propertyKey,jsonSchemaOptions) => {
                 let schemaProperties = schema.properties[propertyKey];
-
-                if(typeof schemaProperties==="boolean") return;
+                if (typeof schemaProperties === 'boolean') return;
+                jsonSchemaOptions.schemaRefPath
                 if (schemaProperties.type === 'array') {
-                    let t = (type as Function).name.toLowerCase() as JSONSchema7TypeName;
-                    schemaProperties = { type: 'array', items: {type: t,...schemaProperties.items as object} };
+                    const items = typeTransformer(type,jsonSchemaOptions.specTypes,jsonSchemaOptions.schemaRefPath)
+                    schema.properties[propertyKey] = { type: 'array', ...items };
                 }
                 return schema;
             },
