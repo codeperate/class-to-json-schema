@@ -5,6 +5,7 @@ export function MultipleOf(multipleOf: number): PropertyDecorator {
     return function (target, propertyKey) {
         decoratorMapper({
             target,
+            parameters: multipleOf,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.MultipleOf,
             fn: (multipleOf, schema,propertyKey) => {

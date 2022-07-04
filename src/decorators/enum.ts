@@ -14,7 +14,7 @@ export function Enum(enumValues: any): PropertyDecorator {
                 schemaProperties.enum = enumValues;
                 return schema;
             },
-            schemaDecorator: SchemaDecorators.AnyOf,
+            schemaDecorator: SchemaDecorators.Enum,
         });
     };
 }

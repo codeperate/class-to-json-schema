@@ -1,11 +1,11 @@
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
-export function ExclusiveMinimum(minimum: number) {
+export function ExclusiveMinimum(minimum: number): PropertyDecorator {
     return function (target, propertyKey) {
         decoratorMapper({
             target,
-            propertyKey,
+            propertyKey: propertyKey.toString(),
             parameters: minimum,
             fn: (minimum, schema,propertyKey) => {
                 const schemaProperties = schema.properties[propertyKey];
