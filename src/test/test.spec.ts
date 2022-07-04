@@ -31,15 +31,15 @@ export class Organization {
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
     console.log(schema.toJSON());
-    // expect(schema).toEqual({
-    //     required: ['name', 'namespace', 'slug', 'address', 'members', 'phone'],
-    //     properties: {
-    //         name: { type: 'string' },
-    //         namespace: { type: 'string', pattern: '/^[a-z0-9]+$/g' },
-    //         slug: { type: 'string' },
-    //         address: { type: 'string' },
-    //         members: { type: 'array', items: [Object] },
-    //         phone: { type: 'string' },
-    //     },
-    // });
+    expect(schema).toEqual({
+        required: ['name', 'namespace', 'slug', 'address', 'members', 'phone'],
+        properties: {
+            name: { type: 'string' },
+            namespace: { type: 'string', pattern: '/^[a-z0-9]+$/g' },
+            slug: { type: 'string' },
+            address: { type: 'string' },
+            members: { type: 'array', items: { '$ref': '#/components/schemas/member' } },
+            phone: { type: 'string' },
+        },
+    });
 });
