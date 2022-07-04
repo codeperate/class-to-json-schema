@@ -24,11 +24,11 @@
     },
     "homepage": "https://github.com/codeperate/class-to-json-schema#readme",
     "dependencies": {
-        "@types/json-schema": "^7.0.11",
         "np": "^7.6.2",
         "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
+        "@types/json-schema": "^7.0.11",
         "@jest/types": "^28.1.1",
         "@types/jest": "^28.1.4",
         "@types/node": "^18.0.0",
