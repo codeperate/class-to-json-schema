@@ -24,5 +24,6 @@ export class Organization {
 }
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
-    schema.toJSON()
+    console.log(schema.toJSON());
+    
 });

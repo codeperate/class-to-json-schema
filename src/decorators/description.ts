@@ -1,7 +1,7 @@
-import { SchemaDecorators } from "../enum";
-import { decoratorMapper } from "../utils/decorator.utils";
+import { SchemaDecorators } from '../enum';
+import { decoratorMapper } from '../utils/decorator.utils';
 
-export function Description(description: string){
+export function Description(description: any) {
     return function (target, propertyKey?) {
         decoratorMapper({
             target,
@@ -18,7 +18,7 @@ export function Description(description: string){
                 }
                 return schema;
             },
-            schemaDecorator: SchemaDecorators.Title,
+            schemaDecorator: SchemaDecorators.Description,
         });
     };
 }
