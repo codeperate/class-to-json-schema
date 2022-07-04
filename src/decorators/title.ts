@@ -6,8 +6,6 @@ import { decoratorMapper } from '../utils';
 
 export function Title(title: string) {
     return function (target, propertyKey?) {
-        //console.log("Property Key: " + propertyKey + " Target: " + target);
-        
         decoratorMapper({
             target,
             propertyKey: propertyKey?.toString(),
