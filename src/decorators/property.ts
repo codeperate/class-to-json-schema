@@ -9,7 +9,7 @@ export function Property(type?: any): PropertyDecorator {
             parameters: type,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Property,
-            fn: (type, schema, propertyKey, jsonSchemaOptions) => {
+            fn: (type, schema, propertyKey,isAssignToObj,jsonSchemaOptions) => {
                 let schemaProperties = schema.properties[propertyKey];
                 if (typeof schemaProperties === 'boolean') return;
                 type = type ? type : schemaProperties.type;

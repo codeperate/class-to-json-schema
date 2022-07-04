@@ -14,9 +14,9 @@ export class Organization {
     @Property(Member)
     member: Member;
 
-    @Title('Members of Organization')
+    @Title('Members of Organization1')
     @CollectionOf(Member)
-    @Title('Member')
+    @Title('Member1')
     members: Member[];
 
     @Enum(OrganizationState)
@@ -24,14 +24,16 @@ export class Organization {
 }
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
+    console.log(schema.properties['members']);
+    
     expect(schema.toJSON()).toStrictEqual({
         required: ['member', 'members', 'state'],
         properties: {
             member: { $ref: '#/components/schemas/member' },
             members: {
                 type: 'array',
-                items: { $ref: '#/components/schemas/member' },
-                title: 'Members of Organization',
+                items: { $ref: '#/components/schemas/member', title: 'Member1' },
+                title: 'Members of Organization1',
             },
             state: { type: 'string', enum: ['ON', 'OFF'] },
         },

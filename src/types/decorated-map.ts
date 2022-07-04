@@ -5,7 +5,7 @@ import { JsonSchemaOptions } from '../utils';
 export type DecoratedContent = {
     type: SchemaDecorators;
     args: any;
-    fn: (arg: any, schema: JSONSchema, propertyKey: string,jsonSchemaOptions:Partial<JsonSchemaOptions>) => void;
+    fn: (arg: any, schema: JSONSchema, propertyKey: string,isAssignToObj:boolean,jsonSchemaOptions:Partial<JsonSchemaOptions>) => void;
 };
 export type DecoratedMap = {
     [key: string]: DecoratedContent[];

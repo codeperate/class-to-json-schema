@@ -10,15 +10,16 @@ export function Title(title: string) {
             target,
             propertyKey: propertyKey?.toString(),
             parameters: title,
-            fn: (title, schema, propertyKey?) => {
+            fn: (title, schema, propertyKey, isAssignToObj) => {
                 if (!propertyKey) {
-                    if (!schema.title) schema.title = "";
+                    if (!schema.title) schema.title = '';
                     schema.title = title;
                 } else {
                     const schemaProperties = schema.properties[propertyKey];
                     if (typeof schemaProperties === 'boolean') return;
-                    if (!schemaProperties) schemaProperties.items = {};
-                    schemaProperties.title = title;
+                    if (schemaProperties.type === 'array' && !isAssignToObj) {
+                        schemaProperties.items = { ...schemaProperties.items as object, title: title };
+                    } else schemaProperties.title = title;
                 }
                 return schema;
             },
