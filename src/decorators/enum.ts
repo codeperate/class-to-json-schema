@@ -9,12 +9,12 @@ export function Enum(enumValues: any): PropertyDecorator {
             parameters: enumValues,
             fn: (enumValues, schema, propertyKey) => {
                 let schemaProperties = schema.properties[propertyKey];
-
                 if (typeof schemaProperties === 'boolean') return;
-                schemaProperties.enum = enumValues;
+                console.log( Object.values(enumValues));
+                schemaProperties.enum = Object.values(enumValues);
                 return schema;
             },
-            schemaDecorator: SchemaDecorators.AnyOf,
+            schemaDecorator: SchemaDecorators.Enum,
         });
     };
 }
