@@ -1,13 +1,13 @@
-import { Title } from '../decorators';
+import { Title,Description } from '../decorators';
 import { SpecTypes } from '../types';
 import { getJsonSchema } from '../utils';
 
 @Title('title')
-// @Description('Description')
+@Description('Description')
 export class Organization {
     
-    // @Title('title')
-    // @Description('Description')
+    @Title('title')
+    @Description('Description')
     name;
 }
 

@@ -1,20 +1,24 @@
 import { SchemaDecorators } from "../enum";
 import { decoratorMapper } from "../utils/decorator.utils";
 
-export function Description(description: string): PropertyDecorator | ClassDecorator {
+export function Description(description: string){
     return function (target, propertyKey?) {
-        return decoratorMapper({
+        decoratorMapper({
             target,
+            propertyKey: propertyKey?.toString(),
             parameters: description,
-            propertyKey: propertyKey.toString(),
-            schemaDecorator: SchemaDecorators.Description,
-            fn:(title, schema,propertyKey,jsonSchemaOptions) => {
-                title
-                propertyKey
-                jsonSchemaOptions
+            fn: (description, schema, propertyKey?) => {
+                if (!propertyKey) {
+                    schema.description = description;
+                } else {
+                    const schemaProperties = schema.properties[propertyKey];
+                    if (typeof schemaProperties === 'boolean') return;
+                    if (!schemaProperties) schemaProperties.items = {};
+                    schemaProperties.description = description;
+                }
                 return schema;
-            }
-        })
-        
+            },
+            schemaDecorator: SchemaDecorators.Title,
+        });
     };
 }
