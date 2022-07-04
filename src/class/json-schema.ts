@@ -4,18 +4,19 @@ type ValueOf<T, K extends keyof T> = T[K];
 export class JSONSchema<T extends Function = any> extends JSONSchema7Class {
     constructor(schema?: JSONSchema7) {
         super();
-    if(schema)
-        Object.assign(this, schema);
+        if (schema) Object.assign(this, schema);
     }
     clone(): JSONSchema<T> {
-        return new JSONSchema(this.toJSON());
+        return new JSONSchema(JSON.parse(this.toPlain()));
     }
     toJSON(): JSONSchema7 {
         return Object.getOwnPropertyNames(this).reduce((a, b) => {
-            if(this[b])
-            a[b] = this[b];
+            if (this[b]) a[b] = this[b];
             return a;
         }, {});
+    }
+    toPlain() {
+        return JSON.stringify(this);
     }
     pick(props: (keyof T)[] | RegExp, removeRequired: boolean = true): JSONSchema<T> {
         const schema = this.clone();
