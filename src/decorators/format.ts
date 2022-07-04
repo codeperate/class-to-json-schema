@@ -11,8 +11,11 @@ export function Format(format: JsonFormatTypes | string) {
                 const schemaProperties = schema.properties[propertyKey];
                 if (typeof schemaProperties === 'boolean') return;
 
-                 if (!schemaProperties.type || schemaProperties.type === 'object') schemaProperties.type = 'string';
-                schemaProperties.type === 'array' ? (schemaProperties.items = { format: format, ...(schemaProperties.items as object) }) : (schemaProperties.format = format);
+                //  if (!schemaProperties.type || schemaProperties.type === 'object') schemaProperties.type = 'string';
+                // schemaProperties.type === 'array' ? (schemaProperties.items = { format: format, ...(schemaProperties.items as object) }) : (schemaProperties.format = format);
+                schemaProperties.type === 'array'
+                    ? (schemaProperties.items = { format: format, ...(schemaProperties.items as object) })
+                    : ((schemaProperties.format = format), (schemaProperties.type = 'string'));
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Format,
