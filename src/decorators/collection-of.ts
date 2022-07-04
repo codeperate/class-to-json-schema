@@ -1,7 +1,8 @@
 import { SchemaDecorators } from '../enum';
 import { Class } from '../types';
 import { decoratorMapper } from '../utils/decorator.utils';
-import { typeTransformer } from '../utils/utils';
+import { transformer } from '../utils/transformer.utils';
+
 
 export function CollectionOf(type: typeof Number | typeof String | typeof Boolean | typeof Object | Class): PropertyDecorator {
     return function (target, propertyKey) {
@@ -9,17 +10,14 @@ export function CollectionOf(type: typeof Number | typeof String | typeof Boolea
             target,
             parameters: type,
             propertyKey: propertyKey.toString(),
-            fn: (type: typeof Number | typeof String | typeof Boolean | Class, schema, propertyKey,jsonSchemaOptions) => {
+            schemaDecorator: SchemaDecorators.CollectionOf,
+            fn: (type: typeof Number | typeof String | typeof Boolean | Class, schema, propertyKey, jsonSchemaOptions) => {
                 let schemaProperties = schema.properties[propertyKey];
                 if (typeof schemaProperties === 'boolean') return;
-                jsonSchemaOptions.schemaRefPath
-                if (schemaProperties.type === 'array') {
-                    const items = typeTransformer(type,jsonSchemaOptions.specTypes,jsonSchemaOptions.schemaRefPath)
-                    schema.properties[propertyKey] = { type: 'array', ...items };
-                }
+                const items = transformer({ type, specType: jsonSchemaOptions.specTypes, schemaRefPath: jsonSchemaOptions.schemaRefPath, isArray: schemaProperties.type === 'array' });
+                schema.properties[propertyKey] = { ...schemaProperties, ...items };
                 return schema;
             },
-            schemaDecorator: SchemaDecorators.CollectionOf,
         });
     };
 }

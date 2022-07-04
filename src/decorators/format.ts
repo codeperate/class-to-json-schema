@@ -1,7 +1,7 @@
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
 
-export function Format(format: JsonFormatTypes|string) {
+export function Format(format: JsonFormatTypes | string) {
     return function (target, propertyKey) {
         decoratorMapper({
             target,
@@ -9,11 +9,10 @@ export function Format(format: JsonFormatTypes|string) {
             parameters: format,
             fn: (format, schema, propertyKey) => {
                 const schemaProperties = schema.properties[propertyKey];
+                if (typeof schemaProperties === 'boolean') return;
 
-                if(typeof schemaProperties==="boolean") return;
-                schemaProperties.type === 'array'
-                    ? (schemaProperties.items = { format: format, ...(schemaProperties.items as object) })
-                    : (schemaProperties.format = format);
+                 if (!schemaProperties.type || schemaProperties.type === 'object') schemaProperties.type = 'string';
+                schemaProperties.type === 'array' ? (schemaProperties.items = { format: format, ...(schemaProperties.items as object) }) : (schemaProperties.format = format);
                 return schema;
             },
             schemaDecorator: SchemaDecorators.Format,

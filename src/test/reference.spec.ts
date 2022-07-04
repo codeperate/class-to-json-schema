@@ -1,4 +1,4 @@
-import { CollectionOf, Enum, Property, Title } from '../decorators';
+import { CollectionOf, Enum, Property } from '../decorators';
 import { SpecTypes } from '../types';
 import { getJsonSchema } from '../utils';
 
@@ -14,9 +14,9 @@ export class Organization {
     @Property(Member)
     member: Member;
 
-    @Title('Members of Organization')
+    // @Title('Members of Organization')
     @CollectionOf(Member)
-    @Title('Member')
+    // @Title('Member')
     members: Member[];
 
     @Enum(OrganizationState)
@@ -25,4 +25,5 @@ export class Organization {
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
     console.log(schema.toJSON());
+    
 });
