@@ -13,7 +13,7 @@ export function Email(): PropertyDecorator{
                 schemaProperties.format = 'email';
                 return schema;
             },
-            schemaDecorator: SchemaDecorators.AnyOf,
+            schemaDecorator: SchemaDecorators.Email,
         });
     }
 }

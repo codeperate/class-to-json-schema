@@ -39,20 +39,6 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
     let schema: JSONSchema = new JSONSchema();
     let meta: any = {};
 
-    if(classDecoratedMaps){
-        for (const classKey of Object.keys(classDecoratedMaps)) {
-            for(const decorated of  classDecoratedMaps[classKey]){
-                if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
-                    jsonSchemaOptions.additionalConverters[decorated.type]({
-                        target: entity,
-                        schema: schema,
-                        meta: meta,
-                        arguments: decorated.args,
-                    });
-                } else decorated.fn(decorated.args, schema, undefined, jsonSchemaOptions);
-            }
-        }
-    }
 
     for (const propertyKey of Object.keys(decoratedMaps)) {
         const metaType = getSchemaMetaType(entity, propertyKey);
@@ -73,6 +59,21 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
                     arguments: decorated.args,
                 });
             } else decorated.fn(decorated.args, schema, propertyKey, jsonSchemaOptions);
+        }
+    }
+
+    if(classDecoratedMaps){
+        for (const classKey of Object.keys(classDecoratedMaps)) {
+            for(const decorated of  classDecoratedMaps[classKey]){
+                if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
+                    jsonSchemaOptions.additionalConverters[decorated.type]({
+                        target: entity,
+                        schema: schema,
+                        meta: meta,
+                        arguments: decorated.args,
+                    });
+                } else decorated.fn(decorated.args, schema, undefined, jsonSchemaOptions);
+            }
         }
     }
     return schema;

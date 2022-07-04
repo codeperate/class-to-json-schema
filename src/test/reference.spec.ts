@@ -30,7 +30,7 @@ test('Get Organization JSON Schema', () => {
             member: { $ref: '#/components/schemas/member' },
             members: {
                 type: 'array',
-                items: { $ref: '#/components/schemas/member' },
+                items: { $ref: '#/components/schemas/member', title: 'Member' },
                 title: 'Members of Organization',
             },
             state: { type: 'string', enum: ['ON', 'OFF'] },

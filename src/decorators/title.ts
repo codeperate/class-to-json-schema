@@ -12,7 +12,6 @@ export function Title(title: string) {
             parameters: title,
             fn: (title, schema, propertyKey?) => {
                 if (!propertyKey) {
-                    if (!schema.title) schema.title = "";
                     schema.title = title;
                 } else {
                     const schemaProperties = schema.properties[propertyKey];
