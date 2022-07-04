@@ -1,4 +1,5 @@
 export const JSON_SCHEMA_KEY = Symbol('json-schema');
+export const JSON_CLASS_KEY = Symbol('json-class')
 // import { Collection } from '@mikro-orm/core';
 import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
@@ -9,7 +10,6 @@ import { isClass, replaceAll } from './utils';
 
 export function getSchema(target: object, propertyKey?: string | symbol) {
     const schema = Reflect.getMetadata(JSON_SCHEMA_KEY, target) as JSONSchema;
-    console.log(schema);
     return schema;
 }
 

@@ -9,7 +9,7 @@ export function setSchema(target: object, schema:Object):void{
 
 
 export function setSchemaByMetaType(schema: JSONSchema, property: Function, isClassType: Boolean, propertyKey?: string) {
-    let propertyType = (property.name as String).toLowerCase();
+    let propertyType = property.name.toLowerCase();
     if (!schema) schema.type = 'object';
     if (!schema.properties) schema.properties = {};
     schema.properties[propertyKey] = {

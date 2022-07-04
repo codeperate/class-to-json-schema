@@ -1,33 +1,27 @@
-import { CollectionOf, Pattern, Required } from '../decorators';
+import { CollectionOf, Enum, Property, Title } from '../decorators';
 import { SpecTypes } from '../types';
 import { getJsonSchema } from '../utils';
 
+export enum OrganizationState {
+    ON = 'ON',
+    OFF = 'OFF',
+}
+
 export class Member {
-    @Required()
     name!: string;
 }
-
 export class Organization {
-    @Required()
-    name!: string;
+    @Property(Member)
+    member: Member;
 
-    @Required()
-    @Pattern(/^[a-z0-9]+$/g)
-    namespace: string;
-
-    @Required()
-    slug!: string;
-
-    @Required()
-    address!: string;
-
+    @Title('Members of Organization')
     @CollectionOf(Member)
-    members;
+    @Title('Member')
+    members: Member[];
 
-    @Required()
-    phone!: string;
+    @Enum(OrganizationState)
+    state: OrganizationState;
 }
-
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
     console.log(schema.toJSON());
