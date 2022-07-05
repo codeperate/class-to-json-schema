@@ -1,5 +1,5 @@
 import { Format, Schema } from '../decorators';
-import { SpecTypes } from '../types';
+import { SpecTypes } from '../type';
 import { getJsonSchema } from '../utils';
 
 @Schema({ title: 'test', description: 'test', required: ['date'] })

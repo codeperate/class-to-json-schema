@@ -4,8 +4,8 @@ import { JSONSchema7 } from 'json-schema';
 // import { Collection } from '@mikro-orm/core';
 import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
-import { DecoratedMap } from '../types/decorated-map';
-import { SpecTypes } from '../types/spec-type';
+import { DecoratedMap } from '../type/decorated-map';
+import { SpecTypes } from '../type/spec-type';
 import { setSchemaByMetaType } from './set-schema';
 
 export function getSchema(target: object, propertyKey?: string | symbol) {

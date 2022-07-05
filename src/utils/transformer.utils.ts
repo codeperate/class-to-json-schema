@@ -1,8 +1,9 @@
-import { Class, SpecTypes } from '../types';
+import { SpecTypes } from '../type';
+import { ClassOrAbstractClass } from '../type/class';
 import { isClass } from './utils';
 
 export interface TransformerType {
-    type: typeof Number | typeof String | typeof Boolean | typeof Object | String | Class;
+    type: typeof Number | typeof String | typeof Boolean | typeof Object | String | ClassOrAbstractClass;
     specType: SpecTypes;
     schemaRefPath: String;
     isArray: boolean;
@@ -20,7 +21,7 @@ export function classTransformer(transformerType: TransformerType): Object {
     return objectToSchema(isArray, false, t);
 }
 
-export function objectToSchema(isArray: boolean, isRef: boolean, name: string,) {
+export function objectToSchema(isArray: boolean, isRef: boolean, name: string) {
     if (isArray) return { type: 'array', items: { ...(isRef ? { $ref: name } : { type: name }) } };
     return { ...(isRef ? { $ref: name } : { type: name }) };
 }

@@ -1,5 +1,5 @@
 import { Title, Description } from '../decorators';
-import { SpecTypes } from '../types';
+import { SpecTypes } from '../type';
 import { getJsonSchema } from '../utils';
 
 @Title('title1')
