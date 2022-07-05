@@ -24,8 +24,6 @@ export class Organization {
 }
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
-    console.log(schema.properties['members']);
-    
     expect(schema.toJSON()).toStrictEqual({
         required: ['member', 'members', 'state'],
         properties: {

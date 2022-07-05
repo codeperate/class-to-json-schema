@@ -44,7 +44,6 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
         setSchemaByMetaType(schema, metaType, propertyKey);
         const collectionIdx = decoratedMaps[propertyKey].findIndex((e) => e.type === 'CollectionOf');
         if (collectionIdx !== -1) {
-            schema.properties[propertyKey] = { type: 'array' };
             const outsideArrs = decoratedMaps[propertyKey].slice(collectionIdx, decoratedMaps[propertyKey].length);
             for (const outsideArr of outsideArrs) {
                 if (jsonSchemaOptions.additionalConverters?.[outsideArr.type]) {
@@ -54,9 +53,12 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
                         meta: meta,
                         arguments: outsideArr.args,
                     });
-                } else outsideArr.fn(outsideArr.args, schema, propertyKey, true, jsonSchemaOptions);
+                } else outsideArr.fn(outsideArr.args, schema, propertyKey, jsonSchemaOptions);
             }
+            schema.properties[propertyKey] = { type: 'array' ,items:{}};
             decoratedMaps[propertyKey] = decoratedMaps[propertyKey].splice(0, collectionIdx);
+            console.log(decoratedMaps[propertyKey]);
+            
         }
         for (const decorated of decoratedMaps[propertyKey]) {
             if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
@@ -66,7 +68,7 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
                     meta: meta,
                     arguments: decorated.args,
                 });
-            } else decorated.fn(decorated.args, schema, propertyKey, false, jsonSchemaOptions);
+            } else decorated.fn(decorated.args, schema, propertyKey, jsonSchemaOptions);
         }
     }
 

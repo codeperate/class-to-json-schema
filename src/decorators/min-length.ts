@@ -1,5 +1,6 @@
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
+import { propertiesHelper } from '../utils/utils';
 
 export function MinLength(minLength: number): PropertyDecorator {
     return function (target, propertyKey){
@@ -7,13 +8,10 @@ export function MinLength(minLength: number): PropertyDecorator {
             {target,
             propertyKey: propertyKey.toString(),
             parameters: minLength,
-            fn: (minLength, schema,propertyKey) => {
+            fn: (minLength, schema,propertyKey,isAssignToObj) => {
                 let schemaProperties = schema.properties[propertyKey] 
-
                 if(typeof schemaProperties==="boolean") return;
-                schemaProperties.type === 'array'
-                    ?schemaProperties.items = { minLength: minLength, ...schemaProperties.items as object}
-                    :schemaProperties.minLength = minLength;
+                propertiesHelper(schemaProperties,{minLength})
                 return schema;
             },
             schemaDecorator: SchemaDecorators.MinLength,}

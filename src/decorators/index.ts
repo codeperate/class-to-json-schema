@@ -26,7 +26,6 @@ export * from './integer';
 export * from './max-length';
 export * from './max-properties';
 export * from './max';
-export * from './maximum';
 export * from './min-items';
 export * from './min-length';
 export * from './min-properties';

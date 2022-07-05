@@ -10,9 +10,10 @@ export function CollectionOf(type: typeof Number | typeof String | typeof Boolea
             parameters: type,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.CollectionOf,
-            fn: (type: typeof Number | typeof String | typeof Boolean | Class, schema, propertyKey, isAssignToObj,jsonSchemaOptions) => {
+            fn: (type: typeof Number | typeof String | typeof Boolean | Class, schema, propertyKey,jsonSchemaOptions) => {
                 let schemaProperties = schema.properties[propertyKey];
                 if (typeof schemaProperties === 'boolean') return;
+                if (!schemaProperties.type) schemaProperties = {type:'array',items:{}}
                 const items = classTransformer({ type, specType: jsonSchemaOptions.specTypes, schemaRefPath: jsonSchemaOptions.schemaRefPath, isArray: schemaProperties.type === 'array' });
                 schema.properties[propertyKey] = { ...schemaProperties, ...items };
                 return schema;

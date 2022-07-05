@@ -20,7 +20,7 @@ export function classTransformer(transformerType: TransformerType): Object {
     return objectToSchema(isArray, false, t);
 }
 
-export function objectToSchema(isArray: boolean, isRef: boolean, name: string) {
+export function objectToSchema(isArray: boolean, isRef: boolean, name: string,) {
     if (isArray) return { type: 'array', items: { ...(isRef ? { $ref: name } : { type: name }) } };
     return { ...(isRef ? { $ref: name } : { type: name }) };
 }

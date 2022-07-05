@@ -16,11 +16,11 @@ export function setSchemaByMetaType(schema: JSONSchema, property: Function, prop
     schema.properties[propertyKey] = {
         ...(!isClass(property))?{
             type: propertyType as JSONSchema7TypeName,
-            ...(propertyKey === 'array'
-                ? {
-                      items: {},
-                  }
-                : {}),
+            // ...(propertyKey === 'array'
+            //     ? {
+            //           items: {},
+            //       }
+            //     : {}),
         }:{},
     };
     if (!schema.required) schema.required = [];

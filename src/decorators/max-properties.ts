@@ -1,5 +1,6 @@
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils/decorator.utils';
+import { propertiesHelper } from '../utils/utils';
 
 export function MaxProperties(maxProperties: number) {
     return function (target, propertyKey) {
@@ -7,10 +8,10 @@ export function MaxProperties(maxProperties: number) {
             {target,
             propertyKey,
             parameters: maxProperties,
-            fn: (maxProperties, schema,propertyKey) => {
+            fn: (maxProperties, schema,propertyKey,isAssignToObj) => {
                 let schemaProperties = schema.properties[propertyKey];
                 if(typeof schemaProperties==="boolean") return;
-                schemaProperties.maxProperties = maxProperties;
+                propertiesHelper(schemaProperties,{maxProperties})
                 return schema;
             },
             schemaDecorator: SchemaDecorators.MaxProperties,}
