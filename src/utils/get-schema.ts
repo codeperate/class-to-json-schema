@@ -1,6 +1,5 @@
 export const JSON_SCHEMA_KEY = Symbol('json-schema');
 export const JSON_CLASS_KEY = Symbol('json-class');
-import { JSONSchema7 } from 'json-schema';
 // import { Collection } from '@mikro-orm/core';
 import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
@@ -29,7 +28,7 @@ export interface JsonSchemaOptions {
     specTypes: SpecTypes;
     schemaRefPath: string;
     additionalConverters: {
-        [schemaDecorator in SchemaDecorators]: (convertersOptions: Partial<ConvertersOptions>) => JSONSchema;
+        [schemaDecorator in SchemaDecorators]?: (convertersOptions: Partial<ConvertersOptions>) => JSONSchema;
     };
 }
 
@@ -42,34 +41,42 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
     for (const propertyKey of Object.keys(decoratedMaps)) {
         const metaType = getSchemaMetaType(entity, propertyKey);
         let decorators = decoratedMaps[propertyKey];
-        const collectionIdx = decoratedMaps[propertyKey].findIndex((e) => e.type === 'CollectionOf');
-        setSchemaByMetaType(schema, metaType, propertyKey, collectionIdx === -1);
-        if (collectionIdx !== -1) {
-            const schemaProperties = schema.properties[propertyKey] as JSONSchema7;
-            const upperDecrators = decorators.slice(collectionIdx, decorators.length);
-            for (const upperDecrator of upperDecrators.reverse()) {
-                if (upperDecrator.type === 'CollectionOf') {
-                    schemaProperties.type = 'array';
-                    if (!schemaProperties.items) schemaProperties.items = {};
-                }
-                if (jsonSchemaOptions.additionalConverters?.[upperDecrator.type]) {
-                    jsonSchemaOptions.additionalConverters[upperDecrator.type]({
-                        target: entity,
-                        schema: schema,
-                        meta: meta,
-                        arguments: upperDecrator.args,
-                    });
-                } else upperDecrator.fn(upperDecrator.args, schema, propertyKey, jsonSchemaOptions);
-            }
-            decorators = decorators.splice(0, collectionIdx);
-        }
-        for (const decorated of decorators) {
+        // const collectionIdx = decoratedMaps[propertyKey].findIndex((e) => e.type === 'CollectionOf');
+         setSchemaByMetaType(schema, metaType, propertyKey,jsonSchemaOptions);
+        // if (collectionIdx !== -1) {
+        //     const schemaProperties = schema.properties[propertyKey] as JSONSchema7;
+        //     delete schemaProperties.type
+        //     const upperDecrators = decorators.slice(collectionIdx, decorators.length);
+        //     for (const upperDecrator of upperDecrators.reverse()) {
+        //         if (upperDecrator.type === 'CollectionOf') {
+        //             if (!schema.properties[propertyKey]) schemaProperties.type = 'array';
+        //             if (!schemaProperties.items) schemaProperties.items = {};
+        //         }
+        //         if (jsonSchemaOptions.additionalConverters?.[upperDecrator.type]) {
+        //             jsonSchemaOptions.additionalConverters[upperDecrator.type]({
+        //                 target: entity,
+        //                 schema: schema,
+        //                 meta: meta,
+        //                 arguments: upperDecrator.args,
+        //             });
+        //         } else upperDecrator.fn(upperDecrator.args, schema, propertyKey, jsonSchemaOptions);
+        //     }
+        //     console.log(schema.toJSON());
+            
+        //     decorators = decorators.splice(0, collectionIdx);
+
+        //     console.log(decorators);
+            
+        // }
+        console.log(schema.toJSON())
+        for (const decorated of decorators.reverse()) {
             if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
                 jsonSchemaOptions.additionalConverters[decorated.type]({
                     target: entity,
                     schema: schema,
                     meta: meta,
                     arguments: decorated.args,
+                    defaultConverter: () => decorated.fn(decorated.args, schema, propertyKey, jsonSchemaOptions),
                 });
             } else decorated.fn(decorated.args, schema, propertyKey, jsonSchemaOptions);
         }
@@ -89,5 +96,6 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
             }
         }
     }
+
     return schema;
 }
