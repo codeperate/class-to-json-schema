@@ -16,12 +16,11 @@ export function setSchemaByMetaType(schema: JSONSchema, property: any, propertyK
     if (!schema.properties) schema.properties = {};
     if (!schema.required) schema.required = [];
     if (!schema.required.includes(propertyKey)) schema.required.push(propertyKey);
-
-    if(propertyType==="array") return;
-    if(!isClass(property)){
-        schema.properties[propertyKey] = {type: propertyType as JSONSchema7TypeName }
-        return
-
+    if (propertyKey) schema.properties[propertyKey] = {};
+    if (propertyType === 'array') return;
+    if (!isClass(property)) {
+        schema.properties[propertyKey] = { type: propertyType as JSONSchema7TypeName };
+        return;
     }
     const tmp = classTransformer({
         type: property,
@@ -29,5 +28,5 @@ export function setSchemaByMetaType(schema: JSONSchema, property: any, propertyK
         schemaRefPath: undefined,
         isArray: false,
     });
-    schema.properties[propertyKey] = {...tmp as object }
+    schema.properties[propertyKey] = { ...(tmp as object) };
 }

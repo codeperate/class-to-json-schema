@@ -11,7 +11,13 @@ export function Title(title: string) {
             propertyKey: propertyKey?.toString(),
             parameters: title,
             fn: (title, schema, propertyKey) => {
-                changeSchema(schema,(s)=>{s.title=title},propertyKey)
+                changeSchema(
+                    schema,
+                    (s) => {
+                        s.title = title;
+                    },
+                    propertyKey,
+                );
             },
             schemaDecorator: SchemaDecorators.Title,
         });
