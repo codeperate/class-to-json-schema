@@ -1,4 +1,5 @@
 import { SchemaDecorators } from '../enum';
+
 import { decoratorMapper } from '../utils/decorator.utils';
 
 export function Format(format: JsonFormatTypes | string) {
@@ -17,6 +18,7 @@ export function Format(format: JsonFormatTypes | string) {
                     ? (schemaProperties.items = { format: format, ...(schemaProperties.items as object) })
                     : ((schemaProperties.format = format), (schemaProperties.type = 'string'));
                 return schema;
+                // changeSchema(schema,(s)=>{s.format=format},propertyKey)
             },
             schemaDecorator: SchemaDecorators.Format,
         });

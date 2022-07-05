@@ -1,4 +1,5 @@
 import { SchemaDecorators } from '../enum';
+import { changeSchema } from '../utils/change-schema';
 import { decoratorMapper } from '../utils/decorator.utils';
 
 export function Email(): PropertyDecorator{
@@ -7,11 +8,7 @@ export function Email(): PropertyDecorator{
             target,
             propertyKey: propertyKey.toString(),
             fn: (arg, schema,propertyKey) => {
-                let schemaProperties = schema.properties[propertyKey] ;
-
-                if(typeof schemaProperties==="boolean") return;
-                schemaProperties.format = 'email';
-                return schema;
+                changeSchema(schema,(s)=>{s.format='email'},propertyKey)
             },
             schemaDecorator: SchemaDecorators.Email,
         });

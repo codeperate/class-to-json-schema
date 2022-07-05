@@ -1,4 +1,5 @@
 import { SchemaDecorators } from '../enum';
+import { changeSchema } from '../utils/change-schema';
 import { decoratorMapper } from '../utils/decorator.utils';
 
 export function exclusiveMaximum(maximum: number): PropertyDecorator {
@@ -8,13 +9,7 @@ export function exclusiveMaximum(maximum: number): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             parameters: maximum,
             fn: (maximum, schema,propertyKey) => {
-                let schemaProperties = schema.properties[propertyKey];
-
-                if(typeof schemaProperties==="boolean") return;
-                schemaProperties.type === 'array'
-                    ? (schemaProperties.items = { maximum: maximum, ...schemaProperties.items as object })
-                    : (schemaProperties.maximum = maximum);
-                return schema;
+                changeSchema(schema,(s)=>{s.exclusiveMaximum=maximum},propertyKey)
             },
             schemaDecorator: SchemaDecorators.ExclusiveMaximum,
         });

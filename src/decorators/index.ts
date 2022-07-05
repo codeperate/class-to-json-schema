@@ -1,7 +1,6 @@
 // created from 'create-ts-index'
 
 export * from './all-of';
-export * from './allow';
 export * from './any-of';
 export * from './any';
 export * from './collection-contains';
@@ -30,7 +29,6 @@ export * from './min-items';
 export * from './min-length';
 export * from './min-properties';
 export * from './min';
-export * from './minimum';
 export * from './multiple-of';
 export * from './name';
 export * from './nullable';
