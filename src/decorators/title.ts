@@ -1,8 +1,7 @@
 // import { getSchema } from "../utils/get-schema"
 import { SchemaDecorators } from '../enum';
 import { decoratorMapper } from '../utils';
-import { propertiesHelper } from '../utils/utils';
-
+import { changeSchema } from '../utils/change-schema';
 //read class and class entity
 
 export function Title(title: string) {
@@ -11,17 +10,8 @@ export function Title(title: string) {
             target,
             propertyKey: propertyKey?.toString(),
             parameters: title,
-            fn: (title, schema, propertyKey, isAssignToObj) => {
-                if (!propertyKey) {
-                    if (!schema.title) schema.title = '';
-                    schema.title = title;
-                } else {                    
-                    const schemaProperties = schema.properties[propertyKey];
-                    if (typeof schemaProperties === 'boolean') return;
-                    propertiesHelper(schemaProperties,{title})
-                }
-                console.log(title,schema.type,schema.properties[propertyKey]);
-                return schema;
+            fn: (title, schema, propertyKey) => {
+                changeSchema(schema,(s)=>{s.title=title},propertyKey)
             },
             schemaDecorator: SchemaDecorators.Title,
         });

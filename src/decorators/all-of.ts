@@ -10,7 +10,6 @@ export function AllOf(...allOf: JSONSchema7Definition[]) {
             parameters: allOf,
             fn: (allOf, schema, propertyKey) => {
                 let schemaProperties = schema.properties[propertyKey];
-
                 if (typeof schemaProperties === 'boolean') return;
                 schemaProperties.allOf = allOf;
                 return schema;

@@ -1,6 +1,6 @@
 import { SchemaDecorators } from '../enum';
+import { changeSchema } from '../utils/change-schema';
 import { decoratorMapper } from '../utils/decorator.utils';
-import { propertiesHelper } from '../utils/utils';
 
 export function Description(description: any) {
     return function (target, propertyKey?) {
@@ -9,14 +9,7 @@ export function Description(description: any) {
             propertyKey: propertyKey?.toString(),
             parameters: description,
             fn: (description, schema, propertyKey,isAssignToObj) => {
-                if (!propertyKey) {
-                    schema.description = description;
-                } else {
-                    const schemaProperties = schema.properties[propertyKey];
-                    if(typeof schemaProperties==="boolean") return;
-                    propertiesHelper(schemaProperties,{description})
-                }
-                return schema;
+                changeSchema(schema,(s)=>{s.description=description},propertyKey)
             },
             schemaDecorator: SchemaDecorators.Description,
         });
