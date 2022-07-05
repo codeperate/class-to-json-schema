@@ -14,7 +14,7 @@ export function CollectionOf(type: typeof Number | typeof String | typeof Boolea
                 let schemaProperties = schema.properties[propertyKey];
                 if (typeof schemaProperties === 'boolean') return;
                 const items = classTransformer({ type, specType: jsonSchemaOptions.specTypes, schemaRefPath: jsonSchemaOptions.schemaRefPath, isArray: schemaProperties.type === 'array' });
-                if (!schemaProperties.type) schema.properties[propertyKey] = { ...schemaProperties, type: 'array', items };
+                schema.properties[propertyKey] = { ...schemaProperties, type: 'array', items };
                 return schema;
             },
         });
