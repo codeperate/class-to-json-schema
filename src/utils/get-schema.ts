@@ -41,12 +41,12 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
 
     for (const propertyKey of Object.keys(decoratedMaps)) {
         const metaType = getSchemaMetaType(entity, propertyKey);
-        setSchemaByMetaType(schema, metaType, propertyKey);
+        let decorators = decoratedMaps[propertyKey];
         const collectionIdx = decoratedMaps[propertyKey].findIndex((e) => e.type === 'CollectionOf');
+        setSchemaByMetaType(schema, metaType, propertyKey, collectionIdx === -1);
         if (collectionIdx !== -1) {
             const schemaProperties = schema.properties[propertyKey] as JSONSchema7;
-            delete schemaProperties.type;
-            const outsideArrs = decoratedMaps[propertyKey].slice(collectionIdx, decoratedMaps[propertyKey].length);
+            const outsideArrs = decorators.slice(collectionIdx, decorators.length);
             for (const outsideArr of outsideArrs.reverse()) {
                 if (outsideArr.type === 'CollectionOf') {
                     schemaProperties.type = 'array';
@@ -61,10 +61,9 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
                     });
                 } else outsideArr.fn(outsideArr.args, schema, propertyKey, jsonSchemaOptions);
             }
-            decoratedMaps[propertyKey] = decoratedMaps[propertyKey].splice(0, collectionIdx);
+            decorators = decorators.splice(0, collectionIdx);
         }
-
-        for (const decorated of decoratedMaps[propertyKey]) {
+        for (const decorated of decorators) {
             if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
                 jsonSchemaOptions.additionalConverters[decorated.type]({
                     target: entity,
