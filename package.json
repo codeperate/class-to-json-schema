@@ -1,6 +1,6 @@
 {
     "name": "class-to-json-schema",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "Build JSON schema with class and decorators.",
     "main": "dist/index.js",
     "types": "dist/types/index.d.ts",
@@ -17,7 +17,7 @@
         "type": "git",
         "url": "git+https://github.com/codeperate/class-to-json-schema.git"
     },
-    "author": "",
+    "author": "Codeperate Limited",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/codeperate/class-to-json-schema/issues"
