@@ -1,5 +1,6 @@
 import {  JSONSchema7Definition } from 'json-schema';
 import { SchemaDecorators } from '../enum';
+import { changeSchema } from '../utils/change-schema';
 import { decoratorMapper } from '../utils/decorator.utils';
 
 export function AnyOf(...anyOf: JSONSchema7Definition[]): PropertyDecorator {
@@ -9,11 +10,7 @@ export function AnyOf(...anyOf: JSONSchema7Definition[]): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             parameters: anyOf,
             fn: (anyOf, schema,propertyKey) => {
-                let schemaProperties = schema.properties[propertyKey];
-
-                if (typeof schemaProperties === 'boolean') return;
-                schemaProperties.anyOf = anyOf;
-                return schema;
+                changeSchema(schema,(s)=>{s.anyOf=anyOf},propertyKey)
             },
             schemaDecorator: SchemaDecorators.AnyOf,
         });

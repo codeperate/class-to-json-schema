@@ -8,7 +8,7 @@ export function Description(description: any) {
             target,
             propertyKey: propertyKey?.toString(),
             parameters: description,
-            fn: (description, schema, propertyKey,isAssignToObj) => {
+            fn: (description, schema, propertyKey) => {
                 changeSchema(schema,(s)=>{s.description=description},propertyKey)
             },
             schemaDecorator: SchemaDecorators.Description,

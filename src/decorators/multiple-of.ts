@@ -1,4 +1,5 @@
 import { SchemaDecorators } from '../enum';
+import { changeSchema } from '../utils/change-schema';
 import { decoratorMapper } from '../utils/decorator.utils';
 
 export function MultipleOf(multipleOf: number): PropertyDecorator {
@@ -9,13 +10,7 @@ export function MultipleOf(multipleOf: number): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.MultipleOf,
             fn: (multipleOf, schema,propertyKey) => {
-                const schemaProperties = schema.properties[propertyKey];
-
-                if(typeof schemaProperties==="boolean") return;
-                schemaProperties.type === 'array'
-                    ? (schemaProperties.items = { multipleOf: multipleOf, ...schemaProperties.items as object })
-                    : (schemaProperties.multipleOf = multipleOf);
-                return schema;
+                changeSchema(schema,(s)=>{s.multipleOf=multipleOf},propertyKey)
             },
         });
     };
