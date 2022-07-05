@@ -46,20 +46,20 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
         setSchemaByMetaType(schema, metaType, propertyKey, collectionIdx === -1);
         if (collectionIdx !== -1) {
             const schemaProperties = schema.properties[propertyKey] as JSONSchema7;
-            const outsideArrs = decorators.slice(collectionIdx, decorators.length);
-            for (const outsideArr of outsideArrs.reverse()) {
-                if (outsideArr.type === 'CollectionOf') {
+            const upperDecrators = decorators.slice(collectionIdx, decorators.length);
+            for (const upperDecrator of upperDecrators.reverse()) {
+                if (upperDecrator.type === 'CollectionOf') {
                     schemaProperties.type = 'array';
                     if (!schemaProperties.items) schemaProperties.items = {};
                 }
-                if (jsonSchemaOptions.additionalConverters?.[outsideArr.type]) {
-                    jsonSchemaOptions.additionalConverters[outsideArr.type]({
+                if (jsonSchemaOptions.additionalConverters?.[upperDecrator.type]) {
+                    jsonSchemaOptions.additionalConverters[upperDecrator.type]({
                         target: entity,
                         schema: schema,
                         meta: meta,
-                        arguments: outsideArr.args,
+                        arguments: upperDecrator.args,
                     });
-                } else outsideArr.fn(outsideArr.args, schema, propertyKey, jsonSchemaOptions);
+                } else upperDecrator.fn(upperDecrator.args, schema, propertyKey, jsonSchemaOptions);
             }
             decorators = decorators.splice(0, collectionIdx);
         }
