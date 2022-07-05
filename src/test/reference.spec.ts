@@ -1,5 +1,5 @@
 import { CollectionOf, Enum, Property, Title } from '../decorators';
-import { SpecTypes } from '../types';
+import { SpecTypes } from '../type';
 import { getJsonSchema } from '../utils';
 
 export enum OrganizationState {

@@ -1,5 +1,5 @@
 import { CollectionOf, Pattern, Required } from '../decorators';
-import { SpecTypes } from '../types';
+import { SpecTypes } from '../type';
 import { getJsonSchema } from '../utils';
 
 export class Member {
@@ -37,7 +37,7 @@ test('Get Organization JSON Schema', () => {
             namespace: { type: 'string', pattern: '/^[a-z0-9]+$/g' },
             slug: { type: 'string' },
             address: { type: 'string' },
-            members: { type: 'array', items: { '$ref': '#/components/schemas/member' } },
+            members: { type: 'array', items: { $ref: '#/components/schemas/member' } },
             phone: { type: 'string' },
         },
     });
