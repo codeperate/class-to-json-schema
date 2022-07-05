@@ -1,5 +1,6 @@
 export const JSON_SCHEMA_KEY = Symbol('json-schema');
 export const JSON_CLASS_KEY = Symbol('json-class');
+import { JSONSchema7 } from 'json-schema';
 // import { Collection } from '@mikro-orm/core';
 import { JSONSchema } from '../class/json-schema';
 import { SchemaDecorators } from '../enum/decorator';
@@ -38,14 +39,19 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
     let schema: JSONSchema = new JSONSchema();
     let meta: any = {};
 
-
     for (const propertyKey of Object.keys(decoratedMaps)) {
         const metaType = getSchemaMetaType(entity, propertyKey);
         setSchemaByMetaType(schema, metaType, propertyKey);
         const collectionIdx = decoratedMaps[propertyKey].findIndex((e) => e.type === 'CollectionOf');
         if (collectionIdx !== -1) {
+            const schemaProperties = schema.properties[propertyKey] as JSONSchema7;
+            delete schemaProperties.type;
             const outsideArrs = decoratedMaps[propertyKey].slice(collectionIdx, decoratedMaps[propertyKey].length);
-            for (const outsideArr of outsideArrs) {
+            for (const outsideArr of outsideArrs.reverse()) {
+                if (outsideArr.type === 'CollectionOf') {
+                    schemaProperties.type = 'array';
+                    if (!schemaProperties.items) schemaProperties.items = {};
+                }
                 if (jsonSchemaOptions.additionalConverters?.[outsideArr.type]) {
                     jsonSchemaOptions.additionalConverters[outsideArr.type]({
                         target: entity,
@@ -55,11 +61,9 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
                     });
                 } else outsideArr.fn(outsideArr.args, schema, propertyKey, jsonSchemaOptions);
             }
-            schema.properties[propertyKey] = { type: 'array' ,items:{}};
             decoratedMaps[propertyKey] = decoratedMaps[propertyKey].splice(0, collectionIdx);
-            console.log(decoratedMaps[propertyKey]);
-            
         }
+
         for (const decorated of decoratedMaps[propertyKey]) {
             if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
                 jsonSchemaOptions.additionalConverters[decorated.type]({
@@ -72,9 +76,9 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
         }
     }
 
-    if(classDecoratedMaps){
+    if (classDecoratedMaps) {
         for (const classKey of Object.keys(classDecoratedMaps)) {
-            for(const decorated of  classDecoratedMaps[classKey]){
+            for (const decorated of classDecoratedMaps[classKey]) {
                 if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
                     jsonSchemaOptions.additionalConverters[decorated.type]({
                         target: entity,

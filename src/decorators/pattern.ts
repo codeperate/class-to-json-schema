@@ -1,4 +1,5 @@
 import { SchemaDecorators } from '../enum';
+import { changeSchema } from '../utils/change-schema';
 import { decoratorMapper } from '../utils/decorator.utils';
 
 export function Pattern(pattern: string | RegExp): PropertyDecorator {
@@ -9,13 +10,13 @@ export function Pattern(pattern: string | RegExp): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Pattern,
             fn: (pattern, schema, propertyKey) => {
-                const schemaProperties = schema.properties[propertyKey];
-
-                if(typeof schemaProperties==="boolean") return;
-                schemaProperties.type === 'array'
-                    ? (schemaProperties.items = { pattern: pattern.tostring(), ...(schemaProperties.items as object) })
-                    : (schemaProperties.pattern = pattern.toString());
-                return schema;
+                // const schemaProperties = schema.properties[propertyKey];
+                // if(typeof schemaProperties==="boolean") return;
+                // schemaProperties.type === 'array'
+                //     ? (schemaProperties.items = { pattern: pattern.tostring(), ...(schemaProperties.items as object) })
+                //     : (schemaProperties.pattern = pattern.toString());
+                // return schema;
+                changeSchema(schema,(s)=>{s.pattern=pattern.toString()},propertyKey)
             },
         });
     };

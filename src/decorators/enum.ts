@@ -1,4 +1,5 @@
 import { SchemaDecorators } from '../enum';
+import { changeSchema } from '../utils/change-schema';
 import { decoratorMapper } from '../utils/decorator.utils';
 
 export function Enum(enumValues: any): PropertyDecorator {
@@ -8,10 +9,7 @@ export function Enum(enumValues: any): PropertyDecorator {
             propertyKey: propertyKey.toString(),
             parameters: enumValues,
             fn: (enumValues, schema, propertyKey) => {
-                let schemaProperties = schema.properties[propertyKey];
-                if (typeof schemaProperties === 'boolean') return;
-                schemaProperties.enum = Object.values(enumValues);
-                return schema;
+                changeSchema(schema,(s)=>{s.enum = Object.values(enumValues)},propertyKey)
             },
             schemaDecorator: SchemaDecorators.Enum,
         });

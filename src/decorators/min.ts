@@ -1,6 +1,6 @@
 import { SchemaDecorators } from '../enum';
+import { changeSchema } from '../utils/change-schema';
 import { decoratorMapper } from '../utils/decorator.utils';
-import { propertiesHelper } from '../utils/utils';
 
 export function Min(minimum: number): PropertyDecorator {
     return function (target, propertyKey) {
@@ -8,11 +8,8 @@ export function Min(minimum: number): PropertyDecorator {
             target,
             propertyKey: propertyKey.toString(),
             parameters: minimum,
-            fn: (minimum, schema,propertyKey,isAssignToObj) => {
-                const schemaProperties = schema.properties[propertyKey];
-                if(typeof schemaProperties==="boolean") return;
-                propertiesHelper(schemaProperties,{minimum})
-                return schema;
+            fn: (minimum, schema,propertyKey) => {
+                changeSchema(schema,(s)=>{s.minimum = minimum},propertyKey)
             },
             schemaDecorator: SchemaDecorators.Min,
         });
