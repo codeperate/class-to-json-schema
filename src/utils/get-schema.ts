@@ -29,7 +29,7 @@ export interface JsonSchemaOptions {
     specTypes: SpecTypes;
     schemaRefPath: string;
     additionalConverters: {
-        [schemaDecorator in SchemaDecorators]: (convertersOptions: Partial<ConvertersOptions>) => JSONSchema;
+        [schemaDecorator in SchemaDecorators]?: (convertersOptions: Partial<ConvertersOptions>) => JSONSchema;
     };
 }
 
