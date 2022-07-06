@@ -7,7 +7,7 @@ import { isClass } from './utils';
 
 export function setSchemaByMetaType(schema: JSONSchema, property: any, propertyKey: string, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
     let propertyType = property.name;
-    if (!isCustomClass(property.prototype)) propertyType = property.name.toLowerCase();
+    if (!isCustomClass(property)) propertyType = property.name.toLowerCase();
     if (property.prototype === Date.prototype) propertyType = 'string';
     if (!schema) schema.type = 'object';
     if (!schema.properties) schema.properties = {};
