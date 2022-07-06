@@ -1,17 +1,19 @@
-import { SchemaDecorators } from '../enum';
+import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
-import { decoratorMapper } from '../utils/decorator.utils';
 
 export function Enum(enumValues: any): PropertyDecorator {
-    return function (target, propertyKey) {
-        decoratorMapper({
-            target,
-            propertyKey: propertyKey.toString(),
-            parameters: enumValues,
-            fn: (enumValues, schema, propertyKey) => {
-                changeSchema(schema,(s)=>{s.enum = Object.values(enumValues)},propertyKey)
-            },
-            schemaDecorator: SchemaDecorators.Enum,
-        });
-    };
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.Enum,
+        args: null,
+        action: (args) => {
+            changeSchema(
+                args.schema,
+                (s) => {
+                    s.enum = Object.values(enumValues);
+                },
+                args.propertyKey,
+            );
+        },
+    });
 }

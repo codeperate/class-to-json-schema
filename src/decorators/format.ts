@@ -1,20 +1,15 @@
-import { SchemaDecorators } from '../enum';
+import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
 
-import { decoratorMapper } from '../utils/decorator.utils';
-
 export function Format(format: JsonFormatTypes | string) {
-    return function (target, propertyKey) {
-        decoratorMapper({
-            target,
-            propertyKey,
-            parameters: format,
-            fn: (format, schema, propertyKey) => {
-                changeSchema(schema,(s)=>{s.format=format},propertyKey)
-            },
-            schemaDecorator: SchemaDecorators.Format,
-        });
-    };
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.Format,
+        args: format,
+        action: (args) => {
+            changeSchema(args.schema, (s) => (s.format = format), args.propertyKey);
+        },
+    });
 }
 
 export enum JsonFormatTypes {

@@ -1,17 +1,19 @@
-import { SchemaDecorators } from '../enum';
+import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
-import { decoratorMapper } from '../utils/decorator.utils';
 
-export function Description(description: any) {
-    return function (target, propertyKey?) {
-        decoratorMapper({
-            target,
-            propertyKey: propertyKey?.toString(),
-            parameters: description,
-            fn: (description, schema, propertyKey) => {
-                changeSchema(schema,(s)=>{s.description=description},propertyKey)
-            },
-            schemaDecorator: SchemaDecorators.Description,
-        });
-    };
+export function Description(description: string) {
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.Default,
+        args: description,
+        action: (args) => {
+            changeSchema(
+                args.schema,
+                (s) => {
+                    s.description = description;
+                },
+                args.propertyKey,
+            );
+        },
+    });
 }

@@ -1,6 +1,8 @@
-import { CollectionOf, Schema, Title } from '../decorators';
-import { SpecTypes } from '../type';
-import { getJsonSchema } from '../utils';
+import { CollectionOf } from '../decorators/collection-of';
+import { Schema } from '../decorators/schema';
+import { Title } from '../decorators/title';
+import { getJsonSchema } from '../get-schema';
+import { SpecTypes } from '../type/spec-type';
 
 @Title('DefaultMember')
 @Schema({ title: 'member' })
@@ -9,7 +11,7 @@ export class Member {
     name!: string;
 
     @Schema({ title: 'OuterName' })
-    @CollectionOf(Number)
+    @CollectionOf(() => Number)
     @Schema({ title: 'InnerName' })
     player: number[];
 }

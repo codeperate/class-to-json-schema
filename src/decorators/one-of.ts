@@ -1,17 +1,15 @@
-import { JSONSchema7Definition } from "json-schema";
-import { SchemaDecorators } from "../enum";
-import { changeSchema } from "../utils/change-schema";
-import { decoratorMapper } from "../utils/decorator.utils";
+import { JSONSchema7Definition } from 'json-schema';
+import { SchemaDecorators } from '../enum/decorator';
+
+import { SchemaDecoratorFactory } from '../schema-decorator';
+import { changeSchema } from '../utils/change-schema';
 
 export function OneOf(...oneOf: JSONSchema7Definition[]): PropertyDecorator {
-    return function (target, propertyKey) {
-        decoratorMapper({
-          target,
-          propertyKey: propertyKey.toString(),
-          schemaDecorator: SchemaDecorators.OneOf,
-          fn: (oneOf, schema,propertyKey) => {
-            changeSchema(schema,(s)=>{s.oneOf=oneOf},propertyKey)
-          },
-        });
-      };
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.OneOf,
+        args: oneOf,
+        action: (args) => {
+            changeSchema(args.schema, (s) => (s.oneOf = oneOf), args.propertyKey);
+        },
+    });
 }

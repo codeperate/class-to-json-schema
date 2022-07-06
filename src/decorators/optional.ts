@@ -1,27 +1,23 @@
-import { SchemaDecorators } from '../enum';
-import { changeSchema } from '../utils/change-schema';
-import { decoratorMapper } from '../utils/decorator.utils';
-import { classTransformer } from '../utils/transformer.utils';
+import { defaultMetaConverter } from '../default-meta-converter';
+import { SchemaDecorators } from '../enum/decorator';
 
-export function Optional(type?: Function): PropertyDecorator {
-    return function (target, propertyKey) {
-        decoratorMapper({
-            target,
-            propertyKey: propertyKey.toString(),
-            schemaDecorator: SchemaDecorators.Optional,
-            fn: (arg, schema, propertyKey, jsonSchemaOptions) => {
-                changeSchema(
-                    schema,
-                    (s) => {
-                        if (s.required) s.required.splice(s.required.indexOf(propertyKey, 0), 1);
-                    },
-                    propertyKey,
-                );
-                if (type) {
-                    const ref = classTransformer({ type: type(), schemaRefPath: jsonSchemaOptions.schemaRefPath });
-                    schema.properties[propertyKey] = ref;
-                }
-            },
-        });
-    };
+import { SchemaDecoratorFactory } from '../schema-decorator';
+import { MetaType } from '../type/meta-type';
+import { changeSchema } from '../utils/change-schema';
+
+export function Optional(type?: () => MetaType): PropertyDecorator {
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.Optional,
+        args: type,
+        action: (args) => {
+            changeSchema(
+                args.schema,
+                () => {
+                    if (args.schema.required) args.schema.required = args.schema.required.filter((r) => r === args.propertyKey);
+                },
+                args.propertyKey,
+            );
+            defaultMetaConverter({ ...args, reflectedMetaType: type?.() });
+        },
+    });
 }

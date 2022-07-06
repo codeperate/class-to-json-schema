@@ -1,6 +1,7 @@
-import { Title, Description } from '../decorators';
-import { SpecTypes } from '../type';
-import { getJsonSchema } from '../utils';
+import { Description } from '../decorators/description';
+import { Title } from '../decorators/title';
+import { getJsonSchema } from '../get-schema';
+import { SpecTypes } from '../type/spec-type';
 
 @Title('title1')
 @Description('Description1')
@@ -19,5 +20,6 @@ test('Get Organization JSON Schema', () => {
         },
         title: 'title1',
         description: 'Description1',
+        type: 'object',
     });
 });

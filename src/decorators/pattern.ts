@@ -1,23 +1,19 @@
-import { SchemaDecorators } from '../enum';
+import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
-import { decoratorMapper } from '../utils/decorator.utils';
 
 export function Pattern(pattern: string | RegExp): PropertyDecorator {
-    return function (target, propertyKey) {
-        decoratorMapper({
-            target,
-            parameters: pattern,
-            propertyKey: propertyKey.toString(),
-            schemaDecorator: SchemaDecorators.Pattern,
-            fn: (pattern, schema, propertyKey) => {
-                // const schemaProperties = schema.properties[propertyKey];
-                // if(typeof schemaProperties==="boolean") return;
-                // schemaProperties.type === 'array'
-                //     ? (schemaProperties.items = { pattern: pattern.tostring(), ...(schemaProperties.items as object) })
-                //     : (schemaProperties.pattern = pattern.toString());
-                // return schema;
-                changeSchema(schema,(s)=>{s.pattern=pattern.toString()},propertyKey)
-            },
-        });
-    };
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.Pattern,
+        args: pattern,
+        action: (args) => {
+            changeSchema(
+                args.schema,
+                (s) => {
+                    s.pattern = pattern.toString();
+                },
+                args.propertyKey,
+            );
+        },
+    });
 }

@@ -1,17 +1,13 @@
-import { SchemaDecorators } from '../enum';
+import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
-import { decoratorMapper } from '../utils/decorator.utils';
 
 export function MultipleOf(multipleOf: number): PropertyDecorator {
-    return function (target, propertyKey) {
-        decoratorMapper({
-            target,
-            parameters: multipleOf,
-            propertyKey: propertyKey.toString(),
-            schemaDecorator: SchemaDecorators.MultipleOf,
-            fn: (multipleOf, schema,propertyKey) => {
-                changeSchema(schema,(s)=>{s.multipleOf=multipleOf},propertyKey)
-            },
-        });
-    };
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.MultipleOf,
+        args: multipleOf,
+        action: (args) => {
+            changeSchema(args.schema, (s) => (s.multipleOf = multipleOf), args.propertyKey);
+        },
+    });
 }

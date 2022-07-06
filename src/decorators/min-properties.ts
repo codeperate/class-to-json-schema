@@ -1,20 +1,13 @@
-import { SchemaDecorators } from '../enum';
+import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
-import { decoratorMapper } from '../utils/decorator.utils';
-
 
 export function MinProperties(minProperties: number): PropertyDecorator {
-    return function (target, propertyKey) {
-        decoratorMapper({
-            target,
-            propertyKey: propertyKey.toString(),
-            parameters: minProperties,
-            fn: (minProperties, schema, propertyKey) => {
-                changeSchema(schema,(s)=>{s.minProperties=minProperties},propertyKey)
-            },
-            schemaDecorator: SchemaDecorators.MinProperties,
-        });
-
-       
-    };
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.MinProperties,
+        args: minProperties,
+        action: (args) => {
+            changeSchema(args.schema, (s) => (s.minProperties = minProperties), args.propertyKey);
+        },
+    });
 }

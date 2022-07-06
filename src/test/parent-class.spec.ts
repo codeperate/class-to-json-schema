@@ -1,6 +1,7 @@
-import { Title } from '../decorators';
-import { SpecTypes } from '../type';
-import { getJsonSchema } from '../utils';
+import { Title } from '../decorators/title';
+import { getJsonSchema } from '../get-schema';
+import { SpecTypes } from '../type/spec-type';
+
 @Title('BaseEntity')
 export class BaseEntity {
     @Title('name')
@@ -24,5 +25,6 @@ test('Get Organization JSON Schema', () => {
             child2: { type: 'string', title: 'child2' },
         },
         title: 'Organization2',
+        type: 'object',
     });
 });

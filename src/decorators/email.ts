@@ -1,16 +1,19 @@
-import { SchemaDecorators } from '../enum';
+import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
-import { decoratorMapper } from '../utils/decorator.utils';
 
-export function Email(): PropertyDecorator{
-    return function(target,propertyKey){
-        decoratorMapper({
-            target,
-            propertyKey: propertyKey.toString(),
-            fn: (arg, schema,propertyKey) => {
-                changeSchema(schema,(s)=>{s.format='email'},propertyKey)
-            },
-            schemaDecorator: SchemaDecorators.Email,
-        });
-    }
+export function Email(): PropertyDecorator {
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.Email,
+        args: null,
+        action: (args) => {
+            changeSchema(
+                args.schema,
+                (s) => {
+                    s.format = 'email';
+                },
+                args.propertyKey,
+            );
+        },
+    });
 }

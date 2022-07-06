@@ -1,6 +1,8 @@
-import { CollectionOf, Enum, Title } from '../decorators';
-import { SpecTypes } from '../type';
-import { getJsonSchema } from '../utils';
+import { CollectionOf } from '../decorators/collection-of';
+import { Enum } from '../decorators/enum';
+import { Title } from '../decorators/title';
+import { getJsonSchema } from '../get-schema';
+import { SpecTypes } from '../type/spec-type';
 
 export enum OrganizationState {
     ON = 'ON',
@@ -14,7 +16,7 @@ export class Organization {
     member: Member;
 
     @Title('Members of Organization1')
-    @CollectionOf(Member)
+    @CollectionOf(() => Member)
     @Title('Member1')
     members: Member[];
 
@@ -34,5 +36,6 @@ test('Get Organization JSON Schema', () => {
             },
             state: { type: 'string', enum: ['ON', 'OFF'] },
         },
+        type: 'object',
     });
 });

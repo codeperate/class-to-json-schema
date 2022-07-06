@@ -1,17 +1,13 @@
-import { SchemaDecorators } from '../enum';
+import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
-import { decoratorMapper } from '../utils/decorator.utils';
 
 export function ExclusiveMinimum(minimum: number): PropertyDecorator {
-    return function (target, propertyKey) {
-        decoratorMapper({
-            target,
-            propertyKey: propertyKey.toString(),
-            parameters: minimum,
-            fn: (minimum, schema,propertyKey) => {
-                changeSchema(schema,(s)=>{s.exclusiveMinimum = minimum},propertyKey)
-            },
-            schemaDecorator: SchemaDecorators.ExclusiveMinimum,
-        });
-    };
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.ExclusiveMinimum,
+        args: minimum,
+        action: (args) => {
+            changeSchema(args.schema, (s) => (s.exclusiveMinimum = minimum), args.propertyKey);
+        },
+    });
 }

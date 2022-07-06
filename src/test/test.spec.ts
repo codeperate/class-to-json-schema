@@ -1,6 +1,9 @@
-import { CollectionOf, Min, Pattern, Required } from '../decorators';
-import { SpecTypes } from '../type';
-import { getJsonSchema } from '../utils';
+import { CollectionOf } from '../decorators/collection-of';
+import { Min } from '../decorators/min';
+import { Pattern } from '../decorators/pattern';
+import { Required } from '../decorators/required';
+import { getJsonSchema } from '../get-schema';
+import { SpecTypes } from '../type/spec-type';
 
 export class Member {
     @Required()
@@ -21,7 +24,7 @@ export class Organization {
     @Required()
     address!: string;
 
-    @CollectionOf(Member)
+    @CollectionOf(() => Member)
     members;
 
     @Required()
@@ -44,5 +47,6 @@ test('Get Organization JSON Schema', () => {
             phone: { type: 'string' },
             staffNo: { type: 'number', minimum: 0 },
         },
+        type: 'object',
     });
 });

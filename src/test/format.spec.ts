@@ -1,6 +1,7 @@
-import { Format, Schema } from '../decorators';
-import { SpecTypes } from '../type';
-import { getJsonSchema } from '../utils';
+import { Format } from '../decorators/format';
+import { Schema } from '../decorators/schema';
+import { getJsonSchema } from '../get-schema';
+import { SpecTypes } from '../type/spec-type';
 
 @Schema({ title: 'test', description: 'test', required: ['date'] })
 export class Organization {
@@ -11,10 +12,10 @@ export class Organization {
     dateTime!: Date;
 
     @Format('email')
-    email:string;
+    email: string;
 
     @Format('password')
-    password:string;
+    password: string;
 }
 
 test('Get Organization JSON Schema', () => {
@@ -23,6 +24,7 @@ test('Get Organization JSON Schema', () => {
         title: 'test',
         description: 'test',
         required: ['date'],
+        type: 'object',
         properties: {
             date: { type: 'string', format: 'date' },
             dateTime: { type: 'string', format: 'date-time' },

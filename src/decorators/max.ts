@@ -1,21 +1,13 @@
-import { SchemaDecorators } from '../enum';
+import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
-import { decoratorMapper } from '../utils/decorator.utils';
 
 export function Max(maximum: number): PropertyDecorator {
-    return function (target, propertyKey) {
-        decoratorMapper({
-            target,
-            propertyKey: propertyKey.toString(),
-            parameters: maximum,
-            fn: (maximum, schema,propertyKey) => {
-                // let schemaProperties = schema.properties[propertyKey];
-                // if(typeof schemaProperties==="boolean") return;
-                // propertiesHelper(schemaProperties,{maximum})
-                // return schema;
-                changeSchema(schema,(s)=>{s.maximum=maximum},propertyKey)
-            },
-            schemaDecorator: SchemaDecorators.Max,
-        });
-    };
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.Max,
+        args: maximum,
+        action: (args) => {
+            changeSchema(args.schema, (s) => (s.maximum = maximum), args.propertyKey);
+        },
+    });
 }

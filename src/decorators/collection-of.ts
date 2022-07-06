@@ -1,22 +1,24 @@
-import { SchemaDecorators } from '../enum';
-import { ClassOrAbstractClass } from '../type/class';
-import { decoratorMapper } from '../utils/decorator.utils';
-import { classTransformer } from '../utils/transformer.utils';
+import { defaultMetaConverter } from '../default-meta-converter';
+import { SchemaDecorators } from '../enum/decorator';
 
-export function CollectionOf(type: typeof Number | typeof String | typeof Boolean | typeof Object | ClassOrAbstractClass): PropertyDecorator {
-    return function (target, propertyKey) {
-        decoratorMapper({
-            target,
-            parameters: type,
-            propertyKey: propertyKey.toString(),
-            schemaDecorator: SchemaDecorators.CollectionOf,
-            fn: (type: typeof Number | typeof String | typeof Boolean | ClassOrAbstractClass, schema, propertyKey, jsonSchemaOptions) => {
-                let schemaProperties = schema.properties[propertyKey];
-                if (typeof schemaProperties === 'boolean') return;
-                const items = classTransformer({ type, schemaRefPath: jsonSchemaOptions.schemaRefPath });
-                schema.properties[propertyKey] = { ...schemaProperties, type: 'array', items };
-                return schema;
-            },
-        });
-    };
+import { SchemaDecoratorFactory } from '../schema-decorator';
+import { MetaType } from '../type/meta-type';
+import { changeSchema } from '../utils/change-schema';
+
+export function CollectionOf(type: () => MetaType): PropertyDecorator {
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.AllOf,
+        args: type,
+        action: (args) => {
+            changeSchema(
+                args.schema,
+                (s) => {
+                    s.type = 'array';
+                    s.items = {};
+                },
+                args.propertyKey,
+            );
+            defaultMetaConverter({ ...args, reflectedMetaType: type() });
+        },
+    });
 }

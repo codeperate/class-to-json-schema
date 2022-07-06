@@ -1,17 +1,13 @@
-import { SchemaDecorators } from '../enum';
+import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
-import { decoratorMapper } from '../utils/decorator.utils';
 
 export function MinLength(minLength: number): PropertyDecorator {
-    return function (target, propertyKey) {
-        decoratorMapper({
-            target,
-            propertyKey: propertyKey.toString(),
-            parameters: minLength,
-            fn: (minLength, schema, propertyKey) => {
-                changeSchema(schema,(s)=>{s.minLength=minLength},propertyKey)
-            },
-            schemaDecorator: SchemaDecorators.MinLength,
-        });
-    };
+    return SchemaDecoratorFactory({
+        decoratorType: SchemaDecorators.MinLength,
+        args: minLength,
+        action: (args) => {
+            changeSchema(args.schema, (s) => (s.minLength = minLength), args.propertyKey);
+        },
+    });
 }

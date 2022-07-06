@@ -1,6 +1,6 @@
-import { Required } from '../decorators';
-import { SpecTypes } from '../type';
-import { getJsonSchema } from '../utils';
+import { Required } from '../decorators/required';
+import { getJsonSchema } from '../get-schema';
+import { SpecTypes } from '../type/spec-type';
 
 export class Member {}
 export class Organization {
@@ -12,5 +12,6 @@ test('Get Organization JSON Schema', () => {
     expect(schema.toJSON()).toStrictEqual({
         required: ['member'],
         properties: { member: { $ref: '#/components/schemas/Member' } },
+        type: 'object',
     });
 });

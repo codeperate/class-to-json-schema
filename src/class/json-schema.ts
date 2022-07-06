@@ -5,6 +5,12 @@ export class JSONSchema<T extends object = any> extends JSONSchema7Class {
     constructor(schema?: JSONSchema7) {
         super();
         if (schema) Object.assign(this, schema);
+        this.clearUndefined();
+    }
+    clearUndefined() {
+        for (const [key, value] of Object.entries(this)) {
+            if (value === undefined) delete this[key];
+        }
     }
     clone(): JSONSchema<T> {
         return new JSONSchema(JSON.parse(this.toPlain()));
