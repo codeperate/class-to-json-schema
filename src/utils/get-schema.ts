@@ -65,7 +65,7 @@ export function getJsonSchema(entity: any, jsonSchemaOptions: Partial<JsonSchema
 
     if (classDecoratedMaps) {
         for (const classKey of Object.keys(classDecoratedMaps)) {
-            for (const decorated of classDecoratedMaps[classKey]) {
+            for (const decorated of classDecoratedMaps[classKey].reverse()) {
                 if (jsonSchemaOptions.additionalConverters?.[decorated.type]) {
                     jsonSchemaOptions.additionalConverters[decorated.type]({
                         target: entity,
