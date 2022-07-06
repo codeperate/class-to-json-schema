@@ -11,6 +11,6 @@ test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
     expect(schema.toJSON()).toStrictEqual({
         required: ['member'],
-        properties: { member: { $ref: '#/components/schemas/member' } },
+        properties: { member: { $ref: '#/components/schemas/Member' } },
     });
 });
