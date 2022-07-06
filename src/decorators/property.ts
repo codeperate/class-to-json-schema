@@ -9,11 +9,11 @@ export function Property(type?: any): PropertyDecorator {
             parameters: type,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Property,
-            fn: (type, schema, propertyKey,jsonSchemaOptions) => {
+            fn: (type, schema, propertyKey, jsonSchemaOptions) => {
                 let schemaProperties = schema.properties[propertyKey];
                 if (typeof schemaProperties === 'boolean') return;
                 type = type ? type : schemaProperties.type;
-                const items = classTransformer({ type, specType: jsonSchemaOptions.specTypes, schemaRefPath: jsonSchemaOptions.schemaRefPath, isArray: schemaProperties.type === 'array' });
+                const items = classTransformer({ type, schemaRefPath: jsonSchemaOptions.schemaRefPath });
                 schema.properties[propertyKey] = { ...schemaProperties, ...items };
                 return schema;
             },

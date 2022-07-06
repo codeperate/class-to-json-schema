@@ -37,6 +37,9 @@ export interface JsonSchemaOptions {
 
 export function getJsonSchema<T extends Class<any>>(entity: T, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
     let schema: JSONSchema<InstanceType<T>> = new JSONSchema();
+    if (!jsonSchemaOptions.schemaRefPath)
+        jsonSchemaOptions.schemaRefPath = jsonSchemaOptions.specTypes === SpecTypes.OPENAPI || jsonSchemaOptions.specTypes === SpecTypes.SWAGGER ? '#/components/schemas/' : '#/definitions/';
+    
     for (const className of getAllParentClassName(entity).reverse()) {
         let decoratedMap: DecoratedMap = defaultStorage.getPropertyInfo(className);
         let classDecoratedMap: DecoratedMap = defaultStorage.getClassInfo(className);

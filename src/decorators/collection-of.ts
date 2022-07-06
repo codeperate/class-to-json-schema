@@ -13,7 +13,7 @@ export function CollectionOf(type: typeof Number | typeof String | typeof Boolea
             fn: (type: typeof Number | typeof String | typeof Boolean | ClassOrAbstractClass, schema, propertyKey, jsonSchemaOptions) => {
                 let schemaProperties = schema.properties[propertyKey];
                 if (typeof schemaProperties === 'boolean') return;
-                const items = classTransformer({ type, specType: jsonSchemaOptions.specTypes, schemaRefPath: jsonSchemaOptions.schemaRefPath, isArray: schemaProperties.type === 'array' });
+                const items = classTransformer({ type, schemaRefPath: jsonSchemaOptions.schemaRefPath });
                 schema.properties[propertyKey] = { ...schemaProperties, type: 'array', items };
                 return schema;
             },

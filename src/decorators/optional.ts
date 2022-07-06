@@ -1,14 +1,15 @@
 import { SchemaDecorators } from '../enum';
 import { changeSchema } from '../utils/change-schema';
 import { decoratorMapper } from '../utils/decorator.utils';
+import { classTransformer } from '../utils/transformer.utils';
 
-export function Optional(): PropertyDecorator {
+export function Optional(type?: Function): PropertyDecorator {
     return function (target, propertyKey) {
         decoratorMapper({
             target,
             propertyKey: propertyKey.toString(),
             schemaDecorator: SchemaDecorators.Optional,
-            fn: (arg, schema, propertyKey) => {
+            fn: (arg, schema, propertyKey, jsonSchemaOptions) => {
                 changeSchema(
                     schema,
                     (s) => {
@@ -16,6 +17,10 @@ export function Optional(): PropertyDecorator {
                     },
                     propertyKey,
                 );
+                if (type) {
+                    const ref = classTransformer({ type: type(), schemaRefPath: jsonSchemaOptions.schemaRefPath });
+                    schema.properties[propertyKey] = ref;
+                }
             },
         });
     };

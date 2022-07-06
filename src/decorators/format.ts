@@ -1,4 +1,5 @@
 import { SchemaDecorators } from '../enum';
+import { changeSchema } from '../utils/change-schema';
 
 import { decoratorMapper } from '../utils/decorator.utils';
 
@@ -9,16 +10,7 @@ export function Format(format: JsonFormatTypes | string) {
             propertyKey,
             parameters: format,
             fn: (format, schema, propertyKey) => {
-                const schemaProperties = schema.properties[propertyKey];
-                if (typeof schemaProperties === 'boolean') return;
-
-                //  if (!schemaProperties.type || schemaProperties.type === 'object') schemaProperties.type = 'string';
-                // schemaProperties.type === 'array' ? (schemaProperties.items = { format: format, ...(schemaProperties.items as object) }) : (schemaProperties.format = format);
-                schemaProperties.type === 'array'
-                    ? (schemaProperties.items = { format: format, ...(schemaProperties.items as object) })
-                    : ((schemaProperties.format = format), (schemaProperties.type = 'string'));
-                return schema;
-                // changeSchema(schema,(s)=>{s.format=format},propertyKey)
+                changeSchema(schema,(s)=>{s.format=format},propertyKey)
             },
             schemaDecorator: SchemaDecorators.Format,
         });

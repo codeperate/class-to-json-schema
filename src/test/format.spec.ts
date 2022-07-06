@@ -11,10 +11,10 @@ export class Organization {
     dateTime!: Date;
 
     @Format('email')
-    email;
+    email:string;
 
     @Format('password')
-    password;
+    password:string;
 }
 
 test('Get Organization JSON Schema', () => {
