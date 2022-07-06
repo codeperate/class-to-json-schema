@@ -28,10 +28,10 @@ test('Get Organization JSON Schema', () => {
     expect(schema.toJSON()).toStrictEqual({
         required: ['member', 'members', 'state'],
         properties: {
-            member: { $ref: '#/components/schemas/Member' },
+            member: { $ref: '#/components/schemas/member' },
             members: {
                 type: 'array',
-                items: { $ref: '#/components/schemas/Member', title: 'Member1' },
+                items: { $ref: '#/components/schemas/member', title: 'Member1' },
                 title: 'Members of Organization1',
             },
             state: { type: 'string', enum: ['ON', 'OFF'] },
