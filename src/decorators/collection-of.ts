@@ -5,7 +5,7 @@ import { SchemaDecoratorFactory } from '../schema-decorator';
 import { MetaType } from '../type/meta-type';
 import { changeSchema } from '../utils/change-schema';
 
-export function CollectionOf(type: () => MetaType | MetaType): PropertyDecorator {
+export function CollectionOf(type: () => MetaType): PropertyDecorator {
     return SchemaDecoratorFactory({
         decoratorType: SchemaDecorators.AllOf,
         args: type,
@@ -18,7 +18,7 @@ export function CollectionOf(type: () => MetaType | MetaType): PropertyDecorator
                 },
                 args.propertyKey,
             );
-            defaultMetaConverter({ ...args, reflectedMetaType: typeof type === 'function' ? type() : type });
+            defaultMetaConverter({ ...args, reflectedMetaType: type() });
         },
     });
 }
