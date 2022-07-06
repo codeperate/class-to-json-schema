@@ -1,7 +1,8 @@
 import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+import { ClassOrAbstractClass } from '../type/class';
 import { JSONSchema7Class } from './json-schema-class';
 type ValueOf<T, K extends keyof T> = T[K];
-export class JSONSchema<T extends Function = any> extends JSONSchema7Class {
+export class JSONSchema<T extends ClassOrAbstractClass = any> extends JSONSchema7Class {
     constructor(schema?: JSONSchema7) {
         super();
         if (schema) Object.assign(this, schema);
