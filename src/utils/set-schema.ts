@@ -1,13 +1,12 @@
 import { JSONSchema7TypeName } from 'json-schema';
 import { JSONSchema } from '../class';
 import { JsonSchemaOptions } from './get-schema';
-import { isCustomClass } from './is-custom-class';
 import { classTransformer } from './transformer.utils';
 import { isClass } from './utils';
 
 export function setSchemaByMetaType(schema: JSONSchema, property: any, propertyKey: string, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
     let propertyType = property.name;
-    if (!isCustomClass(property)) propertyType = property.name.toLowerCase();
+    propertyType = propertyType.charAt(0).toLowerCase() + propertyType.slice(1);
     if (property.prototype === Date.prototype) propertyType = 'string';
     if (!schema) schema.type = 'object';
     if (!schema.properties) schema.properties = {};
