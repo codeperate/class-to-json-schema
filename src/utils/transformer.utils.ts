@@ -15,7 +15,7 @@ export function classTransformer(transformerType: TransformerType): Object {
     if (t) t = t.charAt(0).toLowerCase() + t.slice(1);
     if (isClass(type)) {
         if (schemaRefPath) return objectToSchema(isArray, true, `${schemaRefPath}/${t}`);
-        if (specType === SpecTypes.SWAGGER || specType === SpecTypes.OPENAPI) return objectToSchema(isArray, true, `#/components/schemas/${t}`);
+        if (specType === SpecTypes.SWAGGER || specType === SpecTypes.OPENAPI) return objectToSchema(isArray, true, `#/components/schemas/${t.charAt(0).toUpperCase() + t.slice(1)}`);
         return objectToSchema(isArray, true, `#/definitions/${t}`);
     }
     if (typeof type === 'string') return objectToSchema(isArray, false, type);
