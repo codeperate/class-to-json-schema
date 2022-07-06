@@ -4,12 +4,6 @@ import { JsonSchemaOptions } from './get-schema';
 import { classTransformer } from './transformer.utils';
 import { isClass } from './utils';
 
-const JSON_SCHEMA_KEY = Symbol('json-schema');
-
-export function setSchema(target: object, schema: Object): void {
-    Reflect.defineMetadata(JSON_SCHEMA_KEY, schema, target);
-}
-
 export function setSchemaByMetaType(schema: JSONSchema, property: any, propertyKey: string, jsonSchemaOptions: Partial<JsonSchemaOptions>) {
     let propertyType = property.name.toLowerCase();
     if (!schema) schema.type = 'object';

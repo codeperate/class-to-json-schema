@@ -10,19 +10,15 @@ export function AllOf(...allOf: JSONSchema7Definition[]) {
             propertyKey,
             parameters: allOf,
             fn: (allOf, schema, propertyKey) => {
-                changeSchema(schema, (s)=>{s.allOf = allOf}, propertyKey)
+                changeSchema(
+                    schema,
+                    (s) => {
+                        s.allOf = allOf;
+                    },
+                    propertyKey,
+                );
             },
             schemaDecorator: SchemaDecorators.AllOf,
         });
     };
 }
-
-// const decoratedMap:DecoratedMap=Reflect.getMetadata(JSON_SCHEMA_KEY,target)
-// if(!decoratedMap[propertyKey]) decoratedMap[propertyKey]=[];
-// decoratedMap[propertyKey].push({
-//     type:SchemaDecorators.AllOf,
-//     args:allOf,
-//     fn:(args,schema)=>{
-//         schema.allOf=args;
-//     }
-// })
