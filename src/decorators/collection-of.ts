@@ -7,7 +7,7 @@ import { changeSchema } from '../utils/change-schema';
 
 export function CollectionOf(type: () => MetaType): PropertyDecorator {
     return SchemaDecoratorFactory({
-        decoratorType: SchemaDecorators.AllOf,
+        decoratorType: SchemaDecorators.CollectionOf,
         args: type,
         action: (args) => {
             changeSchema(
