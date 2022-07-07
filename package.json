@@ -1,6 +1,6 @@
 {
     "name": "@codeperate/class-to-json-schema",
-    "version": "0.0.16",
+    "version": "0.0.17",
     "description": "Build JSON schema with class and decorators.",
     "main": "dist/index.js",
     "types": "dist/types/index.d.ts",
