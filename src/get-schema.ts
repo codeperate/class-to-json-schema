@@ -17,7 +17,7 @@ export interface JsonSchemaOption {
     specTypes: SpecTypes;
     schemaRefPath: string;
     additionalConverters: {
-        [schemaDecorator in SchemaDecorators]?: (convertersOptions: ConvertersArgs) => JSONSchema;
+        [schemaDecorator in SchemaDecorators]?: (convertersOptions: ConvertersArgs) => void;
     };
     storage: SchemaStorage;
     defaultMetaConverter?: (args: ConvertersArgs) => void;

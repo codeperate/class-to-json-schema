@@ -9,7 +9,7 @@
     ],
     "scripts": {
         "build": "pnpm run create-index && del-cli dist && tsc -p tsconfig.build.json",
-        "create-index": "ctix single -p ./tsconfig.build.json --useRootDir",
+        "create-index": "ctix single -p ./tsconfig.build.json --useRootDir --overwrite",
         "test": "jest",
         "develop:test": "jest --watchAll",
         "release": "pnpm run build && np"
