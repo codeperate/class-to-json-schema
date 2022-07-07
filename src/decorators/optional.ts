@@ -1,14 +1,12 @@
-import { defaultMetaConverter } from '../default-meta-converter';
 import { SchemaDecorators } from '../enum/decorator';
 
 import { SchemaDecoratorFactory } from '../schema-decorator';
-import { MetaType } from '../type/meta-type';
 import { changeSchema } from '../utils/change-schema';
 
-export function Optional(type?: () => MetaType): PropertyDecorator {
+export function Optional(): PropertyDecorator {
     return SchemaDecoratorFactory({
         decoratorType: SchemaDecorators.Optional,
-        args: type,
+        args: null,
         action: (args) => {
             changeSchema(
                 args.schema,
@@ -17,7 +15,6 @@ export function Optional(type?: () => MetaType): PropertyDecorator {
                 },
                 args.propertyKey,
             );
-            defaultMetaConverter({ ...args, reflectedMetaType: type?.() });
         },
     });
 }

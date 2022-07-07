@@ -1,5 +1,4 @@
-import { Optional } from '../decorators/optional';
-import { Required } from '../decorators/required';
+import { Nested } from '../decorators/nested';
 import { getJsonSchema } from '../get-schema';
 import { SpecTypes } from '../type/spec-type';
 
@@ -8,10 +7,10 @@ export class Organization1 {}
 export class Organization2 {}
 
 export class Member {
-    @Required(() => Organization1)
+    @Nested(() => Organization1)
     org1: Organization1;
 
-    @Optional(() => Organization1)
+    @Nested(() => Organization1)
     org2: Organization2;
 }
 

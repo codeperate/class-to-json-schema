@@ -1,10 +1,10 @@
-import { Required } from '../decorators/required';
+import { Nested } from '../decorators/nested';
 import { getJsonSchema } from '../get-schema';
 import { SpecTypes } from '../type/spec-type';
 
 export class Member {}
 export class Organization {
-    @Required()
+    @Nested(() => Member)
     member: Member;
 }
 test('Get Organization JSON Schema', () => {

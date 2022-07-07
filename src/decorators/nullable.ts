@@ -7,7 +7,14 @@ export function Nullable(): PropertyDecorator {
         decoratorType: SchemaDecorators.Nullable,
         args: null,
         action: (args) => {
-            changeSchema(args.schema, (s) => s, args.propertyKey);
+            changeSchema(
+                args.schema,
+                (s) => {
+                    if (!Array.isArray(s.type)) s.type = [s.type];
+                    s.type.push('null');
+                },
+                args.propertyKey,
+            );
         },
     });
 }
