@@ -17,5 +17,24 @@ export class Member {
 }
 
 test('Get Member JSON SChema', () => {
-    getJsonSchema(Member, { specTypes: SpecTypes.OPENAPI });
+    const schema = getJsonSchema(Member, { specTypes: SpecTypes.OPENAPI });
+    expect(schema.toJSON()).toStrictEqual({
+        required: ['name', 'player'],
+        properties: {
+            name: {
+                type: 'string',
+                title: 'name',
+            },
+            player: {
+                type: 'array',
+                title: 'OuterName',
+                items: {
+                    type: 'number',
+                    title: 'InnerName',
+                },
+            },
+        },
+        type: 'object',
+        title: 'member',
+    });
 });
