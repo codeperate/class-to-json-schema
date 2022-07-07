@@ -21,6 +21,8 @@ export interface JsonSchemaOption {
     };
     storage: SchemaStorage;
     defaultMetaConverter?: (args: ConvertersArgs) => void;
+    beforeConverted: (args: ConvertersArgs) => void;
+    afterConverted: (args: ConvertersArgs) => void;
 }
 
 export function getJsonSchema<T extends Class<any>>(entity: T, option: Partial<JsonSchemaOption> = {}) {

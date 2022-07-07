@@ -21,10 +21,12 @@ export function setSchemaByDecoratedMap(schema: JSONSchema, dMap: DecoratedMap, 
         } as ConvertersArgs;
         const metaConverter = option.defaultMetaConverter || defaultMetaConverter;
         metaConverter(converterArgs);
+        option.beforeConverted?.(converterArgs);
         for (const decorator of decorators.reverse()) {
             converterArgs.decoratoredContent = decorator;
             if (option.additionalConverters?.[decorator.decoratorType]) option.additionalConverters[decorator.decoratorType](converterArgs);
             else decorator.action(converterArgs);
         }
+        option.afterConverted?.(converterArgs);
     }
 }
