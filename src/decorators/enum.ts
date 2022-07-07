@@ -5,7 +5,7 @@ import { changeSchema } from '../utils/change-schema';
 export function Enum(enumValues: object): PropertyDecorator {
     return SchemaDecoratorFactory({
         decoratorType: SchemaDecorators.Enum,
-        args: null,
+        args: enumValues,
         action: (args) => {
             changeSchema(
                 args.schema,
