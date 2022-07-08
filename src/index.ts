@@ -24,6 +24,7 @@ export * from './decorators/nullable';
 export * from './decorators/one-of';
 export * from './decorators/optional';
 export * from './decorators/pattern';
+export * from './decorators/ref';
 export * from './decorators/required';
 export * from './decorators/schema';
 export * from './decorators/title';
