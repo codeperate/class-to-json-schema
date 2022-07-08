@@ -1,4 +1,3 @@
-import { deepAssign } from '@codeperate/utils';
 import { JSONSchema7 } from 'json-schema';
 import { SchemaDecorators } from '../enum/decorator';
 
@@ -13,7 +12,7 @@ export function Schema(partialSchema: JSONSchema7) {
             changeSchema(
                 args.schema,
                 (s) => {
-                    s = deepAssign(s, partialSchema);
+                    Object.assign(s, partialSchema);
                 },
                 args.propertyKey,
             );
