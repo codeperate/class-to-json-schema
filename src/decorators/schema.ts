@@ -6,7 +6,7 @@ import { changeSchema } from '../utils/change-schema';
 
 export function Schema(partialSchema: JSONSchema7) {
     return SchemaDecoratorFactory({
-        decoratorType: SchemaDecorators.Required,
+        decoratorType: SchemaDecorators.Schema,
         args: partialSchema,
         action: (args) => {
             changeSchema(
