@@ -24,8 +24,8 @@ export function setSchemaByDecoratedMap(schema: JSONSchema, dMap: DecoratedMap, 
         option.beforeConverted?.(converterArgs);
         for (const decorator of decorators.reverse()) {
             converterArgs.decoratoredContent = decorator;
+            decorator.action(converterArgs);
             if (option.additionalConverters?.[decorator.decoratorType]) option.additionalConverters[decorator.decoratorType](converterArgs);
-            else decorator.action(converterArgs);
         }
         option.afterConverted?.(converterArgs);
     }
