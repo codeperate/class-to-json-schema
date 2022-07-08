@@ -40,7 +40,7 @@ test('Get Organization JSON Schema', () => {
         required: ['name', 'namespace', 'slug', 'address', 'members', 'phone', 'staffNo'],
         properties: {
             name: { type: 'string' },
-            namespace: { type: 'string', pattern: '/^[a-z0-9]+$/g' },
+            namespace: { type: 'string', pattern: '^[a-z0-9]+$' },
             slug: { type: 'string' },
             address: { type: 'string' },
             members: { type: 'array', items: { $ref: '#/components/schemas/Member' } },

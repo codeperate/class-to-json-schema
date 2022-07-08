@@ -10,7 +10,7 @@ export function Pattern(pattern: string | RegExp): PropertyDecorator {
             changeSchema(
                 args.schema,
                 (s) => {
-                    s.pattern = pattern.toString();
+                    pattern instanceof RegExp ? (s.pattern = pattern.source) : (s.pattern = pattern);
                 },
                 args.propertyKey,
             );
