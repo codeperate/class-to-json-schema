@@ -47,4 +47,5 @@ export enum SchemaDecorators {
     Title = 'Title',
     UniqueItems = 'UniqueItems',
     Nested = 'Nested',
+    Ref = 'Ref',
 }
