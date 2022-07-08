@@ -7,7 +7,7 @@ export function Optional(): PropertyDecorator {
         decoratorType: SchemaDecorators.Optional,
         args: null,
         action: (args) => {
-            if (args.schema.required) args.schema.required = args.schema.required.filter((r) => r === args.propertyKey);
+            if (args.schema.required) args.schema.required = args.schema.required.filter((r) => r !== args.propertyKey);
         },
     });
 }

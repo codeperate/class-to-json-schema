@@ -1,9 +1,9 @@
 import { Format } from '../decorators/format';
-import { Schema } from '../decorators/schema';
+import { Optional } from '../decorators/optional';
 import { getJsonSchema } from '../get-schema';
 import { SpecTypes } from '../type/spec-type';
 
-@Schema({ title: 'test', description: 'test', required: ['date'] })
+//@Schema({ title: 'test', description: 'test', required: ['date'] })
 export class Organization {
     @Format('date')
     date!: Date;
@@ -12,6 +12,7 @@ export class Organization {
     dateTime!: Date;
 
     @Format('email')
+    @Optional()
     email: string;
 
     @Format('password')
@@ -21,9 +22,7 @@ export class Organization {
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
     expect(schema.toJSON()).toStrictEqual({
-        title: 'test',
-        description: 'test',
-        required: ['date'],
+        required: ['date', 'dateTime', 'password'],
         type: 'object',
         properties: {
             date: { type: 'string', format: 'date' },
