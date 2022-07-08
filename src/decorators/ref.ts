@@ -11,6 +11,7 @@ export function Ref(ref: Class | string): PropertyDecorator {
             changeSchema(
                 schema,
                 (s) => {
+                    for (const key of Object.keys(s)) delete s[key];
                     s.$ref = option.schemaRefPath + (typeof ref === 'string' ? ref : ref.name);
                 },
                 propertyKey,
