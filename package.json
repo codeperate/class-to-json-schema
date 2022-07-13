@@ -12,7 +12,7 @@
         "create-index": "ctix single -p ./tsconfig.build.json --useRootDir --overwrite",
         "test": "jest",
         "develop:test": "jest --watchAll",
-        "release": "pnpm run build && np"
+        "release": "pnpm run build && npx np --no-cleanup --no-release-draft"
     },
     "repository": {
         "type": "git",
@@ -26,7 +26,6 @@
     "homepage": "https://github.com/codeperate/class-to-json-schema#readme",
     "dependencies": {
         "@codeperate/utils": "^1.0.10",
-        "np": "^7.6.2",
         "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
