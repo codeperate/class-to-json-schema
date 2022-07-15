@@ -21,5 +21,21 @@ export class Member {
 
 test('Get Enum JSON Schema', () => {
     const schema = getJsonSchema(Member, { specTypes: SpecTypes.OPENAPI });
-    console.log(JSON.stringify(schema, null, 2));
+    expect(schema.toJSON()).toStrictEqual({
+        type: 'object',
+        properties: {
+            state: {
+                $ref: '',
+                enum: ['ON', 'OFF'],
+                type: 'string',
+            },
+            states: {
+                type: 'array',
+                items: {
+                    $ref: '#/components/schemas/MemberState',
+                },
+            },
+        },
+        required: ['state', 'states'],
+    });
 });
