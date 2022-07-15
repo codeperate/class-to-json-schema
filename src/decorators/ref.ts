@@ -5,7 +5,7 @@ import { changeSchema } from '../utils/change-schema';
 
 export function Ref(ref: Class | string): PropertyDecorator {
     return SchemaDecoratorFactory({
-        decoratorType: SchemaDecorators.Pattern,
+        decoratorType: SchemaDecorators.Ref,
         args: ref,
         action: ({ schema, option, propertyKey }) => {
             changeSchema(
