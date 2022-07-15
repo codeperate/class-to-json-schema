@@ -29,7 +29,7 @@ export function getJsonSchema<T extends Class<any>>(entity: T, option: Partial<J
     let schema: JSONSchema<InstanceType<T>> = new JSONSchema();
     if (!option.schemaRefPath) option.schemaRefPath = option.specTypes === SpecTypes.OPENAPI || option.specTypes === SpecTypes.SWAGGER ? '#/components/schemas/' : '#/definitions/';
     const storage = option['storage'] || defaultStorage;
-    for (const className of getAllParentClassName(entity).reverse()) {
+    for (const className of [...getAllParentClassName(entity)].reverse()) {
         const decoratedMap = storage.getDecoratedMap(className);
         if (decoratedMap) setSchemaByDecoratedMap(schema, decoratedMap, option);
     }
