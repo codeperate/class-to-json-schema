@@ -2,7 +2,6 @@ import { CollectionOf } from '../decorators/collection-of';
 import { Enum } from '../decorators/enum';
 import { Ref } from '../decorators/ref';
 import { getJsonSchema } from '../get-schema';
-import { getDefaultStorage } from '../schema-storage';
 import { SpecTypes } from '../type/spec-type';
 export enum MemberState {
     ON = 'ON',
