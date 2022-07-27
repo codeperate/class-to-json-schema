@@ -20,7 +20,7 @@ export class Organization {
     @Title('Member1')
     members: Member[];
 
-    @Enum(OrganizationState)
+    @Enum(OrganizationState, { name: 'OrganizationState', ref: true })
     state: OrganizationState;
 }
 test('Get Organization JSON Schema', () => {
@@ -34,7 +34,7 @@ test('Get Organization JSON Schema', () => {
                 items: { $ref: '#/components/schemas/Member', title: 'Member1' },
                 title: 'Members of Organization1',
             },
-            state: { type: 'string', enum: ['ON', 'OFF'] },
+            state: { $ref: '#/components/schemas/OrganizationState' },
         },
         type: 'object',
     });

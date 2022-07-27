@@ -1,7 +1,7 @@
-import { defaultStorage, SchemaStorage } from './schema-storage';
+import { getDefaultStorage, SchemaStorage } from './schema-storage';
 import { DecoratedContent } from './type/decorated-map';
 
-export function SchemaDecoratorFactory<T>(args: DecoratedContent<T>, schemaStorage: SchemaStorage = defaultStorage) {
+export function SchemaDecoratorFactory<T>(args: DecoratedContent<T>, schemaStorage: SchemaStorage = getDefaultStorage()) {
     return (target, propertyKey?) => {
         schemaStorage.pushDecoratedContent(args, target, propertyKey);
     };

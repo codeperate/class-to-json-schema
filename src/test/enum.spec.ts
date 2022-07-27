@@ -1,8 +1,8 @@
 import { CollectionOf } from '../decorators/collection-of';
 import { Enum } from '../decorators/enum';
 import { Ref } from '../decorators/ref';
-import { Schema } from '../decorators/schema';
 import { getJsonSchema } from '../get-schema';
+import { getDefaultStorage } from '../schema-storage';
 import { SpecTypes } from '../type/spec-type';
 export enum MemberState {
     ON = 'ON',
@@ -10,8 +10,7 @@ export enum MemberState {
 }
 
 export class Member {
-    @Enum(MemberState)
-    @Schema({ $ref: '' })
+    @Enum(MemberState, { name: 'MemberState', ref: false })
     state: MemberState;
 
     @CollectionOf(() => String)
@@ -25,7 +24,6 @@ test('Get Enum JSON Schema', () => {
         type: 'object',
         properties: {
             state: {
-                $ref: '',
                 enum: ['ON', 'OFF'],
                 type: 'string',
             },
