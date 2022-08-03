@@ -1,4 +1,5 @@
 import { CollectionOf } from '../decorators/collection-of';
+import { Nested } from '../decorators/nested';
 import { Pattern } from '../decorators/pattern';
 import { Required } from '../decorators/required';
 import { SchemaDecorators } from '../enum/decorator';
@@ -20,6 +21,9 @@ export class Organization {
 
     @CollectionOf(() => Member)
     members;
+
+    @Nested(() => Member)
+    member: Member;
 }
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, {
@@ -28,15 +32,22 @@ test('Get Organization JSON Schema', () => {
             [SchemaDecorators.CollectionOf]: ({ schema, decoratoredContent, propertyKey }) => {
                 schema['properties'][propertyKey]['items'] = { type: 'string' };
             },
+            [SchemaDecorators.Nested]: ({ schema, decoratoredContent, propertyKey }) => {
+                schema['properties'][propertyKey]['additionalProperties'] = false;
+            },
         },
     });
     console.log(schema);
     expect(schema.toJSON()).toStrictEqual({
-        required: ['name', 'namespace', 'members'],
+        required: ['name', 'namespace', 'members', 'member'],
         properties: {
             members: { type: 'array', items: { type: 'string' } },
             name: { type: 'string' },
             namespace: { type: 'string', pattern: '^[a-z0-9]+$' },
+            member: {
+                $ref: '#/components/schemas/Member',
+                additionalProperties: false,
+            },
         },
         type: 'object',
     });
