@@ -14,7 +14,6 @@ export function Enum(enumVal: Record<any, any>, _option: { name: string; ref?: b
                 schema,
                 (s) => {
                     if (_option.ref) {
-                        for (const key of Object.keys(s)) delete s[key];
                         s.$ref = option.schemaRefPath + _option.name;
                     } else {
                         s.type = 'string';
