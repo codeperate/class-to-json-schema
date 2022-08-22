@@ -12,6 +12,7 @@ export function Description(description: string) {
                 (s) => {
                     s.description = description;
                 },
+                args.option,
                 args.propertyKey,
             );
         },

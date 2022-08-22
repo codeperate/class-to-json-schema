@@ -32,6 +32,7 @@ export function defaultMetaConverter({ schema, reflectedMetaType, propertyKey, o
             } else s.type = (reflectedMetaType.name.charAt(0).toLowerCase() + reflectedMetaType.name.slice(1)) as JSONSchema7TypeName;
             if (reflectedMetaType === Date) s.type = 'string';
         },
+        option,
         propertyKey,
     );
 }

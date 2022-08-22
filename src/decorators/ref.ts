@@ -14,6 +14,7 @@ export function Ref(ref: Class | string): PropertyDecorator {
                     for (const key of Object.keys(s)) delete s[key];
                     s.$ref = option.schemaRefPath + (typeof ref === 'string' ? ref : ref.name);
                 },
+                option,
                 propertyKey,
             );
         },

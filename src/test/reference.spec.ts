@@ -34,7 +34,7 @@ test('Get Organization JSON Schema', () => {
                 items: { $ref: '#/components/schemas/Member', title: 'Member1' },
                 title: 'Members of Organization1',
             },
-            state: { $ref: '#/components/schemas/OrganizationState', type: 'string' },
+            state: { $ref: '#/components/schemas/OrganizationState' },
         },
         type: 'object',
     });

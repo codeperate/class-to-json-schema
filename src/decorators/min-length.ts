@@ -7,7 +7,7 @@ export function MinLength(minLength: number): PropertyDecorator {
         decoratorType: SchemaDecorators.MinLength,
         args: minLength,
         action: (args) => {
-            changeSchema(args.schema, (s) => (s.minLength = minLength), args.propertyKey);
+            changeSchema(args.schema, (s) => (s.minLength = minLength), args.option, args.propertyKey);
         },
     });
 }

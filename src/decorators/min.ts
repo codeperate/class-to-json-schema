@@ -7,7 +7,7 @@ export function Min(minimum: number): PropertyDecorator {
         decoratorType: SchemaDecorators.Min,
         args: minimum,
         action: (args) => {
-            changeSchema(args.schema, (s) => (s.minimum = minimum), args.propertyKey);
+            changeSchema(args.schema, (s) => (s.minimum = minimum), args.option, args.propertyKey);
         },
     });
 }

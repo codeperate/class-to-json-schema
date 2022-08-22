@@ -9,7 +9,7 @@ export function OneOf(...oneOf: JSONSchema7Definition[]): PropertyDecorator {
         decoratorType: SchemaDecorators.OneOf,
         args: oneOf,
         action: (args) => {
-            changeSchema(args.schema, (s) => (s.oneOf = oneOf), args.propertyKey);
+            changeSchema(args.schema, (s) => (s.oneOf = oneOf), args.option, args.propertyKey);
         },
     });
 }

@@ -5,12 +5,6 @@ export class SchemaStorage {
     storage: {
         [key: string]: DecoratedMap;
     } = {};
-    enums: {
-        [key: string]: Record<any, any>;
-    } = {};
-    pushEnum(key: string, value: Record<any, any>) {
-        set(this.enums, key, value);
-    }
     pushDecoratedContent<T>(content: DecoratedContent<T>, target: Class | InstanceType<Class>, propertyKey?: string) {
         const targetClass = typeof target === 'function' ? target : target.constructor;
         let className = targetClass.name;
@@ -27,16 +21,10 @@ export class SchemaStorage {
     getDecoratedMaps() {
         return this.storage;
     }
-    getEnums() {
-        return this.enums;
-    }
 }
 
-export let defaultStorage = new SchemaStorage();
+export let defaultSchemaStorage = new SchemaStorage();
 
-export function setDefaultStorage(storage: SchemaStorage) {
-    defaultStorage = storage;
-}
-export function getDefaultStorage() {
-    return defaultStorage;
+export function getSchemaStorage() {
+    return defaultSchemaStorage;
 }

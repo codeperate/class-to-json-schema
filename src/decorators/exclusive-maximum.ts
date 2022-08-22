@@ -7,7 +7,7 @@ export function ExclusiveMaximum(maximum: number): PropertyDecorator {
         decoratorType: SchemaDecorators.ExclusiveMaximum,
         args: maximum,
         action: (args) => {
-            changeSchema(args.schema, (s) => (s.exclusiveMaximum = maximum), args.propertyKey);
+            changeSchema(args.schema, (s) => (s.exclusiveMaximum = maximum), args.option, args.propertyKey);
         },
     });
 }

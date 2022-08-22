@@ -12,6 +12,7 @@ export function Pattern(pattern: string | RegExp): PropertyDecorator {
                 (s) => {
                     pattern instanceof RegExp ? (s.pattern = pattern.source) : (s.pattern = pattern);
                 },
+                args.option,
                 args.propertyKey,
             );
         },

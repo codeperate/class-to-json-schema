@@ -8,8 +8,8 @@ export function AllOf(...allOf: JSONSchema7Definition[]) {
     return SchemaDecoratorFactory({
         decoratorType: SchemaDecorators.AllOf,
         args: allOf,
-        action: ({ schema, propertyKey }) => {
-            changeSchema(schema, (s) => (s.allOf = allOf), propertyKey);
+        action: ({ schema, propertyKey, option }) => {
+            changeSchema(schema, (s) => (s.allOf = allOf), option, propertyKey);
         },
     });
 }

@@ -7,7 +7,7 @@ export function MultipleOf(multipleOf: number): PropertyDecorator {
         decoratorType: SchemaDecorators.MultipleOf,
         args: multipleOf,
         action: (args) => {
-            changeSchema(args.schema, (s) => (s.multipleOf = multipleOf), args.propertyKey);
+            changeSchema(args.schema, (s) => (s.multipleOf = multipleOf), args.option, args.propertyKey);
         },
     });
 }

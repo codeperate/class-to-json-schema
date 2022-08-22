@@ -7,7 +7,7 @@ export function ExclusiveMinimum(minimum: number): PropertyDecorator {
         decoratorType: SchemaDecorators.ExclusiveMinimum,
         args: minimum,
         action: (args) => {
-            changeSchema(args.schema, (s) => (s.exclusiveMinimum = minimum), args.propertyKey);
+            changeSchema(args.schema, (s) => (s.exclusiveMinimum = minimum), args.option, args.propertyKey);
         },
     });
 }
