@@ -6,7 +6,7 @@ export function MaxProperties(maxProperties: number) {
         decoratorType: SchemaDecorators.MaxProperties,
         args: maxProperties,
         action: (args) => {
-            changeSchema(args.schema, (s) => (s.maxProperties = maxProperties), args.propertyKey);
+            changeSchema(args.schema, (s) => (s.maxProperties = maxProperties), args.option, args.propertyKey);
         },
     });
 }

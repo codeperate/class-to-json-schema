@@ -7,7 +7,7 @@ export function Format(format: JsonFormatTypes | string) {
         decoratorType: SchemaDecorators.Format,
         args: format,
         action: (args) => {
-            changeSchema(args.schema, (s) => (s.format = format), args.propertyKey);
+            changeSchema(args.schema, (s) => (s.format = format), args.option, args.propertyKey);
         },
     });
 }

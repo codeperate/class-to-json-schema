@@ -7,7 +7,7 @@ export function MaxLength(maxLength: number): PropertyDecorator {
         decoratorType: SchemaDecorators.MaxLength,
         args: maxLength,
         action: (args) => {
-            changeSchema(args.schema, (s) => (s.maxLength = maxLength), args.propertyKey);
+            changeSchema(args.schema, (s) => (s.maxLength = maxLength), args.option, args.propertyKey);
         },
     });
 }

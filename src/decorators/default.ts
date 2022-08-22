@@ -12,6 +12,7 @@ export function Default(defaultValue: string | number | boolean | {}) {
                 (s) => {
                     s.default = defaultValue;
                 },
+                args.option,
                 args.propertyKey,
             );
         },

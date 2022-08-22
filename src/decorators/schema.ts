@@ -14,6 +14,7 @@ export function Schema(partialSchema: JSONSchema7) {
                 (s) => {
                     Object.assign(s, partialSchema);
                 },
+                args.option,
                 args.propertyKey,
             );
         },

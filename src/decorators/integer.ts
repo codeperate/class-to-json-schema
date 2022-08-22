@@ -7,7 +7,7 @@ export function Integer(): PropertyDecorator {
         decoratorType: SchemaDecorators.Integer,
         args: null,
         action: (args) => {
-            changeSchema(args.schema, (s) => (s.type = 'integer'), args.propertyKey);
+            changeSchema(args.schema, (s) => (s.type = 'integer'), args.option, args.propertyKey);
         },
     });
 }

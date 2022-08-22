@@ -12,6 +12,7 @@ export function Email(): PropertyDecorator {
                 (s) => {
                     s.format = 'email';
                 },
+                args.option,
                 args.propertyKey,
             );
         },

@@ -14,6 +14,7 @@ export function Nullable(): PropertyDecorator {
                     (s) => {
                         s['nullable'] = true;
                     },
+                    args.option,
                     args.propertyKey,
                 );
             } else if (args.option.specTypes === SpecTypes.JSON) {
@@ -23,6 +24,7 @@ export function Nullable(): PropertyDecorator {
                         if (!Array.isArray(s.type)) s.type = [s.type];
                         s.type.push('null');
                     },
+                    args.option,
                     args.propertyKey,
                 );
             }

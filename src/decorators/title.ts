@@ -12,6 +12,7 @@ export function Title(title: string) {
                 (s) => {
                     s.title = title;
                 },
+                args.option,
                 args.propertyKey,
             );
         },

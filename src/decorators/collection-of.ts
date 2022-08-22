@@ -16,6 +16,7 @@ export function CollectionOf(type: () => MetaType): PropertyDecorator {
                     s.type = 'array';
                     s.items = {};
                 },
+                args.option,
                 args.propertyKey,
             );
             defaultMetaConverter({ ...args, reflectedMetaType: type() });
