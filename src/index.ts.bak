@@ -40,6 +40,7 @@ export * from './utils/narrow-schema.utils';
 export * from './utils/utils';
 export * from './default-meta-converter';
 export * from './get-schema';
+export * from './ref-storage';
 export * from './schema-decorator';
 export * from './schema-storage';
 export * from './set-schema-by-decorated-map';
