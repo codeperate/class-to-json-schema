@@ -84,4 +84,7 @@ export class JSONSchema<T extends object = any> extends JSONSchema7Class {
         if (this.properties) return Object.keys(this.properties) as (keyof T)[];
         return [];
     }
+    toArray() {
+        return new JSONSchema({ type: 'array', items: this.toJSON() });
+    }
 }
