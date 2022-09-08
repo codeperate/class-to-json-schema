@@ -25,7 +25,7 @@
     },
     "homepage": "https://github.com/codeperate/class-to-json-schema#readme",
     "dependencies": {
-        "@codeperate/utils": "^1.0.10",
+        "@codeperate/utils": "^1.0.13",
         "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
