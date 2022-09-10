@@ -29,7 +29,7 @@ const defaultOption: Partial<JsonSchemaOption> = {
     deRef: true,
 };
 export function getJsonSchema<T extends Class<any>>(entity: T, option: Partial<JsonSchemaOption> = {}) {
-    option = Object.assign(defaultOption, option);
+    option = Object.assign({}, defaultOption, option);
     let schema: JSONSchema<InstanceType<T>> = new JSONSchema();
     if (!option.schemaRefPath) option.schemaRefPath = option.specTypes === SpecTypes.OPENAPI || option.specTypes === SpecTypes.SWAGGER ? '#/components/schemas/' : '#/definitions/';
     const storage = option['storage'] || getSchemaStorage();
