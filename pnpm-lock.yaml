@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@codeperate/utils': ^1.0.10
+  '@codeperate/utils': ^1.0.13
   '@jest/types': ^28.1.1
   '@types/jest': ^28.1.4
   '@types/json-schema': ^7.0.11
@@ -14,7 +14,7 @@ specifiers:
   typescript: ^4.7.4
 
 dependencies:
-  '@codeperate/utils': 1.0.10
+  '@codeperate/utils': 1.0.14
   reflect-metadata: 0.1.13
 
 devDependencies:
@@ -353,8 +353,8 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@codeperate/utils/1.0.10:
-    resolution: {integrity: sha512-ajfpO6zFL9FYjFhM4/r0TFGCJN6TQAibD+ESHMKzhH1k+eq/hjKobBMJZadarLRKnQGw+MSjSUS+j5PX18S9og==}
+  /@codeperate/utils/1.0.14:
+    resolution: {integrity: sha512-rL0TkJAmb/Lb5BvuVZjbGvytOV+Qd6ubnzdEV2rvV/ESEbwFW+u+PD7ESVu1ltbcjPSsUv1eQdxoAx2WLi4uQg==}
     dependencies:
       ts-toolbelt: 9.6.0
     dev: false
