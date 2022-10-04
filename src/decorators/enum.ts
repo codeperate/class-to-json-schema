@@ -21,7 +21,7 @@ export function Enum(enumVal: Record<any, any>, _option: { name: string; ref?: b
                         s.enum = Object.values(enumVal);
                     }
                 },
-                option,
+                { ...option, deRef: !_option.ref },
                 propertyKey,
             );
         },
