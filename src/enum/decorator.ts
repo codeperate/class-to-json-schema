@@ -28,6 +28,7 @@ export enum SchemaDecorators {
     Max = 'Max',
     Maximum = 'Maximum',
     MinItems = 'MinItems',
+    MaxItems = 'MaxItems',
     MinLength = 'MinLength',
     MinProperties = 'MinProperties',
     Min = 'Min',
