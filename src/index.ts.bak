@@ -11,6 +11,7 @@ export * from './decorators/exclusive-maximum';
 export * from './decorators/exclusive-minimum';
 export * from './decorators/format';
 export * from './decorators/integer';
+export * from './decorators/max-items';
 export * from './decorators/max-length';
 export * from './decorators/max-properties';
 export * from './decorators/max';

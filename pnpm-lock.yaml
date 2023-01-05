@@ -9,6 +9,7 @@ specifiers:
   ctix: ^1.1.4
   del-cli: ^4.0.1
   jest: ^28.1.2
+  reflect-metadata: ^0.1.13
   ts-jest: ^28.0.5
   ts-node: ^10.8.2
   typescript: ^4.7.4
@@ -22,6 +23,7 @@ devDependencies:
   ctix: 1.1.4
   del-cli: 4.0.1
   jest: 28.1.2_mfp6r5vakwpzedmo62qy467j7u
+  reflect-metadata: 0.1.13
   ts-jest: 28.0.5_lt5llx2ti6zt4eclhanfli5ynu
   ts-node: 10.8.2_nv75g3i7xuh23du6z7qul3uiqi
   typescript: 4.7.4
@@ -2642,6 +2644,10 @@ packages:
     dependencies:
       indent-string: 5.0.0
       strip-indent: 4.0.0
+    dev: true
+
+  /reflect-metadata/0.1.13:
+    resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
     dev: true
 
   /require-directory/2.1.1:

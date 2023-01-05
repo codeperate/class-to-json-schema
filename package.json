@@ -30,6 +30,7 @@
     },
     "devDependencies": {
         "@codeperate/utils": "^1.0.21",
+        "reflect-metadata": "^0.1.13",
         "@jest/types": "^28.1.1",
         "@types/node": "18.11.18",
         "@types/jest": "^28.1.4",
