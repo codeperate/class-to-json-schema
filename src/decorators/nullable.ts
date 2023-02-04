@@ -18,7 +18,7 @@ export function Nullable(): PropertyDecorator {
                     args.option,
                     args.propertyKey,
                 );
-            } else if (args.option.specTypes === SpecTypes.JSON) {
+            } else if ([SpecTypes.JSON, SpecTypes.OPENAPI3_1].some((t) => args.option.specTypes === t)) {
                 changeSchema(
                     args.schema,
                     (s) => {
