@@ -2,6 +2,7 @@ import { SchemaDecorators } from '../enum/decorator';
 import { SchemaDecoratorFactory } from '../schema-decorator';
 import { SpecTypes } from '../type/spec-type';
 import { changeSchema } from '../utils/change-schema';
+import { addType } from '../utils/utils';
 
 export function Nullable(): PropertyDecorator {
     return SchemaDecoratorFactory({
@@ -21,8 +22,7 @@ export function Nullable(): PropertyDecorator {
                 changeSchema(
                     args.schema,
                     (s) => {
-                        if (!Array.isArray(s.type)) s.type = [s.type];
-                        s.type.push('null');
+                        addType(s, 'null');
                     },
                     args.option,
                     args.propertyKey,

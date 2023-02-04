@@ -4,6 +4,7 @@ import { SchemaDecorators } from '../enum/decorator';
 import { SchemaDecoratorFactory } from '../schema-decorator';
 import { MetaType } from '../type/meta-type';
 import { changeSchema } from '../utils/change-schema';
+import { addType } from '../utils/utils';
 
 export function CollectionOf(type: () => MetaType): PropertyDecorator {
     return SchemaDecoratorFactory({
@@ -13,7 +14,7 @@ export function CollectionOf(type: () => MetaType): PropertyDecorator {
             changeSchema(
                 args.schema,
                 (s) => {
-                    s.type = 'array';
+                    addType(s, 'array');
                     s.items = {};
                 },
                 args.option,

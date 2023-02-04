@@ -3,6 +3,7 @@ import { getRefStorage } from '../ref-storage';
 
 import { SchemaDecoratorFactory } from '../schema-decorator';
 import { changeSchema } from '../utils/change-schema';
+import { addType } from '../utils/utils';
 
 export function Enum(enumVal: Record<any, any>, _option: { name: string; ref?: boolean }) {
     return SchemaDecoratorFactory({
@@ -17,7 +18,7 @@ export function Enum(enumVal: Record<any, any>, _option: { name: string; ref?: b
                         Object.keys(s).forEach((key) => delete s[key]);
                         s.$ref = option.schemaRefPath + _option.name;
                     } else {
-                        s.type = 'string';
+                        addType(s, 'string');
                         s.enum = Object.values(enumVal);
                     }
                 },

@@ -29,7 +29,7 @@
         "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
-        "@codeperate/utils": "^1.0.21",
+        "@codeperate/utils": "^1.1.1",
         "reflect-metadata": "^0.1.13",
         "@jest/types": "^28.1.1",
         "@types/node": "18.11.18",

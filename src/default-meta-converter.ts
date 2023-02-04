@@ -6,6 +6,7 @@ import { DecoratedContent, DecoratedMap } from './type/decorated-map';
 
 import { MetaType } from './type/meta-type';
 import { changeSchema } from './utils/change-schema';
+import { addType } from './utils/utils';
 
 export interface ConvertersArgs<T = any> {
     schema: JSONSchema;
@@ -29,8 +30,11 @@ export function defaultMetaConverter({ schema, reflectedMetaType, propertyKey, o
 
             if (![Date, Number, String, Function, Boolean, Object].some((c) => c === reflectedMetaType)) {
                 s.$ref = `${option.schemaRefPath!}${reflectedMetaType.name}`;
-            } else s.type = (reflectedMetaType.name.charAt(0).toLowerCase() + reflectedMetaType.name.slice(1)) as JSONSchema7TypeName;
-            if (reflectedMetaType === Date) s.type = 'string';
+            } else {
+                const typeName = (reflectedMetaType.name.charAt(0).toLowerCase() + reflectedMetaType.name.slice(1)) as JSONSchema7TypeName;
+                addType(s, typeName);
+            }
+            if (reflectedMetaType === Date) addType(s, 'string');
         },
         option,
         propertyKey,
