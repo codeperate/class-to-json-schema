@@ -37,7 +37,6 @@ test('Get Organization JSON Schema', () => {
             },
         },
     });
-    console.log(schema);
     expect(schema.toJSON()).toStrictEqual({
         required: ['name', 'namespace', 'members', 'member'],
         properties: {

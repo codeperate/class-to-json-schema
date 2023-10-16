@@ -5,5 +5,10 @@ export default async (): Promise<Config.InitialOptions> => {
         verbose: true,
         roots: ['src/test'],
         preset: 'ts-jest',
+        globals: {
+            'ts-jest': {
+                tsConfig: 'tsconfig.test.json',
+            },
+        },
     };
 };

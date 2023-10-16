@@ -14,7 +14,9 @@ function deRefSchema(schema: JSONSchema7, option: Partial<JsonSchemaOption>) {
 export function changeSchema(schema: JSONSchema, action: (schema: JSONSchema7) => void, option: Partial<JsonSchemaOption>, propertyKey?: string) {
     let _schema: JSONSchema | JSONSchema7 | JSONSchema7Definition | JSONSchema7Definition[] = schema;
     _schema = narrowSchema(propertyKey ? schema.properties?.[propertyKey] : schema);
-    _schema = _schema.type === 'array' ? _schema.items : _schema;
+    //_schema = _schema.type === 'array' ? _schema.items : _schema;
+    if (_schema.type === 'array') _schema = _schema.items;
+    else if (Array.isArray(_schema.type) && _schema.type.includes('array')) _schema = _schema.items;
     if (Array.isArray(_schema))
         _schema.map((s) => {
             action(deRefSchema(narrowSchema(s), option));
