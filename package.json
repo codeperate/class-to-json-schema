@@ -44,8 +44,5 @@
     },
     "engines": {
         "node": ">=16"
-    },
-    "dependencies": {
-        "ts-node-test": "^0.4.3"
     }
 }
