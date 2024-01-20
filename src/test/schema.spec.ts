@@ -1,8 +1,10 @@
-import { CollectionOf } from '../decorators/collection-of';
-import { Schema } from '../decorators/schema';
-import { Title } from '../decorators/title';
-import { getJsonSchema } from '../get-schema';
-import { SpecTypes } from '../type/spec-type';
+import test from 'node:test';
+import { CollectionOf } from '../decorators/collection-of.js';
+import { Schema } from '../decorators/schema.js';
+import { Title } from '../decorators/title.js';
+import { getJsonSchema } from '../get-schema.js';
+import { SpecTypes } from '../type/spec-type.js';
+import assert from 'node:assert';
 
 @Title('DefaultMember')
 @Schema({ title: 'member' })
@@ -18,7 +20,7 @@ export class Member {
 
 test('Get Member JSON SChema', () => {
     const schema = getJsonSchema(Member, { specTypes: SpecTypes.OPENAPI });
-    expect(schema.toJSON()).toStrictEqual({
+    assert.deepStrictEqual(schema.toJSON(), {
         required: ['name', 'player'],
         properties: {
             name: {

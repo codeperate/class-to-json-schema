@@ -1,12 +1,9 @@
 {
     "compilerOptions": {
-        "target": "esNext",
-        "module": "commonjs",
-        "lib": ["es2017", "dom", "dom.iterable"],
-        "types": ["jest"],
+        "target": "ESNext",
+        "module": "NodeNext",
+        "types": ["node"],
         "declaration": true,
-        "declarationDir": "dist/types",
-
         "rootDir": "src",
         "outDir": "dist",
         "strict": false,
@@ -16,7 +13,7 @@
         "strictNullChecks": false,
         "noImplicitAny": false,
         "noFallthroughCasesInSwitch": true,
-        "moduleResolution": "node",
+        "moduleResolution": "NodeNext",
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
@@ -25,6 +22,6 @@
         "resolveJsonModule": true,
         "esModuleInterop": true
     },
-    "include": ["src/**/*.ts"],
-    "exclude": ["dist", "types"]
+    "include": ["src/**/*.ts", "src/test/**/*.spec.ts"],
+    "exclude": ["dist"]
 }

@@ -1,9 +1,9 @@
-import { SchemaDecorators } from '../enum/decorator';
-import { getRefStorage } from '../ref-storage';
+import { SchemaDecorators } from '../enum/decorator.js';
+import { getRefStorage } from '../ref-storage.js';
 
-import { SchemaDecoratorFactory } from '../schema-decorator';
-import { changeSchema } from '../utils/change-schema';
-import { addType } from '../utils/utils';
+import { SchemaDecoratorFactory } from '../schema-decorator.js';
+import { changeSchema } from '../utils/change-schema.js';
+import { addType } from '../utils/utils.js';
 
 export function Enum(enumVal: Record<any, any>, _option: { name: string; ref?: boolean }) {
     return SchemaDecoratorFactory({

@@ -1,7 +1,7 @@
-import { SchemaDecorators } from '../enum/decorator';
-import { SchemaDecoratorFactory } from '../schema-decorator';
-import { Class } from '../type/class';
-import { changeSchema } from '../utils/change-schema';
+import { SchemaDecorators } from '../enum/decorator.js';
+import { SchemaDecoratorFactory } from '../schema-decorator.js';
+import { Class } from '../type/class.js';
+import { changeSchema } from '../utils/change-schema.js';
 
 export function Ref(ref: Class | string): PropertyDecorator {
     return SchemaDecoratorFactory({

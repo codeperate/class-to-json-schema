@@ -1,10 +1,12 @@
-import { CollectionOf } from '../decorators/collection-of';
-import { Enum } from '../decorators/enum';
-import { Nullable } from '../decorators/nullable';
-import { Ref } from '../decorators/ref';
-import { getJsonSchema } from '../get-schema';
-import { getRefStorage } from '../ref-storage';
-import { SpecTypes } from '../type/spec-type';
+import test from 'node:test';
+import { CollectionOf } from '../decorators/collection-of.js';
+import { Enum } from '../decorators/enum.js';
+import { Nullable } from '../decorators/nullable.js';
+import { Ref } from '../decorators/ref.js';
+import { getJsonSchema } from '../get-schema.js';
+import { getRefStorage } from '../ref-storage.js';
+import { SpecTypes } from '../type/spec-type.js';
+import assert from 'node:assert';
 export enum MemberState {
     ON = 'ON',
     OFF = 'OFF',
@@ -22,12 +24,12 @@ export class Member {
 
 test('Get Enum JSON Schema', () => {
     const schema = getJsonSchema(Member, { specTypes: SpecTypes.OPENAPI });
-    expect(getRefStorage().get('MemberState')).toStrictEqual({
+    assert.deepStrictEqual(getRefStorage().get('MemberState'), {
         type: 'string',
         enum: ['ON', 'OFF'],
         nullable: true,
     });
-    expect(schema.toJSON()).toStrictEqual({
+    assert.deepStrictEqual(schema.toJSON(), {
         type: 'object',
         properties: {
             state: {

@@ -1,6 +1,7 @@
-import { Nested } from '../decorators/nested';
-import { getJsonSchema } from '../get-schema';
-import { SpecTypes } from '../type/spec-type';
+import { test } from 'node:test';
+import { Nested } from '../decorators/nested.js';
+import { getJsonSchema } from '../get-schema.js';
+import { SpecTypes } from '../type/spec-type.js';
 
 export class Organization1 {}
 

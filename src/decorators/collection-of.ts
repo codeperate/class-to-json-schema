@@ -1,10 +1,10 @@
-import { defaultMetaConverter } from '../default-meta-converter';
-import { SchemaDecorators } from '../enum/decorator';
+import { defaultMetaConverter } from '../default-meta-converter.js';
+import { SchemaDecorators } from '../enum/decorator.js';
 
-import { SchemaDecoratorFactory } from '../schema-decorator';
-import { MetaType } from '../type/meta-type';
-import { changeSchema } from '../utils/change-schema';
-import { setType } from '../utils/utils';
+import { SchemaDecoratorFactory } from '../schema-decorator.js';
+import { MetaType } from '../type/meta-type.js';
+import { changeSchema } from '../utils/change-schema.js';
+import { setType } from '../utils/utils.js';
 
 export function CollectionOf(type: () => MetaType): PropertyDecorator {
     return SchemaDecoratorFactory({

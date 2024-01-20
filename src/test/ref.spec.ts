@@ -1,6 +1,8 @@
-import { Ref } from '../decorators/ref';
-import { getJsonSchema } from '../get-schema';
-import { SpecTypes } from '../type/spec-type';
+import { test } from 'node:test';
+import { Ref } from '../decorators/ref.js';
+import { getJsonSchema } from '../get-schema.js';
+import { SpecTypes } from '../type/spec-type.js';
+import assert from 'node:assert';
 
 export class BaseEntity {
     @Ref('Name')
@@ -9,7 +11,7 @@ export class BaseEntity {
 
 test('Get Ref JSON Schema', () => {
     const schema = getJsonSchema(BaseEntity, { specTypes: SpecTypes.OPENAPI });
-    expect(schema.toJSON()).toStrictEqual({
+    assert.deepStrictEqual(schema.toJSON(), {
         properties: {
             name: {
                 $ref: '#/components/schemas/Name',

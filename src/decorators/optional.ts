@@ -1,6 +1,6 @@
-import { SchemaDecorators } from '../enum/decorator';
+import { SchemaDecorators } from '../enum/decorator.js';
 
-import { SchemaDecoratorFactory } from '../schema-decorator';
+import { SchemaDecoratorFactory } from '../schema-decorator.js';
 
 export function Optional(): PropertyDecorator {
     return SchemaDecoratorFactory({

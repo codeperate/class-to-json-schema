@@ -1,9 +1,9 @@
-import { JSONSchema } from './class';
-import { ConvertersArgs, defaultMetaConverter } from './default-meta-converter';
-import { JsonSchemaOption } from './get-schema';
-import { CLASS_DECORATEDMAP_KEY, DecoratedMap } from './type/decorated-map';
+import { JSONSchema } from './class/index.js';
+import { ConvertersArgs, defaultMetaConverter } from './default-meta-converter.js';
+import { JsonSchemaOption } from './get-schema.js';
+import { CLASS_DECORATEDMAP_KEY, DecoratedMap } from './type/decorated-map.js';
 
-import { MetaType } from './type/meta-type';
+import { MetaType } from './type/meta-type.js';
 
 export function setSchemaByDecoratedMap(schema: JSONSchema, dMap: DecoratedMap, option: Partial<JsonSchemaOption>) {
     let iterator: (string | typeof CLASS_DECORATEDMAP_KEY)[] = Object.keys(dMap.map);

@@ -1,8 +1,8 @@
-import { SchemaDecorators } from '../enum/decorator';
-import { SchemaDecoratorFactory } from '../schema-decorator';
-import { SpecTypes } from '../type/spec-type';
-import { changeSchema } from '../utils/change-schema';
-import { addType } from '../utils/utils';
+import { SchemaDecorators } from '../enum/decorator.js';
+import { SchemaDecoratorFactory } from '../schema-decorator.js';
+import { SpecTypes } from '../type/spec-type.js';
+import { changeSchema } from '../utils/change-schema.js';
+import { addType } from '../utils/utils.js';
 
 export function Nullable(): PropertyDecorator {
     return SchemaDecoratorFactory({

@@ -3,16 +3,16 @@
     "version": "2.0.1",
     "description": "Build JSON schema with class and decorators.",
     "main": "dist/index.js",
-    "types": "dist/types/index.d.ts",
+    "types": "dist/index.d.ts",
+    "type": "module",
     "files": [
         "dist"
     ],
     "scripts": {
-        "build": "pnpm run create-index && del-cli dist && tsc -p tsconfig.build.json",
-        "create-index": "ctix single -p ./tsconfig.build.json --useRootDir --overwrite",
-        "test": "jest",
+        "build": "tsc -p tsconfig.build.json",
+        "test": "tsc -p tsconfig.test.json && node --test dist/test/",
         "develop:test": "jest --watchAll",
-        "release": "pnpm run build && npx np --no-cleanup --no-release-draft"
+        "release": "npm run build && npx np --no-cleanup --no-release-draft"
     },
     "repository": {
         "type": "git",
@@ -25,27 +25,27 @@
     },
     "homepage": "https://github.com/codeperate/class-to-json-schema#readme",
     "peerDependencies": {
-        "@codeperate/utils": "^1.0.21",
-        "reflect-metadata": "^0.1.13"
+        "@codeperate/utils": "^1.2.6",
+        "reflect-metadata": "^0.2.1"
     },
     "devDependencies": {
-        "@codeperate/utils": "^1.1.1",
-        "reflect-metadata": "^0.1.13",
-        "@jest/types": "^28.1.1",
-        "@types/node": "18.11.18",
-        "@types/jest": "^28.1.4",
+        "@codeperate/utils": "^1.2.6",
+        "@types/jasmine": "^5.1.4",
         "@types/json-schema": "^7.0.11",
-        "ctix": "^1.1.4",
-        "del-cli": "^4.0.1",
-        "jest": "^28.1.2",
-        "ts-jest": "^28.0.5",
-        "ts-node": "^10.8.2",
-        "typescript": "^4.7.4"
+        "@types/node": "^20.11.5",
+        "del-cli": "^5.1.0",
+        "jasmine": "^5.1.0",
+        "reflect-metadata": "^0.2.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3"
     },
     "publishConfig": {
         "access": "public"
     },
     "engines": {
         "node": ">=16"
+    },
+    "dependencies": {
+        "ts-node-test": "^0.4.3"
     }
 }

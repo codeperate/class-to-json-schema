@@ -1,6 +1,6 @@
-import { Class } from './type/class';
+import { Class } from './type/class.js';
 import { set } from '@codeperate/utils';
-import { CLASS_DECORATEDMAP_KEY, DecoratedContent, DecoratedMap } from './type/decorated-map';
+import { CLASS_DECORATEDMAP_KEY, DecoratedContent, DecoratedMap } from './type/decorated-map.js';
 export class SchemaStorage {
     storage: {
         [key: string]: DecoratedMap;

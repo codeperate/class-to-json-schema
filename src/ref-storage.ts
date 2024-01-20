@@ -1,5 +1,5 @@
 import { JSONSchema7 } from 'json-schema';
-import { Class } from './type/class';
+import { Class } from './type/class.js';
 export class RefStorage {
     storage: Map<string, JSONSchema7> = new Map();
     set(clsOrStr: string | Class, schema: JSONSchema7) {

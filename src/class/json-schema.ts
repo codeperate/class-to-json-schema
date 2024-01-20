@@ -1,5 +1,5 @@
 import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
-import { JSONSchema7Class } from './json-schema-class';
+import { JSONSchema7Class } from './json-schema-class.js';
 type ValueOf<T, K extends keyof T> = T[K];
 export class JSONSchema<T extends object = any> extends JSONSchema7Class {
     constructor(schema?: JSONSchema7) {

@@ -1,7 +1,7 @@
 import { JSONSchema7Definition } from 'json-schema';
-import { SchemaDecorators } from '../enum/decorator';
-import { SchemaDecoratorFactory } from '../schema-decorator';
-import { changeSchema } from '../utils/change-schema';
+import { SchemaDecorators } from '../enum/decorator.js';
+import { SchemaDecoratorFactory } from '../schema-decorator.js';
+import { changeSchema } from '../utils/change-schema.js';
 
 export function AnyOf(...anyOf: JSONSchema7Definition[]): PropertyDecorator {
     return SchemaDecoratorFactory({

@@ -1,7 +1,7 @@
-import { SchemaDecorators } from '../enum/decorator';
-import { SchemaDecoratorFactory } from '../schema-decorator';
-import { changeSchema } from '../utils/change-schema';
-import { replaceType } from '../utils/utils';
+import { SchemaDecorators } from '../enum/decorator.js';
+import { SchemaDecoratorFactory } from '../schema-decorator.js';
+import { changeSchema } from '../utils/change-schema.js';
+import { replaceType } from '../utils/utils.js';
 
 export function Integer(): PropertyDecorator {
     return SchemaDecoratorFactory({

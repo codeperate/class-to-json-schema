@@ -1,9 +1,11 @@
-import { CollectionOf } from '../decorators/collection-of';
-import { Min } from '../decorators/min';
-import { Pattern } from '../decorators/pattern';
-import { Required } from '../decorators/required';
-import { getJsonSchema } from '../get-schema';
-import { SpecTypes } from '../type/spec-type';
+import test from 'node:test';
+import { CollectionOf } from '../decorators/collection-of.js';
+import { Min } from '../decorators/min.js';
+import { Pattern } from '../decorators/pattern.js';
+import { Required } from '../decorators/required.js';
+import { getJsonSchema } from '../get-schema.js';
+import { SpecTypes } from '../type/spec-type.js';
+import assert from 'node:assert';
 
 export class Member {
     @Required()
@@ -37,7 +39,7 @@ export class Organization {
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
     const mutated = schema.set('additionalProperties', false);
-    expect(mutated.toJSON()).toStrictEqual({
+    assert.deepStrictEqual(mutated.toJSON(), {
         required: ['name', 'namespace', 'slug', 'address', 'members', 'phone', 'staffNo'],
         properties: {
             name: { type: 'string' },

@@ -1,8 +1,8 @@
 import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
-import { JSONSchema } from '../class';
-import { JsonSchemaOption } from '../get-schema';
-import { getRefStorage } from '../ref-storage';
-import { narrowSchema } from './narrow-schema.utils';
+import { JSONSchema } from '../class/index.js';
+import { JsonSchemaOption } from '../get-schema.js';
+import { getRefStorage } from '../ref-storage.js';
+import { narrowSchema } from './narrow-schema.utils.js';
 function deRefSchema(schema: JSONSchema7, option: Partial<JsonSchemaOption>) {
     if (schema.$ref && option.deRef) {
         const ref = schema.$ref.split('/')[schema.$ref.split('/').length - 1];

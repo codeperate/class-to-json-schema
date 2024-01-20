@@ -1,6 +1,8 @@
-import { Title } from '../decorators/title';
-import { getJsonSchema } from '../get-schema';
-import { SpecTypes } from '../type/spec-type';
+import test from 'node:test';
+import { Title } from '../decorators/title.js';
+import { getJsonSchema } from '../get-schema.js';
+import { SpecTypes } from '../type/spec-type.js';
+import assert from 'node:assert';
 
 @Title('BaseEntity')
 export class BaseEntity {
@@ -18,7 +20,7 @@ export class Organization2 extends BaseEntity {
 }
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization2, { specTypes: SpecTypes.OPENAPI });
-    expect(schema.toJSON()).toStrictEqual({
+    assert.deepStrictEqual(schema.toJSON(), {
         required: ['name', 'child2'],
         properties: {
             name: { type: 'string', title: 'name' },

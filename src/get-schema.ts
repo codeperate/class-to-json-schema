@@ -1,13 +1,13 @@
 // import { Collection } from '@mikro-orm/core';
 import 'reflect-metadata';
-import { JSONSchema } from './class/json-schema';
-import { ConvertersArgs } from './default-meta-converter';
-import { SchemaDecorators } from './enum/decorator';
-import { getSchemaStorage, SchemaStorage } from './schema-storage';
-import { setSchemaByDecoratedMap } from './set-schema-by-decorated-map';
-import { Class } from './type/class';
-import { SpecTypes } from './type/spec-type';
-import { getAllParentClassName } from './utils/get-all-parent-class';
+import { JSONSchema } from './class/json-schema.js';
+import { ConvertersArgs } from './default-meta-converter.js';
+import { SchemaDecorators } from './enum/decorator.js';
+import { getSchemaStorage, SchemaStorage } from './schema-storage.js';
+import { setSchemaByDecoratedMap } from './set-schema-by-decorated-map.js';
+import { Class } from './type/class.js';
+import { SpecTypes } from './type/spec-type.js';
+import { getAllParentClassName } from './utils/get-all-parent-class.js';
 
 export function getSchemaMetaType(target: new (...args: any) => any, propertyKey?: string): Function {
     return Reflect.getMetadata('design:type', new (target as any)(), propertyKey) as Function;

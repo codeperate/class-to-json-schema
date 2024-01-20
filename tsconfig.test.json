@@ -1,8 +1,9 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
+        "outDir": "dist",
         "noUnusedParameters": false,
         "noUnusedLocals": false
     },
-    "include": ["src/**/*.spec.ts"]
+    "include": ["src/test/**/*.spec.ts"]
 }

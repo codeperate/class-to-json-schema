@@ -1,7 +1,7 @@
-import { ConvertersArgs } from '../default-meta-converter';
-import { SchemaDecorators } from '../enum/decorator';
+import { ConvertersArgs } from '../default-meta-converter.js';
+import { SchemaDecorators } from '../enum/decorator.js';
 
-import { Class } from './class';
+import { Class } from './class.js';
 export const CLASS_DECORATEDMAP_KEY = Symbol('CLASS_DECORATEDMAP_KEY');
 export type DecoratedContent<T = any> = {
     decoratorType: SchemaDecorators;

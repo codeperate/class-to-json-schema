@@ -1,11 +1,11 @@
 import { set } from '@codeperate/utils';
 import { JSONSchema7TypeName } from 'json-schema';
-import { JSONSchema } from './class';
-import { JsonSchemaOption } from './get-schema';
-import { DecoratedContent, DecoratedMap } from './type/decorated-map';
+import { JSONSchema } from './class/index.js';
+import { JsonSchemaOption } from './get-schema.js';
+import { DecoratedContent, DecoratedMap } from './type/decorated-map.js';
 
-import { MetaType } from './type/meta-type';
-import { changeSchema } from './utils/change-schema';
+import { MetaType } from './type/meta-type.js';
+import { changeSchema } from './utils/change-schema.js';
 
 export interface ConvertersArgs<T = any> {
     schema: JSONSchema;

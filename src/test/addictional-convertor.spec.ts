@@ -1,10 +1,12 @@
-import { CollectionOf } from '../decorators/collection-of';
-import { Nested } from '../decorators/nested';
-import { Pattern } from '../decorators/pattern';
-import { Required } from '../decorators/required';
-import { SchemaDecorators } from '../enum/decorator';
-import { getJsonSchema } from '../get-schema';
-import { SpecTypes } from '../type/spec-type';
+import { describe } from 'node:test';
+import { CollectionOf } from '../decorators/collection-of.js';
+import { Nested } from '../decorators/nested.js';
+import { Pattern } from '../decorators/pattern.js';
+import { Required } from '../decorators/required.js';
+import { SchemaDecorators } from '../enum/decorator.js';
+import { getJsonSchema } from '../get-schema.js';
+import { SpecTypes } from '../type/spec-type.js';
+import assert from 'node:assert';
 
 export class Member {
     @Required()
@@ -25,7 +27,7 @@ export class Organization {
     @Nested(() => Member)
     member: Member;
 }
-test('Get Organization JSON Schema', () => {
+describe('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, {
         specTypes: SpecTypes.OPENAPI,
         additionalConverters: {
@@ -37,7 +39,7 @@ test('Get Organization JSON Schema', () => {
             },
         },
     });
-    expect(schema.toJSON()).toStrictEqual({
+    assert.deepStrictEqual(schema.toJSON(), {
         required: ['name', 'namespace', 'members', 'member'],
         properties: {
             members: { type: 'array', items: { type: 'string' } },

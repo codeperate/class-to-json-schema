@@ -1,6 +1,8 @@
-import { Nested } from '../decorators/nested';
-import { getJsonSchema } from '../get-schema';
-import { SpecTypes } from '../type/spec-type';
+import test from 'node:test';
+import { Nested } from '../decorators/nested.js';
+import { getJsonSchema } from '../get-schema.js';
+import { SpecTypes } from '../type/spec-type.js';
+import assert from 'node:assert';
 
 export class Member {}
 export class Organization {
@@ -9,7 +11,7 @@ export class Organization {
 }
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
-    expect(schema.toJSON()).toStrictEqual({
+    assert.deepStrictEqual(schema.toJSON(), {
         required: ['member'],
         properties: { member: { $ref: '#/components/schemas/Member' } },
         type: 'object',

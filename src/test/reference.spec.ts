@@ -1,8 +1,10 @@
-import { CollectionOf } from '../decorators/collection-of';
-import { Enum } from '../decorators/enum';
-import { Title } from '../decorators/title';
-import { getJsonSchema } from '../get-schema';
-import { SpecTypes } from '../type/spec-type';
+import test from 'node:test';
+import { CollectionOf } from '../decorators/collection-of.js';
+import { Enum } from '../decorators/enum.js';
+import { Title } from '../decorators/title.js';
+import { getJsonSchema } from '../get-schema.js';
+import { SpecTypes } from '../type/spec-type.js';
+import assert from 'node:assert';
 
 export enum OrganizationState {
     ON = 'ON',
@@ -26,7 +28,7 @@ export class Organization {
 test('Get Organization JSON Schema', () => {
     const schema = getJsonSchema(Organization, { specTypes: SpecTypes.OPENAPI });
     //console.log(JSON.stringify(schema.toJSON()))
-    expect(schema.toJSON()).toStrictEqual({
+    assert.deepStrictEqual(schema.toJSON(), {
         required: ['members', 'state'],
         properties: {
             members: {
