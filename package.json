@@ -2,14 +2,19 @@
     "name": "@codeperate/class-to-json-schema",
     "version": "3.0.0",
     "description": "Build JSON schema with class and decorators.",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "dist/mjs/index.js",
+    "exports": {
+        "import": "./dist/mjs/index.js",
+        "require": "./dist/cjs/index.js"
+    },
+    "types": "dist/mjs/index.d.ts",
+    "module": "dist/mjs/index.js",
     "type": "module",
     "files": [
         "dist"
     ],
     "scripts": {
-        "build": "tsc -p tsconfig.build.json",
+        "build": "tsc -p tsconfig.build.json && tsc -p tsconfig.cjs.json",
         "test": "tsc -p tsconfig.test.json && node --test dist/test/",
         "develop:test": "jest --watchAll",
         "release": "npm run build && npx np --no-cleanup --no-release-draft"
@@ -25,11 +30,11 @@
     },
     "homepage": "https://github.com/codeperate/class-to-json-schema#readme",
     "peerDependencies": {
-        "@codeperate/utils": "^1.2.6",
+        "@codeperate/utils": "^1.3.1",
         "reflect-metadata": "^0.2.1"
     },
     "devDependencies": {
-        "@codeperate/utils": "^1.2.6",
+        "@codeperate/utils": "^1.3.1",
         "@types/jasmine": "^5.1.4",
         "@types/json-schema": "^7.0.11",
         "@types/node": "^20.11.5",
