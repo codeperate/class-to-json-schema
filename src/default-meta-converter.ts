@@ -28,6 +28,7 @@ export function defaultMetaConverter({ schema, reflectedMetaType, propertyKey, o
             if (!reflectedMetaType || Array === reflectedMetaType) return;
 
             if (![Date, Number, String, Function, Boolean, Object].some((c) => c === reflectedMetaType)) {
+                Object.keys(s).forEach((key) => delete s[key]);
                 s.$ref = `${option.schemaRefPath!}${reflectedMetaType.name}`;
             } else {
                 const typeName = (reflectedMetaType.name.charAt(0).toLowerCase() + reflectedMetaType.name.slice(1)) as JSONSchema7TypeName;
