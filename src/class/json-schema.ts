@@ -84,6 +84,20 @@ export class JSONSchema<T extends object = any> extends JSONSchema7Class {
         if (this.properties) return Object.keys(this.properties) as (keyof T)[];
         return [];
     }
+    setOptional(props: (keyof T)[]): JSONSchema<T> {
+        const schema = this.clone();
+        if (!schema.required) return schema;
+        schema.required = schema.required.filter((require) => !props.includes(require as keyof T));
+        return schema;
+    }
+    setRequired(props: (keyof T)[]): JSONSchema<T> {
+        const schema = this.clone();
+        if (!schema.required) schema.required = [];
+        props.forEach((prop) => {
+            if (!schema.required!.includes(prop as string)) schema.required!.push(prop as string);
+        });
+        return schema;
+    }
     toArray() {
         return new JSONSchema({ type: 'array', items: this.toJSON() });
     }
