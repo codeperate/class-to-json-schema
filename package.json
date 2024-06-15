@@ -1,6 +1,6 @@
 {
     "name": "@codeperate/class-to-json-schema",
-    "version": "3.0.3",
+    "version": "3.1.0",
     "description": "Build JSON schema with class and decorators.",
     "exports": {
         ".": {
